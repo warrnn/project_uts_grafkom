@@ -1,4 +1,4 @@
-export class MyObject {
+export class Object {
     GL = null;
     SHADER_PROGRAM = null;
 

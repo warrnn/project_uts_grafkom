@@ -1,4 +1,4 @@
-import Object from "../MyObject.js";
+import Object from "../object.js";
 
 function main() {
     var CANVAS = document.getElementById('myCanvas');
