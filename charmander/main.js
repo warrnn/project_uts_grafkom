@@ -1,9 +1,72 @@
-import Object from "../object.js";
+import { Object } from "../object.js";
 
 function main() {
     var CANVAS = document.getElementById('myCanvas');
     CANVAS.width = window.innerWidth;
     CANVAS.height = window.innerHeight;
+
+    // ========== OBJECT DRAG START ==========
+    var THETA = 0, PHI = 0;
+    var drag = false;
+    var x_prev, y_prev;
+    var FRICTION = 0.05;
+    var dX = 0, dY = 0;
+    var SPEED = 0.05;
+
+    var mouseDown = function (e) {
+        drag = true;
+        x_prev = e.clientX;
+        y_prev = e.clientY;
+        e.preventDefault();
+        return false;
+    };
+
+    var mouseUp = function (e) {
+        drag = false;
+    };
+
+    var mouseMove = function (e) {
+        if (!drag) return false;
+        dX = (e.clientX - x_prev) * 2 * Math.PI / CANVAS.width;
+        dY = (e.clientY - y_prev) * 2 * Math.PI / CANVAS.height;
+        THETA += dX;
+        PHI += dY;
+        x_prev = e.clientX;
+        y_prev = e.clientY;
+        e.preventDefault();
+    };
+
+    var keyDown = function (e) {
+        if (e.key === 'w') {
+            dY -= SPEED;
+        }
+        else if (e.key === 'a') {
+            dX -= SPEED;
+        }
+        else if (e.key === 's') {
+            dY += SPEED;
+        }
+        else if (e.key === 'd') {
+            dX += SPEED;
+        }
+    };
+
+    var scroll = (e) => {
+        if (e.deltaY < 0) {
+            LIBS.translateZ(VIEWMATRIX, 0.5);
+        } else {
+            LIBS.translateZ(VIEWMATRIX, -0.5);
+        }
+        e.preventDefault();
+    };
+
+    CANVAS.addEventListener("mousedown", mouseDown, false);
+    CANVAS.addEventListener("mouseup", mouseUp, false);
+    CANVAS.addEventListener("mouseout", mouseUp, false);
+    CANVAS.addEventListener("mousemove", mouseMove, false);
+    window.addEventListener("keydown", keyDown, false);
+    CANVAS.addEventListener("wheel", scroll, false);
+    // ========== OBJECT DRAG END ==========
 
     var GL;
     try {
@@ -17,7 +80,7 @@ function main() {
         attribute vec3 position;
         uniform mat4 Pmatrix, Vmatrix, Mmatrix;
         attribute vec3 color;
-        variying vec3 vColor;
+        varying vec3 vColor;
         
         void main() {
             gl_Position = Pmatrix * Vmatrix * Mmatrix * vec4(position, 1.);
@@ -67,80 +130,37 @@ function main() {
     GL.useProgram(SHADER_PROGRAM);
 
     var PROJMATRIX = LIBS.get_projection(40, CANVAS.width / CANVAS.height, 1, 100);
-    var MOVEMATRIX = LIBS.get_I4();
     var VIEWMATRIX = LIBS.get_I4();
+
+    LIBS.translateZ(VIEWMATRIX, -12)
+
+    // ========== GENERATE SHAPE OBJECT START =========
+    const { vertices: body_vertices, indices: body_indices } = generateEllipsoid(1.2, 2.0, 1.0, 30, 30, [1.0, 0.5, 0.0]);
+    const body = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, body_vertices, body_indices);
+    // ========== GENERATE SHAPE OBJECT END ==========
+
+    // ========== ROTATE SCALE TRANSLATE START ==========
+    // ...
+    // ========== ROTATE SCALE TRANSLATE END ==========
+
+    // ========== CHILDS PUSH START ==========
+    // ...
+    // ========== CHIILDS PUSH END ==========
+
+    // ========== SETUP START ==========
+    body.setup();
+    // ========== SETUP END ==========
 
     GL.enable(GL.DEPTH_TEST);
     GL.depthFunc(GL.LEQUAL);
     GL.clearColor(0.0, 0.0, 0.0, 1.0);
     GL.clearDepth(1.0);
 
-    // ========== OBJECT DRAG START ==========
-    var THETA = 0, PHI = 0;
-    var drag = false;
-    var x_prev, y_prev;
-    var FRICTION = 0.05;
-    var dX = 0, dY = 0;
-
-    var mouseDown = function (e) {
-        drag = true;
-        x_prev = e.pageX, y_prev = e.pageY;
-        e.preventDefault();
-        return false;
-    };
-
-    var mouseUp = function (e) {
-        drag = false;
-    };
-
-    var mouseMove = function (e) {
-        if (!drag) return false;
-        dX = (e.pageX - x_prev) * 2 * Math.PI / CANVAS.width;
-        dY = (e.pageY - y_prev) * 2 * Math.PI / CANVAS.height;
-        THETA += dX;
-        PHI += dY;
-        x_prev = e.pageX, y_prev = e.pageY;
-        e.preventDefault();
-    };
-
-    CANVAS.addEventListener("mousedown", mouseDown, false);
-    CANVAS.addEventListener("mouseup", mouseUp, false);
-    CANVAS.addEventListener("mouseout", mouseUp, false);
-    CANVAS.addEventListener("mousemove", mouseMove, false);
-
-    var SPEED = 0.05;
-
-    var keyDown = function (e) {
-        if (e.key === 'w') {
-            dY -= SPEED;
-        }
-        else if (e.key === 'a') {
-            dX -= SPEED;
-        }
-        else if (e.key === 's') {
-            dY += SPEED;
-        }
-        else if (e.key === 'd') {
-            dX += SPEED;
-        }
-    };
-
-    window.addEventListener("keydown", keyDown, false);
-    // ========== OBJECT DRAG END ==========
-
     var animate = function (time) {
         GL.viewport(0, 0, CANVAS.width, CANVAS.height);
-        GL.clear(GL.COLOR_BUFFER_BIT);
+        GL.clear(GL.COLOR_BUFFER_BIT | GL.DEPTH_BUFFER_BIT);
 
         // ========== OBJECT DRAG START ==========
-        GL.uniformMatrix4fv(_Pmatrix, false, PROJMATRIX);
-        GL.uniformMatrix4fv(_Vmatrix, false, VIEWMATRIX);
-        GL.uniformMatrix4fv(_Mmatrix, false, MOVEMATRIX);
-
-        LIBS.set_I4(MOVEMATRIX);
-        LIBS.rotateY(MOVEMATRIX, THETA);
-        LIBS.rotateX(MOVEMATRIX, PHI);
-
         if (!drag) {
             dX *= (1 - FRICTION);
             dY *= (1 - FRICTION);
@@ -148,6 +168,15 @@ function main() {
             PHI += dY;
         }
         // ========== OBJECT DRAG END ==========
+
+        var MOVEMATRIX = LIBS.get_I4();
+        LIBS.rotateX(MOVEMATRIX, PHI);
+        LIBS.rotateY(MOVEMATRIX, THETA);
+
+        GL.uniformMatrix4fv(_Pmatrix, false, PROJMATRIX);
+        GL.uniformMatrix4fv(_Vmatrix, false, VIEWMATRIX);
+
+        body.render(MOVEMATRIX);
 
         GL.flush();
         window.requestAnimationFrame(animate);
