@@ -77,6 +77,63 @@ function generateCurvedCylinder(radiusStart = 0.2, radiusEnd = 0.1, length = 2.0
     return { vertices, indices };
 }
 
+function generateCylinderDynamicRadius(minStart, maxStart, minEnd, maxEnd, height, radialSegments, heightSegments, color, mode = "linear") {
+    let vertices = [];
+    let indices = [];
+
+    for (let y = 0; y <= heightSegments; y++) {
+        let v = y / heightSegments;
+        let currY = v * height - height / 2; // dari -h/2 ke +h/2
+
+        // radius bawah & atas (masing-masing punya min dan max)
+        let minR = minStart + (minEnd - minStart) * v;
+        let maxR = maxStart + (maxEnd - maxStart) * v;
+
+        // pilih fungsi interpolasi
+        let t;
+        if (mode === "linear") {
+            t = v; // lurus saja
+        } else if (mode === "sin") {
+            t = Math.sin(v * Math.PI); // naik turun (gendut di tengah)
+        } else if (mode === "cos") {
+            t = (1 - Math.cos(v * Math.PI)) / 2; // smooth naik (S-curve)
+        } else {
+            t = v; // fallback linear
+        }
+
+        // radius final
+        let currRadius = minR * (1 - t) + maxR * t;
+
+        // bikin ring
+        for (let i = 0; i <= radialSegments; i++) {
+            let u = i / radialSegments;
+            let theta = u * 2 * Math.PI;
+
+            let x = Math.cos(theta) * currRadius;
+            let z = Math.sin(theta) * currRadius;
+
+            vertices.push(x, currY, z, color[0], color[1], color[2]);
+        }
+    }
+
+    // bikin face (dua segitiga per quad)
+    for (let y = 0; y < heightSegments; y++) {
+        for (let i = 0; i < radialSegments; i++) {
+            let row1 = y * (radialSegments + 1);
+            let row2 = (y + 1) * (radialSegments + 1);
+
+            indices.push(row1 + i, row2 + i, row1 + i + 1);
+            indices.push(row1 + i + 1, row2 + i, row2 + i + 1);
+        }
+    }
+
+    return {
+        vertices: new Float32Array(vertices),
+        indices: new Uint16Array(indices)
+    };
+}
+
+
 function generateBlanket(radiusX, radiusY, height, segmentsX, segmentsY, color) {
     let vertices = [];
     let indices = [];
@@ -141,6 +198,38 @@ function generateCylinder(radiusTop, radiusBottom, height, radialSegments, heigh
 
             indices.push(row1 + i, row2 + i, row1 + i + 1);
             indices.push(row1 + i + 1, row2 + i, row2 + i + 1);
+        }
+    }
+
+    return { vertices, indices };
+}
+
+function generateEllipticParaboloid(a = 1.0, b = 1.0, height = 2.0, radialSegments = 32, heightSegments = 32, color = [1.0, 1.0, 1.0]) {
+    let vertices = [];
+    let indices = [];
+
+    for (let i = 0; i <= heightSegments; i++) {
+        let t = i / heightSegments;       // 0 → 1
+        let r = Math.sqrt(t);             // radius mengecil ke bawah, melebar ke atas
+        let z = height * t;
+
+        for (let j = 0; j <= radialSegments; j++) {
+            let theta = (j / radialSegments) * 2 * Math.PI;
+            let x = a * r * Math.cos(theta);
+            let y = b * r * Math.sin(theta);
+            vertices.push(x, y, z, ...color);
+        }
+    }
+
+    for (let i = 0; i < heightSegments; i++) {
+        for (let j = 0; j < radialSegments; j++) {
+            let a1 = i * (radialSegments + 1) + j;
+            let b1 = a1 + radialSegments + 1;
+            let c1 = b1 + 1;
+            let d1 = a1 + 1;
+
+            indices.push(a1, b1, d1);
+            indices.push(b1, c1, d1);
         }
     }
 

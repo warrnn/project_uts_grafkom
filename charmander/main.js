@@ -12,7 +12,7 @@ function main() {
     var FRICTION = 0.05;
     var dX = 0, dY = 0;
     var SPEED = 0.05;
-    var zoom = -8;
+    var zoom = -6;
 
     var mouseDown = function (e) {
         drag = true;
@@ -136,63 +136,105 @@ function main() {
     var VIEWMATRIX = LIBS.get_I4();
 
     // ========== GENERATE SHAPE OBJECT START =========
-    const { vertices: body_vertices, indices: body_indices } = generateEllipsoid(1.1, 1.3, 1.0, 30, 30, [1.0, 0.5, 0.0]);
+    const { vertices: body_vertices, indices: body_indices } = generateEllipsoid(1.1, 1.3, 0.8, 30, 30, [1.0, 0.5, 0.0]);
     const body = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, body_vertices, body_indices);
 
-    const { vertices: head_vertices, indices: head_indices } = generateEllipsoid(1.0, 1.0, 1.0, 30, 30, [1.0, 0.5, 0.0]);
+    const { vertices: head_vertices, indices: head_indices } = generateEllipsoid(0.8, 1.0, 0.9, 30, 30, [1.0, 0.5, 0.0]);
     const head = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, head_vertices, head_indices);
+
+    const { vertices: eyeWhite_vertices, indices: eyeWhite_indices } = generateEllipsoid(0.23, 0.3, 0.1, 20, 20, [0.0, 0.0, 0.0]);
+    const leftEye = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, eyeWhite_vertices, eyeWhite_indices);
+    const rightEye = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, eyeWhite_vertices, eyeWhite_indices);
+
+    const { vertices: eyePupil_vertices, indices: eyePupil_indices } = generateEllipsoid(0.09, 0.14, 0.06, 20, 20, [1.0, 1.0, 1.0]);
+    const leftEyePupil = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, eyePupil_vertices, eyePupil_indices);
+    const rightEyePupil = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, eyePupil_vertices, eyePupil_indices);
+
+    const { vertices: eyePupil2_vertices, indices: eyePupil2_indices } = generateEllipsoid(0.09, 0.08, 0.06, 20, 20, [1.0, 1.0, 1.0]);
+    const leftEyePupil2 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, eyePupil2_vertices, eyePupil2_indices);
+    const rightEyePupil2 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, eyePupil2_vertices, eyePupil2_indices);
 
     const { vertices: tail_vertices, indices: tail_indices } = generateCurvedCylinder(0.4, 0.2, 1.5, 20, 10, [1.0, 0.5, 0.0]);
     const tail = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, tail_vertices, tail_indices);
 
-    const { vertices: belly_vertices, indices: belly_indices } = generateEllipsoid(0.9, 1, 0.4, 30, 30, [1.0, 1.0, 0.6]);
+    const { vertices: tail_tip, indices: tail_tip_indices } = generateEllipsoid(0.3, 0.3, 0.3, 30, 30, [1.0, 0.3, 0.0]);
+    const tailTip = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, tail_tip, tail_tip_indices);
+
+    const { vertices: fire_vertices, indices: fire_indices } = generateCylinderDynamicRadius(0.2, 0.5, 0.0, 0.15, 1.2, 32, 32, [1.0, 0.3, 0.0], "sin");
+    const tailTipFire = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, fire_vertices, fire_indices);
+
+    const { vertices: belly_vertices, indices: belly_indices } = generateEllipsoid(0.9, 1.05, 0.4, 30, 30, [1.0, 1.0, 0.6]);
     const belly = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, belly_vertices, belly_indices);
 
-    const { vertices: leftarm_shoulder_vertices, indices: leftarm_shoulder_indices } = generateEllipsoid(0.3, 0.3, 0.3, 30, 30, [1.0, 0.5, 0.0]);
-    const leftarmShoulder = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, leftarm_shoulder_vertices, leftarm_shoulder_indices);
+    const { vertices: shoulder_vertices, indices: shoulder_indices } = generateEllipsoid(0.3, 0.3, 0.3, 30, 30, [1.0, 0.5, 0.0]);
+    const leftarmShoulder = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, shoulder_vertices, shoulder_indices);
+    const rightarmShoulder = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, shoulder_vertices, shoulder_indices);
 
-    const { vertices: leftarm_vertices, indices: leftarm_indices } = generateEllipsoid(0.6, 0.3, 0.3, 30, 30, [1.0, 0.5, 0.0]);
-    const leftArm = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, leftarm_vertices, leftarm_indices);
+    const { vertices: arm_vertices, indices: arm_indices } = generateEllipsoid(0.6, 0.3, 0.3, 30, 30, [1.0, 0.5, 0.0]);
+    const leftArm = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, arm_vertices, arm_indices);
+    const rightArm = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, arm_vertices, arm_indices);
 
-    const { vertices: rightarm_shoulder_vertices, indices: rightarm_shoulder_indices } = generateEllipsoid(0.3, 0.3, 0.3, 30, 30, [1.0, 0.5, 0.0]);
-    const rightarmShoulder = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, rightarm_shoulder_vertices, rightarm_shoulder_indices);
+    const { vertices: leg_vertices, indices: leg_indices } = generateEllipsoid(0.4, 0.8, 0.4, 30, 30, [1.0, 0.5, 0.0]);
+    const leftLeg = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, leg_vertices, leg_indices);
+    const rightLeg = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, leg_vertices, leg_indices);
 
-    const { vertices: rightarm_vertices, indices: rightarm_indices } = generateEllipsoid(0.6, 0.3, 0.3, 30, 30, [1.0, 0.5, 0.0]);
-    const rightArm = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, rightarm_vertices, rightarm_indices);
+    const { vertices: leg_ankle_vertices, indices: leg_ankle_indices } = generateEllipsoid(0.3, 0.3, 0.3, 30, 30, [1.0, 0.5, 0.0]);
+    const leftLegAnkle = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, leg_ankle_vertices, leg_ankle_indices);
+    const rightLegAnkle = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, leg_ankle_vertices, leg_ankle_indices);
 
-    const { vertices: leftleg_vertices, indices: leftleg_indices } = generateEllipsoid(0.4, 0.8, 0.4, 30, 30, [1.0, 0.5, 0.0]);
-    const leftLeg = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, leftleg_vertices, leftleg_indices);
+    const { vertices: leg_foot_vertices, indices: leg_foot_indices } = generateEllipsoid(0.35, 0.2, 0.5, 30, 30, [1.0, 0.5, 0.0]);
+    const leftLegFoot = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, leg_foot_vertices, leg_foot_indices);
+    const rightLegFoot = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, leg_foot_vertices, leg_foot_indices);
 
-    const { vertices: rightleg_vertices, indices: rightleg_indices } = generateEllipsoid(0.4, 0.8, 0.4, 30, 30, [1.0, 0.5, 0.0]);
-    const rightLeg = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, rightleg_vertices, rightleg_indices);
-
-    const { vertices: leftleg_ankle_vertices, indices: leftleg_ankle_indices } = generateEllipsoid(0.3, 0.3, 0.3, 30, 30, [1.0, 0.5, 0.0]);
-    const leftLegAnkle = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, leftleg_ankle_vertices, leftleg_ankle_indices);
-
-    const { vertices: rightleg_ankle_vertices, indices: rightleg_ankle_indices } = generateEllipsoid(0.3, 0.3, 0.3, 30, 30, [1.0, 0.5, 0.0]);
-    const rightLegAnkle = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, rightleg_ankle_vertices, rightleg_ankle_indices);
-
-    const { vertices: leftleg_foot_vertices, indices: leftleg_foot_indices } = generateEllipsoid(0.35, 0.2, 0.5, 30, 30, [1.0, 0.5, 0.0]);
-    const leftLegFoot = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, leftleg_foot_vertices, leftleg_foot_indices);
-
-    const { vertices: rightleg_foot_vertices, indices: rightleg_foot_indices } = generateEllipsoid(0.35, 0.2, 0.5, 30, 30, [1.0, 0.5, 0.0]);
-    const rightLegFoot = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, rightleg_foot_vertices, rightleg_foot_indices);
+    const { vertices: claw_vertices, indices: claw_indices } = generateEllipticParaboloid(0.1, 0.1, 0.3, 20, 10, [1.0, 1.0, 1.0]);
+    const leftLegClaw1 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, claw_vertices, claw_indices);
+    const leftLegClaw2 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, claw_vertices, claw_indices);
+    const leftLegClaw3 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, claw_vertices, claw_indices);
+    const rightLegClaw1 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, claw_vertices, claw_indices);
+    const rightLegClaw2 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, claw_vertices, claw_indices);
+    const rightLegClaw3 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, claw_vertices, claw_indices);
     // ========== GENERATE SHAPE OBJECT END ==========
 
     // ========== ROTATE SCALE TRANSLATE START ==========
     LIBS.translateY(head.MOVE_MATRIX, 1.6);
     LIBS.translateZ(head.MOVE_MATRIX, 0.1);
 
+    LIBS.translateX(leftEye.MOVE_MATRIX, -0.45);
+    LIBS.translateY(leftEye.MOVE_MATRIX, 0.3);
+    LIBS.translateZ(leftEye.MOVE_MATRIX, 0.6);
+    LIBS.rotateY(leftEye.MOVE_MATRIX, LIBS.degToRad(-50));
+
+    LIBS.translateX(leftEyePupil.MOVE_MATRIX, 0.02);
+    LIBS.translateY(leftEyePupil.MOVE_MATRIX, 0.07);
+    LIBS.translateZ(leftEyePupil.MOVE_MATRIX, 0.09);
+
+    LIBS.translateX(rightEye.MOVE_MATRIX, 0.45);
+    LIBS.translateY(rightEye.MOVE_MATRIX, 0.3);
+    LIBS.translateZ(rightEye.MOVE_MATRIX, 0.6);
+    LIBS.rotateY(rightEye.MOVE_MATRIX, LIBS.degToRad(50));
+
+    LIBS.translateX(rightEyePupil.MOVE_MATRIX, -0.02);
+    LIBS.translateY(rightEyePupil.MOVE_MATRIX, 0.07);
+    LIBS.translateZ(rightEyePupil.MOVE_MATRIX, 0.09);
+
     LIBS.translateY(tail.MOVE_MATRIX, 0.6);
     LIBS.translateZ(tail.MOVE_MATRIX, -0.8);
     LIBS.rotateX(tail.MOVE_MATRIX, -Math.PI / 3);
     LIBS.rotateY(tail.MOVE_MATRIX, Math.PI);
 
+    LIBS.translateY(tailTip.MOVE_MATRIX, 0.6);
+    LIBS.translateZ(tailTip.MOVE_MATRIX, -1.39);
+    LIBS.rotateX(tailTip.MOVE_MATRIX, LIBS.degToRad(-90));
+
+    LIBS.translateY(tailTipFire.MOVE_MATRIX, 0.57);
+    LIBS.translateZ(tailTipFire.MOVE_MATRIX, -1.07);
+    LIBS.rotateX(tailTipFire.MOVE_MATRIX, LIBS.degToRad(-60));
+
     LIBS.translateY(belly.MOVE_MATRIX, -0.2);
-    LIBS.translateZ(belly.MOVE_MATRIX, 0.59);
+    LIBS.translateZ(belly.MOVE_MATRIX, 0.41);
     LIBS.rotateX(belly.MOVE_MATRIX, Math.PI / 16);
 
-    LIBS.translateX(leftarmShoulder.MOVE_MATRIX, 0.9);
+    LIBS.translateX(leftarmShoulder.MOVE_MATRIX, 0.8);
     LIBS.translateY(leftarmShoulder.MOVE_MATRIX, 0.6);
 
     LIBS.translateX(leftArm.MOVE_MATRIX, 0.3);
@@ -229,6 +271,42 @@ function main() {
     LIBS.translateY(rightLegFoot.MOVE_MATRIX, -0.15);
     LIBS.translateZ(rightLegFoot.MOVE_MATRIX, 0.45);
     LIBS.rotateY(rightLegFoot.MOVE_MATRIX, LIBS.degToRad(-20));
+
+    LIBS.translateX(leftLegClaw1.MOVE_MATRIX, 0.15);
+    LIBS.translateY(leftLegClaw1.MOVE_MATRIX, -2.85);
+    LIBS.translateZ(leftLegClaw1.MOVE_MATRIX, 1.02);
+    LIBS.rotateX(leftLegClaw1.MOVE_MATRIX, LIBS.degToRad(180));
+    LIBS.rotateY(leftLegClaw1.MOVE_MATRIX, LIBS.degToRad(20));
+
+    LIBS.translateX(leftLegClaw2.MOVE_MATRIX, 0.30);
+    LIBS.translateY(leftLegClaw2.MOVE_MATRIX, -2.85);
+    LIBS.translateZ(leftLegClaw2.MOVE_MATRIX, 1.02);
+    LIBS.rotateX(leftLegClaw2.MOVE_MATRIX, LIBS.degToRad(180));
+    LIBS.rotateY(leftLegClaw2.MOVE_MATRIX, LIBS.degToRad(20));
+
+    LIBS.translateX(leftLegClaw3.MOVE_MATRIX, 0.42);
+    LIBS.translateY(leftLegClaw3.MOVE_MATRIX, -2.85);
+    LIBS.translateZ(leftLegClaw3.MOVE_MATRIX, 0.92);
+    LIBS.rotateX(leftLegClaw3.MOVE_MATRIX, LIBS.degToRad(180));
+    LIBS.rotateY(leftLegClaw3.MOVE_MATRIX, LIBS.degToRad(20));
+
+    LIBS.translateX(rightLegClaw1.MOVE_MATRIX, -0.15);
+    LIBS.translateY(rightLegClaw1.MOVE_MATRIX, -2.85);
+    LIBS.translateZ(rightLegClaw1.MOVE_MATRIX, 1.02);
+    LIBS.rotateX(rightLegClaw1.MOVE_MATRIX, LIBS.degToRad(180));
+    LIBS.rotateY(rightLegClaw1.MOVE_MATRIX, LIBS.degToRad(-20));
+
+    LIBS.translateX(rightLegClaw2.MOVE_MATRIX, -0.30);
+    LIBS.translateY(rightLegClaw2.MOVE_MATRIX, -2.85);
+    LIBS.translateZ(rightLegClaw2.MOVE_MATRIX, 1.02);
+    LIBS.rotateX(rightLegClaw2.MOVE_MATRIX, LIBS.degToRad(180));
+    LIBS.rotateY(rightLegClaw2.MOVE_MATRIX, LIBS.degToRad(-20));
+
+    LIBS.translateX(rightLegClaw3.MOVE_MATRIX, -0.42);
+    LIBS.translateY(rightLegClaw3.MOVE_MATRIX, -2.85);
+    LIBS.translateZ(rightLegClaw3.MOVE_MATRIX, 0.92);
+    LIBS.rotateX(rightLegClaw3.MOVE_MATRIX, LIBS.degToRad(180));
+    LIBS.rotateY(rightLegClaw3.MOVE_MATRIX, LIBS.degToRad(-20));
     // ========== ROTATE SCALE TRANSLATE END ==========
 
     // ========== CHILDS PUSH START ==========
@@ -239,18 +317,30 @@ function main() {
     body.addChild(rightarmShoulder);
     body.addChild(leftLeg);
     body.addChild(rightLeg);
+    head.addChild(leftEye);
+    head.addChild(rightEye);
+    tail.addChild(tailTip);
+    tail.addChild(tailTipFire);
+    leftEye.addChild(leftEyePupil);
+    rightEye.addChild(rightEyePupil);
+    leftEye.addChild(leftEyePupil2);
+    rightEye.addChild(rightEyePupil2);
     leftarmShoulder.addChild(leftArm);
     rightarmShoulder.addChild(rightArm);
     leftLeg.addChild(leftLegAnkle);
     rightLeg.addChild(rightLegAnkle);
     leftLegAnkle.addChild(leftLegFoot);
     rightLegAnkle.addChild(rightLegFoot);
+    leftLegAnkle.addChild(leftLegClaw1);
+    leftLegAnkle.addChild(leftLegClaw2);
+    leftLegAnkle.addChild(leftLegClaw3);
+    rightLegAnkle.addChild(rightLegClaw1);
+    rightLegAnkle.addChild(rightLegClaw2);
+    rightLegAnkle.addChild(rightLegClaw3);
     // ========== CHIILDS PUSH END ==========
 
     // ========== SETUP START ==========
     body.setup();
-    tail.setup();
-    belly.setup();
     // ========== SETUP END ==========
 
     GL.enable(GL.DEPTH_TEST);
