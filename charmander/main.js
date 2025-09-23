@@ -12,6 +12,7 @@ function main() {
     var FRICTION = 0.05;
     var dX = 0, dY = 0;
     var SPEED = 0.05;
+    var zoom = -8;
 
     var mouseDown = function (e) {
         drag = true;
@@ -53,9 +54,9 @@ function main() {
 
     var scroll = (e) => {
         if (e.deltaY < 0) {
-            LIBS.translateZ(VIEWMATRIX, 0.5);
+            zoom += 0.5;
         } else {
-            LIBS.translateZ(VIEWMATRIX, -0.5);
+            zoom -= 0.5;
         }
         e.preventDefault();
     };
@@ -68,6 +69,7 @@ function main() {
     CANVAS.addEventListener("wheel", scroll, false);
     // ========== OBJECT DRAG END ==========
 
+    // ========== WEBGL SETUP START ==========
     var GL;
     try {
         GL = CANVAS.getContext("webgl", { antialias: true });
@@ -128,27 +130,127 @@ function main() {
     var _Mmatrix = GL.getUniformLocation(SHADER_PROGRAM, "Mmatrix");
 
     GL.useProgram(SHADER_PROGRAM);
+    // ========== WEBGL SETUP END ==========
 
     var PROJMATRIX = LIBS.get_projection(40, CANVAS.width / CANVAS.height, 1, 100);
     var VIEWMATRIX = LIBS.get_I4();
 
-    LIBS.translateZ(VIEWMATRIX, -12)
-
     // ========== GENERATE SHAPE OBJECT START =========
-    const { vertices: body_vertices, indices: body_indices } = generateEllipsoid(1.2, 2.0, 1.0, 30, 30, [1.0, 0.5, 0.0]);
+    const { vertices: body_vertices, indices: body_indices } = generateEllipsoid(1.1, 1.3, 1.0, 30, 30, [1.0, 0.5, 0.0]);
     const body = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, body_vertices, body_indices);
+
+    const { vertices: head_vertices, indices: head_indices } = generateEllipsoid(1.0, 1.0, 1.0, 30, 30, [1.0, 0.5, 0.0]);
+    const head = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, head_vertices, head_indices);
+
+    const { vertices: tail_vertices, indices: tail_indices } = generateCurvedCylinder(0.4, 0.2, 1.5, 20, 10, [1.0, 0.5, 0.0]);
+    const tail = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, tail_vertices, tail_indices);
+
+    const { vertices: belly_vertices, indices: belly_indices } = generateEllipsoid(0.9, 1, 0.4, 30, 30, [1.0, 1.0, 0.6]);
+    const belly = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, belly_vertices, belly_indices);
+
+    const { vertices: leftarm_shoulder_vertices, indices: leftarm_shoulder_indices } = generateEllipsoid(0.3, 0.3, 0.3, 30, 30, [1.0, 0.5, 0.0]);
+    const leftarmShoulder = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, leftarm_shoulder_vertices, leftarm_shoulder_indices);
+
+    const { vertices: leftarm_vertices, indices: leftarm_indices } = generateEllipsoid(0.6, 0.3, 0.3, 30, 30, [1.0, 0.5, 0.0]);
+    const leftArm = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, leftarm_vertices, leftarm_indices);
+
+    const { vertices: rightarm_shoulder_vertices, indices: rightarm_shoulder_indices } = generateEllipsoid(0.3, 0.3, 0.3, 30, 30, [1.0, 0.5, 0.0]);
+    const rightarmShoulder = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, rightarm_shoulder_vertices, rightarm_shoulder_indices);
+
+    const { vertices: rightarm_vertices, indices: rightarm_indices } = generateEllipsoid(0.6, 0.3, 0.3, 30, 30, [1.0, 0.5, 0.0]);
+    const rightArm = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, rightarm_vertices, rightarm_indices);
+
+    const { vertices: leftleg_vertices, indices: leftleg_indices } = generateEllipsoid(0.4, 0.8, 0.4, 30, 30, [1.0, 0.5, 0.0]);
+    const leftLeg = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, leftleg_vertices, leftleg_indices);
+
+    const { vertices: rightleg_vertices, indices: rightleg_indices } = generateEllipsoid(0.4, 0.8, 0.4, 30, 30, [1.0, 0.5, 0.0]);
+    const rightLeg = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, rightleg_vertices, rightleg_indices);
+
+    const { vertices: leftleg_ankle_vertices, indices: leftleg_ankle_indices } = generateEllipsoid(0.3, 0.3, 0.3, 30, 30, [1.0, 0.5, 0.0]);
+    const leftLegAnkle = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, leftleg_ankle_vertices, leftleg_ankle_indices);
+
+    const { vertices: rightleg_ankle_vertices, indices: rightleg_ankle_indices } = generateEllipsoid(0.3, 0.3, 0.3, 30, 30, [1.0, 0.5, 0.0]);
+    const rightLegAnkle = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, rightleg_ankle_vertices, rightleg_ankle_indices);
+
+    const { vertices: leftleg_foot_vertices, indices: leftleg_foot_indices } = generateEllipsoid(0.35, 0.2, 0.5, 30, 30, [1.0, 0.5, 0.0]);
+    const leftLegFoot = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, leftleg_foot_vertices, leftleg_foot_indices);
+
+    const { vertices: rightleg_foot_vertices, indices: rightleg_foot_indices } = generateEllipsoid(0.35, 0.2, 0.5, 30, 30, [1.0, 0.5, 0.0]);
+    const rightLegFoot = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, rightleg_foot_vertices, rightleg_foot_indices);
     // ========== GENERATE SHAPE OBJECT END ==========
 
     // ========== ROTATE SCALE TRANSLATE START ==========
-    // ...
+    LIBS.translateY(head.MOVE_MATRIX, 1.6);
+    LIBS.translateZ(head.MOVE_MATRIX, 0.1);
+
+    LIBS.translateY(tail.MOVE_MATRIX, 0.6);
+    LIBS.translateZ(tail.MOVE_MATRIX, -0.8);
+    LIBS.rotateX(tail.MOVE_MATRIX, -Math.PI / 3);
+    LIBS.rotateY(tail.MOVE_MATRIX, Math.PI);
+
+    LIBS.translateY(belly.MOVE_MATRIX, -0.2);
+    LIBS.translateZ(belly.MOVE_MATRIX, 0.59);
+    LIBS.rotateX(belly.MOVE_MATRIX, Math.PI / 16);
+
+    LIBS.translateX(leftarmShoulder.MOVE_MATRIX, 0.9);
+    LIBS.translateY(leftarmShoulder.MOVE_MATRIX, 0.6);
+
+    LIBS.translateX(leftArm.MOVE_MATRIX, 0.3);
+    LIBS.translateY(leftArm.MOVE_MATRIX, 0.37);
+    LIBS.translateZ(leftArm.MOVE_MATRIX, -0.3);
+    LIBS.rotateY(leftArm.MOVE_MATRIX, LIBS.degToRad(-30));
+    LIBS.rotateZ(leftArm.MOVE_MATRIX, LIBS.degToRad(-30));
+
+    LIBS.translateX(rightarmShoulder.MOVE_MATRIX, -0.9);
+    LIBS.translateY(rightarmShoulder.MOVE_MATRIX, 0.6);
+
+    LIBS.translateX(rightArm.MOVE_MATRIX, -0.3);
+    LIBS.translateY(rightArm.MOVE_MATRIX, 0.37);
+    LIBS.translateZ(rightArm.MOVE_MATRIX, -0.3);
+    LIBS.rotateY(rightArm.MOVE_MATRIX, LIBS.degToRad(30));
+    LIBS.rotateZ(rightArm.MOVE_MATRIX, LIBS.degToRad(30));
+
+    LIBS.translateX(leftLeg.MOVE_MATRIX, 0.7);
+    LIBS.translateY(leftLeg.MOVE_MATRIX, -0.8);
+
+    LIBS.translateX(rightLeg.MOVE_MATRIX, -0.7);
+    LIBS.translateY(rightLeg.MOVE_MATRIX, -0.8);
+
+    LIBS.translateY(leftLegAnkle.MOVE_MATRIX, -0.55);
+
+    LIBS.translateY(rightLegAnkle.MOVE_MATRIX, -0.55);
+
+    LIBS.translateX(leftLegFoot.MOVE_MATRIX, 0.1);
+    LIBS.translateY(leftLegFoot.MOVE_MATRIX, -0.15);
+    LIBS.translateZ(leftLegFoot.MOVE_MATRIX, 0.45);
+    LIBS.rotateY(leftLegFoot.MOVE_MATRIX, LIBS.degToRad(20));
+
+    LIBS.translateX(rightLegFoot.MOVE_MATRIX, -0.1);
+    LIBS.translateY(rightLegFoot.MOVE_MATRIX, -0.15);
+    LIBS.translateZ(rightLegFoot.MOVE_MATRIX, 0.45);
+    LIBS.rotateY(rightLegFoot.MOVE_MATRIX, LIBS.degToRad(-20));
     // ========== ROTATE SCALE TRANSLATE END ==========
 
     // ========== CHILDS PUSH START ==========
-    // ...
+    body.addChild(head);
+    body.addChild(tail);
+    body.addChild(belly);
+    body.addChild(leftarmShoulder);
+    body.addChild(rightarmShoulder);
+    body.addChild(leftLeg);
+    body.addChild(rightLeg);
+    leftarmShoulder.addChild(leftArm);
+    rightarmShoulder.addChild(rightArm);
+    leftLeg.addChild(leftLegAnkle);
+    rightLeg.addChild(rightLegAnkle);
+    leftLegAnkle.addChild(leftLegFoot);
+    rightLegAnkle.addChild(rightLegFoot);
     // ========== CHIILDS PUSH END ==========
 
     // ========== SETUP START ==========
     body.setup();
+    tail.setup();
+    belly.setup();
     // ========== SETUP END ==========
 
     GL.enable(GL.DEPTH_TEST);
@@ -169,14 +271,20 @@ function main() {
         }
         // ========== OBJECT DRAG END ==========
 
-        var MOVEMATRIX = LIBS.get_I4();
-        LIBS.rotateX(MOVEMATRIX, PHI);
-        LIBS.rotateY(MOVEMATRIX, THETA);
+        var MODELMATRIX = LIBS.get_I4();
+        var VIEWMATRIX_dynamic = LIBS.get_I4();
+
+        LIBS.translateZ(VIEWMATRIX_dynamic, zoom);
+        LIBS.rotateY(VIEWMATRIX_dynamic, THETA);
+        LIBS.rotateX(VIEWMATRIX_dynamic, PHI);
+
+        LIBS.multiply(VIEWMATRIX_dynamic, VIEWMATRIX, VIEWMATRIX_dynamic);
 
         GL.uniformMatrix4fv(_Pmatrix, false, PROJMATRIX);
-        GL.uniformMatrix4fv(_Vmatrix, false, VIEWMATRIX);
+        GL.uniformMatrix4fv(_Vmatrix, false, VIEWMATRIX_dynamic);
+        GL.uniformMatrix4fv(_Mmatrix, false, MODELMATRIX);
 
-        body.render(MOVEMATRIX);
+        body.render(MODELMATRIX);
 
         GL.flush();
         window.requestAnimationFrame(animate);
