@@ -11,8 +11,8 @@ function main() {
     var x_prev, y_prev;
     var FRICTION = 0.05;
     var dX = 0, dY = 0;
-    var SPEED = 0.05;
-    var zoom = -6;
+    var SPEED = 0.05
+    var zoom = -12;
 
     var mouseDown = function (e) {
         drag = true;
@@ -142,6 +142,10 @@ function main() {
     const { vertices: head_vertices, indices: head_indices } = generateEllipsoid(0.8, 1.0, 0.9, 30, 30, [1.0, 0.5, 0.0]);
     const head = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, head_vertices, head_indices);
 
+    const { vertices: eyebrow_vertices, indices: eyebrow_indices } = generateBlanket(0.07, 0.15, 0.1, 30, 30, [0.0, 0.0, 0.0], 0.05);
+    const leftEyebrow = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, eyebrow_vertices, eyebrow_indices);
+    const rightEyebrow = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, eyebrow_vertices, eyebrow_indices);
+
     const { vertices: eyeWhite_vertices, indices: eyeWhite_indices } = generateEllipsoid(0.23, 0.3, 0.1, 20, 20, [0.0, 0.0, 0.0]);
     const leftEye = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, eyeWhite_vertices, eyeWhite_indices);
     const rightEye = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, eyeWhite_vertices, eyeWhite_indices);
@@ -174,6 +178,16 @@ function main() {
     const leftArm = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, arm_vertices, arm_indices);
     const rightArm = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, arm_vertices, arm_indices);
 
+    const { vertices: finger_vertices, indices: finger_indices } = generateEllipticParaboloid(0.1, 0.1, 0.3, 20, 10, [1.0, 0.5, 0.0]);
+    const leftFinger1 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, finger_vertices, finger_indices);
+    const leftFinger2 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, finger_vertices, finger_indices);
+    const leftFinger3 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, finger_vertices, finger_indices);
+    const leftFinger4 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, finger_vertices, finger_indices);
+    const rightFinger1 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, finger_vertices, finger_indices);
+    const rightFinger2 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, finger_vertices, finger_indices);
+    const rightFinger3 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, finger_vertices, finger_indices);
+    const rightFinger4 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, finger_vertices, finger_indices);
+
     const { vertices: leg_vertices, indices: leg_indices } = generateEllipsoid(0.4, 0.8, 0.4, 30, 30, [1.0, 0.5, 0.0]);
     const leftLeg = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, leg_vertices, leg_indices);
     const rightLeg = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, leg_vertices, leg_indices);
@@ -198,6 +212,18 @@ function main() {
     // ========== ROTATE SCALE TRANSLATE START ==========
     LIBS.translateY(head.MOVE_MATRIX, 1.6);
     LIBS.translateZ(head.MOVE_MATRIX, 0.1);
+
+    LIBS.translateX(leftEyebrow.MOVE_MATRIX, 0.6);
+    LIBS.translateY(leftEyebrow.MOVE_MATRIX, 1.92);
+    LIBS.translateZ(leftEyebrow.MOVE_MATRIX, -0.6);
+    LIBS.rotateX(leftEyebrow.MOVE_MATRIX, LIBS.degToRad(45));
+    LIBS.rotateZ(leftEyebrow.MOVE_MATRIX, LIBS.degToRad(75));
+
+    LIBS.translateX(rightEyebrow.MOVE_MATRIX, -0.7);
+    LIBS.translateY(rightEyebrow.MOVE_MATRIX, 1.79);
+    LIBS.translateZ(rightEyebrow.MOVE_MATRIX, -0.45);
+    LIBS.rotateX(rightEyebrow.MOVE_MATRIX, LIBS.degToRad(-225));
+    LIBS.rotateZ(rightEyebrow.MOVE_MATRIX, LIBS.degToRad(-250));
 
     LIBS.translateX(leftEye.MOVE_MATRIX, -0.45);
     LIBS.translateY(leftEye.MOVE_MATRIX, 0.3);
@@ -242,6 +268,54 @@ function main() {
     LIBS.translateZ(leftArm.MOVE_MATRIX, -0.3);
     LIBS.rotateY(leftArm.MOVE_MATRIX, LIBS.degToRad(-30));
     LIBS.rotateZ(leftArm.MOVE_MATRIX, LIBS.degToRad(-30));
+
+    LIBS.translateX(leftFinger1.MOVE_MATRIX, 2.1);
+    LIBS.translateY(leftFinger1.MOVE_MATRIX, -0.7);
+    LIBS.translateZ(leftFinger1.MOVE_MATRIX, 0.1);
+    LIBS.rotateY(leftFinger1.MOVE_MATRIX, LIBS.degToRad(-150));
+    LIBS.rotateZ(leftFinger1.MOVE_MATRIX, LIBS.degToRad(-30));
+
+    LIBS.translateX(leftFinger2.MOVE_MATRIX, 1.62);
+    LIBS.translateY(leftFinger2.MOVE_MATRIX, -0.41);
+    LIBS.translateZ(leftFinger2.MOVE_MATRIX, -0.64);
+    LIBS.rotateY(leftFinger2.MOVE_MATRIX, LIBS.degToRad(-100));
+    LIBS.rotateZ(leftFinger2.MOVE_MATRIX, LIBS.degToRad(-30));
+
+    LIBS.translateX(leftFinger3.MOVE_MATRIX, 1.55);
+    LIBS.translateY(leftFinger3.MOVE_MATRIX, -0.35);
+    LIBS.translateZ(leftFinger3.MOVE_MATRIX, -0.78);
+    LIBS.rotateY(leftFinger3.MOVE_MATRIX, LIBS.degToRad(-90));
+    LIBS.rotateZ(leftFinger3.MOVE_MATRIX, LIBS.degToRad(-30));
+
+    LIBS.translateX(leftFinger4.MOVE_MATRIX, 1.15);
+    LIBS.translateY(leftFinger4.MOVE_MATRIX, -0.15);
+    LIBS.translateZ(leftFinger4.MOVE_MATRIX, -0.95);
+    LIBS.rotateY(leftFinger4.MOVE_MATRIX, LIBS.degToRad(-70));
+    LIBS.rotateZ(leftFinger4.MOVE_MATRIX, LIBS.degToRad(-30));
+
+    LIBS.translateX(rightFinger1.MOVE_MATRIX, -2.1 - 0.14);
+    LIBS.translateY(rightFinger1.MOVE_MATRIX, -0.7);
+    LIBS.translateZ(rightFinger1.MOVE_MATRIX, 0.1 + 0.02);
+    LIBS.rotateY(rightFinger1.MOVE_MATRIX, LIBS.degToRad(150));
+    LIBS.rotateZ(rightFinger1.MOVE_MATRIX, LIBS.degToRad(30));
+
+    LIBS.translateX(rightFinger2.MOVE_MATRIX, -1.62 - 0.14);
+    LIBS.translateY(rightFinger2.MOVE_MATRIX, -0.41);
+    LIBS.translateZ(rightFinger2.MOVE_MATRIX, -0.65 + 0.02);
+    LIBS.rotateY(rightFinger2.MOVE_MATRIX, LIBS.degToRad(100));
+    LIBS.rotateZ(rightFinger2.MOVE_MATRIX, LIBS.degToRad(30));
+
+    LIBS.translateX(rightFinger3.MOVE_MATRIX, -1.55 - 0.14);
+    LIBS.translateY(rightFinger3.MOVE_MATRIX, -0.35);
+    LIBS.translateZ(rightFinger3.MOVE_MATRIX, -0.78 + 0.02);
+    LIBS.rotateY(rightFinger3.MOVE_MATRIX, LIBS.degToRad(90));
+    LIBS.rotateZ(rightFinger3.MOVE_MATRIX, LIBS.degToRad(30));
+
+    LIBS.translateX(rightFinger4.MOVE_MATRIX, -1.17 - 0.14);
+    LIBS.translateY(rightFinger4.MOVE_MATRIX, -0.15);
+    LIBS.translateZ(rightFinger4.MOVE_MATRIX, -0.95 + 0.02);
+    LIBS.rotateY(rightFinger4.MOVE_MATRIX, LIBS.degToRad(70));
+    LIBS.rotateZ(rightFinger4.MOVE_MATRIX, LIBS.degToRad(30));
 
     LIBS.translateX(rightarmShoulder.MOVE_MATRIX, -0.9);
     LIBS.translateY(rightarmShoulder.MOVE_MATRIX, 0.6);
@@ -319,6 +393,8 @@ function main() {
     body.addChild(rightLeg);
     head.addChild(leftEye);
     head.addChild(rightEye);
+    head.addChild(leftEyebrow);
+    head.addChild(rightEyebrow);
     tail.addChild(tailTip);
     tail.addChild(tailTipFire);
     leftEye.addChild(leftEyePupil);
@@ -327,6 +403,14 @@ function main() {
     rightEye.addChild(rightEyePupil2);
     leftarmShoulder.addChild(leftArm);
     rightarmShoulder.addChild(rightArm);
+    leftArm.addChild(leftFinger1);
+    leftArm.addChild(leftFinger2);
+    leftArm.addChild(leftFinger3);
+    leftArm.addChild(leftFinger4);
+    rightArm.addChild(rightFinger1);
+    rightArm.addChild(rightFinger2);
+    rightArm.addChild(rightFinger3);
+    rightArm.addChild(rightFinger4);
     leftLeg.addChild(leftLegAnkle);
     rightLeg.addChild(rightLegAnkle);
     leftLegAnkle.addChild(leftLegFoot);

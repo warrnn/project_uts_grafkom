@@ -134,29 +134,45 @@ function generateCylinderDynamicRadius(minStart, maxStart, minEnd, maxEnd, heigh
 }
 
 
-function generateBlanket(radiusX, radiusY, height, segmentsX, segmentsY, color) {
+function generateBlanket(radiusX, radiusY, height, segmentsX, segmentsY, color, thickness = 0.1) {
     let vertices = [];
     let indices = [];
 
-    // Parametrik: u (sumbu X) untuk lebar perut, v (sumbu Y) untuk tinggi
+    // ====== FRONT SURFACE ======
     for (let j = 0; j <= segmentsY; j++) {
         let v = j / segmentsY;
-        let y = (v - 0.5) * height; // dari -h/2 ke h/2
+        let y = (v - 0.5) * height;
 
         for (let i = 0; i <= segmentsX; i++) {
             let u = i / segmentsX;
-            let angle = (u - 0.5) * Math.PI; // dari -90° sampai +90°
+            let angle = (u - 0.5) * Math.PI;
 
-            // Posisi di permukaan "selimut" melengkung
             let x = Math.cos(angle) * radiusX;
-            let z = Math.sin(angle) * radiusY; // melengkung ke depan
+            let z = Math.sin(angle) * radiusY;
 
-            // Push vertex (x, y, z) + warna
-            vertices.push(x, y, z, color[0], color[1], color[2]);
+            // permukaan depan
+            vertices.push(x, y, z + thickness / 2, color[0], color[1], color[2]);
         }
     }
 
-    // Indeks quad -> segitiga
+    // ====== BACK SURFACE ======
+    for (let j = 0; j <= segmentsY; j++) {
+        let v = j / segmentsY;
+        let y = (v - 0.5) * height;
+
+        for (let i = 0; i <= segmentsX; i++) {
+            let u = i / segmentsX;
+            let angle = (u - 0.5) * Math.PI;
+
+            let x = Math.cos(angle) * radiusX;
+            let z = Math.sin(angle) * radiusY;
+
+            // permukaan belakang
+            vertices.push(x, y, z - thickness / 2, color[0], color[1], color[2]);
+        }
+    }
+
+    // ====== INDICES FRONT ======
     for (let j = 0; j < segmentsY; j++) {
         for (let i = 0; i < segmentsX; i++) {
             let row1 = j * (segmentsX + 1);
@@ -167,7 +183,36 @@ function generateBlanket(radiusX, radiusY, height, segmentsX, segmentsY, color) 
         }
     }
 
-    return { vertices, indices };
+    // ====== INDICES BACK ======
+    let offset = (segmentsY + 1) * (segmentsX + 1);
+    for (let j = 0; j < segmentsY; j++) {
+        for (let i = 0; i < segmentsX; i++) {
+            let row1 = j * (segmentsX + 1) + offset;
+            let row2 = (j + 1) * (segmentsX + 1) + offset;
+
+            // urutan dibalik supaya normalnya ke dalam
+            indices.push(row1 + i, row1 + i + 1, row2 + i);
+            indices.push(row1 + i + 1, row2 + i + 1, row2 + i);
+        }
+    }
+
+    // ====== SIDE WALLS ======
+    for (let j = 0; j < segmentsY; j++) {
+        for (let i = 0; i <= segmentsX; i++) {
+            let frontA = j * (segmentsX + 1) + i;
+            let frontB = (j + 1) * (segmentsX + 1) + i;
+            let backA = frontA + offset;
+            let backB = frontB + offset;
+
+            indices.push(frontA, backA, frontB);
+            indices.push(frontB, backA, backB);
+        }
+    }
+
+    return {
+        vertices: new Float32Array(vertices),
+        indices: new Uint16Array(indices)
+    };
 }
 
 function generateCylinder(radiusTop, radiusBottom, height, radialSegments, heightSegments, color) {
