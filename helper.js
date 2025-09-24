@@ -133,7 +133,6 @@ function generateCylinderDynamicRadius(minStart, maxStart, minEnd, maxEnd, heigh
     };
 }
 
-
 function generateBlanket(radiusX, radiusY, height, segmentsX, segmentsY, color, thickness = 0.1) {
     let vertices = [];
     let indices = [];
@@ -279,4 +278,43 @@ function generateEllipticParaboloid(a = 1.0, b = 1.0, height = 2.0, radialSegmen
     }
 
     return { vertices, indices };
+}
+
+function generateHyperboloid(a = 1.0, b = 1.0, c = 1.0, vMax = 1.0, radialSegments = 32, heightSegments = 32, color = [1.0, 0.0, 0.0]) {
+    let vertices = [];
+    let indices = [];
+
+    for (let i = 0; i <= heightSegments; i++) {
+        let v = (i / heightSegments) * (2 * vMax) - vMax; // -vMax → +vMax
+        let z = c * Math.sinh(v);                        // tinggi (cekung ke dalam)
+
+        let coshV = Math.cosh(v);
+
+        for (let j = 0; j <= radialSegments; j++) {
+            let u = (j / radialSegments) * 2 * Math.PI;
+
+            let x = a * coshV * Math.cos(u);
+            let y = b * coshV * Math.sin(u);
+
+            vertices.push(x, y, z, ...color);
+        }
+    }
+
+    // bikin index (seperti cylinder)
+    for (let i = 0; i < heightSegments; i++) {
+        for (let j = 0; j < radialSegments; j++) {
+            let a1 = i * (radialSegments + 1) + j;
+            let b1 = a1 + radialSegments + 1;
+            let c1 = b1 + 1;
+            let d1 = a1 + 1;
+
+            indices.push(a1, b1, d1);
+            indices.push(b1, c1, d1);
+        }
+    }
+
+    return {
+        vertices: new Float32Array(vertices),
+        indices: new Uint16Array(indices)
+    };
 }

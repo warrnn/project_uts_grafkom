@@ -142,6 +142,19 @@ function main() {
     const { vertices: head_vertices, indices: head_indices } = generateEllipsoid(0.8, 1.0, 0.9, 30, 30, [1.0, 0.5, 0.0]);
     const head = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, head_vertices, head_indices);
 
+    const { vertices: cheek_vertices, indices: cheek_indices } = generateEllipsoid(0.87, 0.8, 0.8, 30, 30, [1.0, 0.55, 0.0]);
+    const cheeks = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, cheek_vertices, cheek_indices);
+
+    const { vertices: mouth_base_vertices, indices: mouth_base_indices } = generateEllipsoid(0.7, 0.8, 0.85, 30, 30, [1.0, 0.5, 0.0]);
+    const mouthBase = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, mouth_base_vertices, mouth_base_indices);
+
+    const { vertices: mouth_vertices, indices: mouth_indices } = generateEllipsoid(0.45, 0.3, 0.12, 20, 20, [1.0, 0.6, 0.6]);
+    const mouth = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, mouth_vertices, mouth_indices);
+
+    const { vertices: nose_vertices, indices: nose_indices } = generateEllipsoid(0.04, 0.04, 0.04, 20, 20, [0.0, 0.0, 0.0]);
+    const noseLeft = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, nose_vertices, nose_indices);
+    const noseRight = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, nose_vertices, nose_indices);
+
     const { vertices: eyebrow_vertices, indices: eyebrow_indices } = generateBlanket(0.07, 0.15, 0.1, 30, 30, [0.0, 0.0, 0.0], 0.05);
     const leftEyebrow = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, eyebrow_vertices, eyebrow_indices);
     const rightEyebrow = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, eyebrow_vertices, eyebrow_indices);
@@ -242,6 +255,20 @@ function main() {
     LIBS.translateX(rightEyePupil.MOVE_MATRIX, -0.02);
     LIBS.translateY(rightEyePupil.MOVE_MATRIX, 0.07);
     LIBS.translateZ(rightEyePupil.MOVE_MATRIX, 0.09);
+
+    LIBS.translateZ(mouthBase.MOVE_MATRIX, 0.2);
+
+    LIBS.translateY(mouth.MOVE_MATRIX, -0.1);
+    LIBS.translateZ(mouth.MOVE_MATRIX, 0.04);
+    LIBS.rotateX(mouth.MOVE_MATRIX, LIBS.degToRad(30));
+
+    LIBS.translateX(noseLeft.MOVE_MATRIX, 0.1);
+    LIBS.translateY(noseLeft.MOVE_MATRIX, -0.1);
+    LIBS.translateZ(noseLeft.MOVE_MATRIX, 0.8);
+
+    LIBS.translateX(noseRight.MOVE_MATRIX, -0.1);
+    LIBS.translateY(noseRight.MOVE_MATRIX, -0.1);
+    LIBS.translateZ(noseRight.MOVE_MATRIX, 0.8);
 
     LIBS.translateY(tail.MOVE_MATRIX, 0.6);
     LIBS.translateZ(tail.MOVE_MATRIX, -0.8);
@@ -395,6 +422,11 @@ function main() {
     head.addChild(rightEye);
     head.addChild(leftEyebrow);
     head.addChild(rightEyebrow);
+    head.addChild(cheeks);
+    head.addChild(mouthBase);
+    head.addChild(mouth);
+    mouthBase.addChild(noseLeft);
+    mouthBase.addChild(noseRight);
     tail.addChild(tailTip);
     tail.addChild(tailTipFire);
     leftEye.addChild(leftEyePupil);
