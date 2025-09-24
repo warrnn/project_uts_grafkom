@@ -157,7 +157,7 @@ function main() {
     const { vertices: tail_vertices, indices: tail_indices } = generateCurvedCylinder(0.4, 0.2, 1.5, 20, 10, [1.0, 0.5, 0.0]);
     const tail = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, tail_vertices, tail_indices);
 
-    const { vertices: tail_tip, indices: tail_tip_indices } = generateEllipsoid(0.3, 0.3, 0.3, 30, 30, [1.0, 0.3, 0.0]);
+    const { vertices: tail_tip, indices: tail_tip_indices } = generateEllipsoid(0.3, 0.3, 0.3, 30, 30, [1.0, 1.0, 0.0]);
     const tailTip = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, tail_tip, tail_tip_indices);
 
     const { vertices: fire_vertices, indices: fire_indices } = generateCylinderDynamicRadius(0.2, 0.5, 0.0, 0.15, 1.2, 32, 32, [1.0, 0.3, 0.0], "sin");
