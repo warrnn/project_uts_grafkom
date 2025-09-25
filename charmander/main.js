@@ -142,7 +142,7 @@ function main() {
     const { vertices: head_vertices, indices: head_indices } = generateEllipsoid(0.8, 1.0, 0.9, 30, 30, [1.0, 0.5, 0.0]);
     const head = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, head_vertices, head_indices);
 
-    const { vertices: cheek_vertices, indices: cheek_indices } = generateEllipsoid(0.87, 0.8, 0.8, 30, 30, [1.0, 0.55, 0.0]);
+    const { vertices: cheek_vertices, indices: cheek_indices } = generateEllipsoid(0.87, 0.8, 0.8, 30, 30, [1.0, 0.5, 0.0]);
     const cheeks = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, cheek_vertices, cheek_indices);
 
     const { vertices: mouth_base_vertices, indices: mouth_base_indices } = generateEllipsoid(0.7, 0.8, 0.85, 30, 30, [1.0, 0.5, 0.0]);
