@@ -148,7 +148,7 @@ function main() {
     const { vertices: mouth_base_vertices, indices: mouth_base_indices } = generateEllipsoid(0.7, 0.8, 0.85, 30, 30, [1.0, 0.5, 0.0]);
     const mouthBase = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, mouth_base_vertices, mouth_base_indices);
 
-    const { vertices: mouth_vertices, indices: mouth_indices } = generateEllipsoid(0.45, 0.3, 0.12, 20, 20, [1.0, 0.6, 0.6]);
+    const { vertices: mouth_vertices, indices: mouth_indices } = generateEllipsoid(0.45, 0.2, 0.12, 20, 20, [1.0, 0.6, 0.6]);
     const mouth = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, mouth_vertices, mouth_indices);
 
     const { vertices: nose_vertices, indices: nose_indices } = generateEllipsoid(0.04, 0.04, 0.04, 20, 20, [0.0, 0.0, 0.0]);
@@ -174,10 +174,10 @@ function main() {
     const { vertices: tail_vertices, indices: tail_indices } = generateCurvedCylinder(0.4, 0.2, 1.5, 20, 10, [1.0, 0.5, 0.0]);
     const tail = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, tail_vertices, tail_indices);
 
-    const { vertices: tail_tip, indices: tail_tip_indices } = generateEllipsoid(0.3, 0.3, 0.3, 30, 30, [1.0, 1.0, 0.0]);
+    const { vertices: tail_tip, indices: tail_tip_indices } = generateEllipsoidGradient(0.3, 0.3, 0.3, 30, 30, [1.0, 0.5, 0.0], [1.0, 1.0, 0.0]);
     const tailTip = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, tail_tip, tail_tip_indices);
 
-    const { vertices: fire_vertices, indices: fire_indices } = generateCylinderDynamicRadius(0.2, 0.5, 0.0, 0.15, 1.2, 32, 32, [1.0, 0.3, 0.0], "sin");
+    const { vertices: fire_vertices, indices: fire_indices } = generateCylinderDynamicRadius(0.2, 0.5, 0.0, 0.0, 1.1, 32, 32, [1.0, 0.3, 0.0], "sin");
     const tailTipFire = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, fire_vertices, fire_indices);
 
     const { vertices: belly_vertices, indices: belly_indices } = generateEllipsoid(0.9, 1.05, 0.4, 30, 30, [1.0, 1.0, 0.6]);
@@ -279,7 +279,7 @@ function main() {
     LIBS.translateZ(tailTip.MOVE_MATRIX, -1.39);
     LIBS.rotateX(tailTip.MOVE_MATRIX, LIBS.degToRad(-90));
 
-    LIBS.translateY(tailTipFire.MOVE_MATRIX, 0.57);
+    LIBS.translateY(tailTipFire.MOVE_MATRIX, 0.56);
     LIBS.translateZ(tailTipFire.MOVE_MATRIX, -1.07);
     LIBS.rotateX(tailTipFire.MOVE_MATRIX, LIBS.degToRad(-60));
 

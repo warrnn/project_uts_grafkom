@@ -44,6 +44,56 @@ function generateEllipsoid(rx = 1, ry = 1, rz = 1, stacks = 20, slices = 20, col
     };
 }
 
+function generateEllipsoidGradient(rx = 1, ry = 1, rz = 1, stacks = 20, slices = 20, colorTop = [1.0, 0.0, 0.0], colorBottom = [0.0, 0.0, 1.0]) {
+    let vertices = [];
+    let indices = [];
+
+    // Generate vertices (posisi + warna gradient)
+    for (let i = 0; i <= stacks; i++) {
+        let theta = i * Math.PI / stacks; // 0 -> PI
+        let sinTheta = Math.sin(theta);
+        let cosTheta = Math.cos(theta);
+
+        // progress untuk gradient (0 = atas, 1 = bawah)
+        let t = i / stacks;
+
+        // Interpolasi warna (linear)
+        let rCol = colorTop[0] * (1 - t) + colorBottom[0] * t;
+        let gCol = colorTop[1] * (1 - t) + colorBottom[1] * t;
+        let bCol = colorTop[2] * (1 - t) + colorBottom[2] * t;
+
+        for (let j = 0; j <= slices; j++) {
+            let phi = j * 2 * Math.PI / slices; // 0 -> 2PI
+            let sinPhi = Math.sin(phi);
+            let cosPhi = Math.cos(phi);
+
+            // posisi ellipsoid
+            let x = rx * sinTheta * cosPhi;
+            let y = ry * cosTheta;
+            let z = rz * sinTheta * sinPhi;
+
+            // push posisi + warna hasil interpolasi
+            vertices.push(x, y, z, rCol, gCol, bCol);
+        }
+    }
+
+    // Generate indices (quad → 2 segitiga)
+    for (let i = 0; i < stacks; i++) {
+        for (let j = 0; j < slices; j++) {
+            let first = i * (slices + 1) + j;
+            let second = first + slices + 1;
+
+            indices.push(first, second, first + 1);
+            indices.push(second, second + 1, first + 1);
+        }
+    }
+
+    return {
+        vertices: new Float32Array(vertices),
+        indices: new Uint16Array(indices)
+    };
+}
+
 function generateCurvedCylinder(radiusStart = 0.2, radiusEnd = 0.1, length = 2.0, segments = 20, rings = 10, color = [1.0, 1.0, 1.0]) {
     let vertices = [];
     let indices = [];
@@ -318,3 +368,25 @@ function generateHyperboloid(a = 1.0, b = 1.0, c = 1.0, vMax = 1.0, radialSegmen
         indices: new Uint16Array(indices)
     };
 }
+
+function generateEllipticArc3D(a = 1.0, b = 0.3, c = 0.2, segments = 50, color = [1.0, 0.0, 0.0]) {
+    let vertices = [];
+    let indices = [];
+
+    for (let i = 0; i <= segments; i++) {
+        let t = (i / segments) * Math.PI; // 0 → π (arc setengah elips)
+        let x = a * Math.cos(t);
+        let y = b * Math.sin(t);
+        let z = c * Math.sin(t / 2); // melengkung ke dalam
+
+        // push posisi + warna (biar sama formatnya dengan yang lain)
+        vertices.push(x, y, z, color[0], color[1], color[2]);
+    }
+
+    // Tidak ada face, jadi indices kosong
+    return {
+        vertices: new Float32Array(vertices),
+        indices: new Uint16Array([])
+    };
+}
+
