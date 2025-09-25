@@ -490,7 +490,9 @@ function main() {
         GL.uniformMatrix4fv(_Vmatrix, false, VIEWMATRIX_dynamic);
         GL.uniformMatrix4fv(_Mmatrix, false, MODELMATRIX);
 
+        // ========== RENDER PARENT OBJECT START ==========
         body.render(MODELMATRIX);
+        // ========== RENDER PARENT OBJECT END ==========
 
         GL.flush();
         window.requestAnimationFrame(animate);
