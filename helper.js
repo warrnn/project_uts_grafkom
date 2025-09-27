@@ -127,6 +127,42 @@ function generateCurvedCylinder(radiusStart = 0.2, radiusEnd = 0.1, length = 2.0
     return { vertices, indices };
 }
 
+function generateCurvedByStrengthCylinder(radiusStart = 0.2, radiusEnd = 0.1, length = 2.0, segments = 20, rings = 10, color = [1.0, 1.0, 1.0], curveStrength = 1.0) {
+    let vertices = [];
+    let indices = [];
+
+    for (let i = 0; i <= segments; i++) {
+        let t = i / segments;
+        let r = radiusStart * (1 - t) + radiusEnd * t;
+
+        // jalur lengkung silinder (pakai setengah lingkaran sebagai path)
+        let angle = t * Math.PI / 2 * curveStrength;
+        let y = -Math.sin(angle) * length;
+        let z = -Math.cos(angle) * length;
+
+        for (let j = 0; j <= rings; j++) {
+            let theta = (j / rings) * 2 * Math.PI;
+            let x = r * Math.cos(theta);
+            let zOffset = r * Math.sin(theta);
+            vertices.push(x, y, z + zOffset, ...color);
+        }
+    }
+
+    for (let i = 0; i < segments; i++) {
+        for (let j = 0; j < rings; j++) {
+            let a = i * (rings + 1) + j;
+            let b = a + rings + 1;
+            let c = b + 1;
+            let d = a + 1;
+            indices.push(a, b, d);
+            indices.push(b, c, d);
+        }
+    }
+
+    return { vertices, indices };
+}
+
+
 function generateCylinderDynamicRadius(minStart, maxStart, minEnd, maxEnd, height, radialSegments, heightSegments, color, mode = "linear") {
     let vertices = [];
     let indices = [];
@@ -390,3 +426,74 @@ function generateEllipticArc3D(a = 1.0, b = 0.3, c = 0.2, segments = 50, color =
     };
 }
 
+function generateEagleTalon(radiusBase = 0.2, radiusTip = 0.02, length = 2.0, curveStrength = 1.0, segments = 40, rings = 20, color = [1.0, 1.0, 1.0]) {
+    let vertices = [];
+    let indices = [];
+
+    for (let i = 0; i <= segments; i++) {
+        let t = i / segments;
+
+        // radius mengecil
+        let r = radiusBase * (1 - t) + radiusTip * t;
+
+        // kurva jalur utama (semacam kuku melengkung)
+        let angle = t * Math.PI / 2 * curveStrength;
+        let xCenter = Math.sin(angle) * length;
+        let yCenter = -t * length; // turun ke bawah
+        let zCenter = Math.cos(angle) * length;
+
+        for (let j = 0; j <= rings; j++) {
+            let theta = (j / rings) * 2 * Math.PI;
+            let x = xCenter + r * Math.cos(theta);
+            let y = yCenter + r * Math.sin(theta);
+            let z = zCenter;
+            vertices.push(x, y, z, ...color);
+        }
+    }
+
+    // buat index quad (dua segitiga per face)
+    for (let i = 0; i < segments; i++) {
+        for (let j = 0; j < rings; j++) {
+            let a = i * (rings + 1) + j;
+            let b = a + rings + 1;
+            let c = b + 1;
+            let d = a + 1;
+            indices.push(a, b, d);
+            indices.push(b, c, d);
+        }
+    }
+
+    return { vertices, indices };
+}
+
+function generateEllipticParaboloidFlexible(a = 1.0, b = 1.0, height = 2.0, radialSegments = 32, heightSegments = 32, curvature = 0.5, color = [1.0, 1.0, 1.0]) {
+    let vertices = [];
+    let indices = [];
+
+    for (let i = 0; i <= heightSegments; i++) {
+        let t = i / heightSegments;        // 0 → 1
+        let r = Math.pow(t, curvature);    // radius dikontrol kelengkungannya
+        let z = height * t;
+
+        for (let j = 0; j <= radialSegments; j++) {
+            let theta = (j / radialSegments) * 2 * Math.PI;
+            let x = a * r * Math.cos(theta);
+            let y = b * r * Math.sin(theta);
+            vertices.push(x, y, z, ...color);
+        }
+    }
+
+    for (let i = 0; i < heightSegments; i++) {
+        for (let j = 0; j < radialSegments; j++) {
+            let a1 = i * (radialSegments + 1) + j;
+            let b1 = a1 + radialSegments + 1;
+            let c1 = b1 + 1;
+            let d1 = a1 + 1;
+
+            indices.push(a1, b1, d1);
+            indices.push(b1, c1, d1);
+        }
+    }
+
+    return { vertices, indices };
+}
