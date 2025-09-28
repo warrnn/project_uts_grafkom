@@ -228,6 +228,10 @@ function main() {
     const { vertices: eye_black_vertices, indices: eye_black_indices } = generateEllipsoid(0.3, 0.2, 0.5, 30, 30, [0.0, 0.0, 0.0]);
     const leftEyeBlack = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, eye_black_vertices, eye_black_indices);
     const rightEyeBlack = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, eye_black_vertices, eye_black_indices);
+    
+    const { vertices: horn_vertices, indices: horn_indices } = generateEllipticParaboloidFlexible(0.25, 0.25, 2.0, 30, 30, 0.2, [1.0, 0.5, 0.0]);
+    const leftHorn = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, horn_vertices, horn_indices);
+    const rightHorn = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, horn_vertices, horn_indices);
     // ========== GENERATE SHAPE OBJECT END ==========
 
     // ========== ROTATE SCALE TRANSLATE START ==========
@@ -405,12 +409,12 @@ function main() {
     LIBS.rotateX(upperTeethRight.MOVE_MATRIX, LIBS.degToRad(90));
 
     LIBS.translateX(lowerTeethLeft.MOVE_MATRIX, -0.2);
-    LIBS.translateY(lowerTeethLeft.MOVE_MATRIX, 0.55);
+    LIBS.translateY(lowerTeethLeft.MOVE_MATRIX, 0.6);
     LIBS.translateZ(lowerTeethLeft.MOVE_MATRIX, 7.2);
     LIBS.rotateX(lowerTeethLeft.MOVE_MATRIX, LIBS.degToRad(-90));
 
     LIBS.translateX(lowerTeethRight.MOVE_MATRIX, 0.2);
-    LIBS.translateY(lowerTeethRight.MOVE_MATRIX, 0.55);
+    LIBS.translateY(lowerTeethRight.MOVE_MATRIX, 0.6);
     LIBS.translateZ(lowerTeethRight.MOVE_MATRIX, 7.2);
     LIBS.rotateX(lowerTeethRight.MOVE_MATRIX, LIBS.degToRad(-90));
 
@@ -442,6 +446,16 @@ function main() {
     LIBS.translateX(rightEyeBlack.MOVE_MATRIX, -0.2);
     LIBS.translateY(rightEyeBlack.MOVE_MATRIX, -0.05);
     LIBS.translateZ(rightEyeBlack.MOVE_MATRIX, 0.2);
+
+    LIBS.translateX(leftHorn.MOVE_MATRIX, 0.7);
+    LIBS.translateY(leftHorn.MOVE_MATRIX, 1.9);
+    LIBS.translateZ(leftHorn.MOVE_MATRIX, -3.2);
+    LIBS.rotateX(leftHorn.MOVE_MATRIX, LIBS.degToRad(20));
+
+    LIBS.translateX(rightHorn.MOVE_MATRIX, -0.7);
+    LIBS.translateY(rightHorn.MOVE_MATRIX, 1.9);
+    LIBS.translateZ(rightHorn.MOVE_MATRIX, -3.2);
+    LIBS.rotateX(rightHorn.MOVE_MATRIX, LIBS.degToRad(20));
     // ========== ROTATE SCALE TRANSLATE END ==========
 
     // ========== CHILDS PUSH START ==========
@@ -458,6 +472,8 @@ function main() {
     head.addChild(cheeks);
     head.addChild(leftEyelid);
     head.addChild(rightEyelid);
+    head.addChild(leftHorn);
+    head.addChild(rightHorn);
     leftEyelid.addChild(leftEyeWhite);
     rightEyelid.addChild(rightEyeWhite);
     leftEyeWhite.addChild(leftEyeBlack);
