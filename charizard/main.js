@@ -174,7 +174,7 @@ function main() {
     const rightFinger2 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, finger_vertices, finger_indices);
     const rightFinger3 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, finger_vertices, finger_indices);
 
-    const { vertices: foot_claw_vertices, indices: foot_claw_indices } = generateEagleTalon(0.2, 0.0, 0.6, 1.0, 30, 30, [1.0, 1.0, 1.0]);
+    const { vertices: foot_claw_vertices, indices: foot_claw_indices } = generateEagleTalon(0.25, 0.0, 0.55, 1.0, 30, 30, [1.0, 1.0, 1.0]);
     const leftFootClaw1 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, foot_claw_vertices, foot_claw_indices);
     const leftFootClaw2 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, foot_claw_vertices, foot_claw_indices);
     const leftFootClaw3 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, foot_claw_vertices, foot_claw_indices);
@@ -228,10 +228,46 @@ function main() {
     const { vertices: eye_black_vertices, indices: eye_black_indices } = generateEllipsoid(0.3, 0.2, 0.5, 30, 30, [0.0, 0.0, 0.0]);
     const leftEyeBlack = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, eye_black_vertices, eye_black_indices);
     const rightEyeBlack = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, eye_black_vertices, eye_black_indices);
-    
+
     const { vertices: horn_vertices, indices: horn_indices } = generateEllipticParaboloidFlexible(0.25, 0.25, 2.0, 30, 30, 0.2, [1.0, 0.5, 0.0]);
     const leftHorn = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, horn_vertices, horn_indices);
     const rightHorn = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, horn_vertices, horn_indices);
+
+    const { vertices: wing_bone_1, indices: wing_bone_1_indices } = generateCylinderDynamicRadius(0.1, 0.1, 0.1, 0.1, 3.0, 32, 32, [1.0, 0.5, 0.0], "linear");
+    const leftWingBone1 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_bone_1, wing_bone_1_indices);
+    const rightWingBone1 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_bone_1, wing_bone_1_indices);
+
+    const { vertices: bone_joints_1, indices: bone_joints_1_indices } = generateEllipsoid(0.3, 0.1, 0.15, 20, 10, [1.0, 0.5, 0.0]);
+    const leftBoneJoints1 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, bone_joints_1, bone_joints_1_indices);
+    const rightBoneJoints1 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, bone_joints_1, bone_joints_1_indices);
+
+    const { vertices: wing_bone_2, indices: wing_bone_2_indices } = generateCurvedByStrengthCylinder(0.1, 0.1, 2.0, 32, 32, [1.0, 0.5, 0.0], 0.8);
+    const leftWingBone2 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_bone_2, wing_bone_2_indices);
+    const rightWingBone2 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_bone_2, wing_bone_2_indices);
+
+    const { vertices: bone_joints_2, indices: bone_joints_2_indices } = generateEllipsoid(0.4, 0.15, 0.15, 20, 10, [1.0, 0.5, 0.0]);
+    const leftBoneJoints2 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, bone_joints_2, bone_joints_2_indices);
+    const rightBoneJoints2 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, bone_joints_2, bone_joints_2_indices);
+
+    const { vertices: wing_bone_3, indices: wing_bone_3_indices } = generateCylinderDynamicRadius(0.1, 0.1, 0.1, 0.1, 2.0, 32, 32, [1.0, 0.5, 0.0], "linear");
+    const leftWingBone3 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_bone_3, wing_bone_3_indices);
+    const rightWingBone3 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_bone_3, wing_bone_3_indices);
+
+    const { vertices: wing_bone_4, indices: wing_bone_4_indices } = generateCylinderDynamicRadius(0.1, 0.1, 0.1, 0.1, 2.0, 32, 32, [1.0, 0.5, 0.0], "linear");
+    const leftWingBone4 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_bone_4, wing_bone_4_indices);
+    const rightWingBone4 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_bone_4, wing_bone_4_indices);
+
+    const { vertices: wing_claw_vertices, indices: wing_claw_indices } = generateEllipticParaboloidFlexible(0.2, 0.1, 0.8, 30, 30, 0.2, [1.0, 0.5, 0.0]);
+    const leftWingClaw = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_claw_vertices, wing_claw_indices);
+    const rightWingClaw = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_claw_vertices, wing_claw_indices);
+
+    const { vertices: wing_bone_5, indices: wing_bone_5_indices } = generateCylinderDynamicRadius(0.1, 0.1, 0.1, 0.1, 1.8, 32, 32, [1.0, 0.5, 0.0], "linear");
+    const leftWingBone5 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_bone_5, wing_bone_5_indices);
+    const rightWingBone5 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_bone_5, wing_bone_5_indices);
+
+    const { vertices: wing_bone_6, indices: wing_bone_6_indices } = generateCylinderDynamicRadius(0.1, 0.1, 0.1, 0.1, 6.3, 32, 32, [1.0, 0.5, 0.0], "linear");
+    const leftWingBone6 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_bone_6, wing_bone_6_indices);
+    const rightWingBone6 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_bone_6, wing_bone_6_indices);
     // ========== GENERATE SHAPE OBJECT END ==========
 
     // ========== ROTATE SCALE TRANSLATE START ==========
@@ -399,12 +435,12 @@ function main() {
     LIBS.translateZ(cheeks.MOVE_MATRIX, 0.2);
 
     LIBS.translateX(upperTeethLeft.MOVE_MATRIX, 0.4);
-    LIBS.translateY(upperTeethLeft.MOVE_MATRIX, 8.3); 
+    LIBS.translateY(upperTeethLeft.MOVE_MATRIX, 8.3);
     LIBS.translateZ(upperTeethLeft.MOVE_MATRIX, -1.3);
     LIBS.rotateX(upperTeethLeft.MOVE_MATRIX, LIBS.degToRad(90));
 
     LIBS.translateX(upperTeethRight.MOVE_MATRIX, -0.4);
-    LIBS.translateY(upperTeethRight.MOVE_MATRIX, 8.3); 
+    LIBS.translateY(upperTeethRight.MOVE_MATRIX, 8.3);
     LIBS.translateZ(upperTeethRight.MOVE_MATRIX, -1.3);
     LIBS.rotateX(upperTeethRight.MOVE_MATRIX, LIBS.degToRad(90));
 
@@ -456,6 +492,98 @@ function main() {
     LIBS.translateY(rightHorn.MOVE_MATRIX, 1.9);
     LIBS.translateZ(rightHorn.MOVE_MATRIX, -3.2);
     LIBS.rotateX(rightHorn.MOVE_MATRIX, LIBS.degToRad(20));
+
+    LIBS.translateX(leftWingBone1.MOVE_MATRIX, -0.7);
+    LIBS.translateY(leftWingBone1.MOVE_MATRIX, 2.0);
+    LIBS.translateZ(leftWingBone1.MOVE_MATRIX, -1.3);
+    LIBS.rotateZ(leftWingBone1.MOVE_MATRIX, LIBS.degToRad(20));
+
+    LIBS.translateX(rightWingBone1.MOVE_MATRIX, 0.7);
+    LIBS.translateY(rightWingBone1.MOVE_MATRIX, 2.0);
+    LIBS.translateZ(rightWingBone1.MOVE_MATRIX, -1.3);
+    LIBS.rotateZ(rightWingBone1.MOVE_MATRIX, LIBS.degToRad(-20));
+
+    LIBS.translateX(leftBoneJoints1.MOVE_MATRIX, -1.0);
+    LIBS.translateY(leftBoneJoints1.MOVE_MATRIX, 1.23);
+    LIBS.rotateZ(leftBoneJoints1.MOVE_MATRIX, LIBS.degToRad(-10));
+
+    LIBS.translateX(rightBoneJoints1.MOVE_MATRIX, 1.0);
+    LIBS.translateY(rightBoneJoints1.MOVE_MATRIX, 1.23);
+    LIBS.rotateZ(rightBoneJoints1.MOVE_MATRIX, LIBS.degToRad(10));
+
+    LIBS.translateX(leftWingBone2.MOVE_MATRIX, 1.1);
+    LIBS.translateY(leftWingBone2.MOVE_MATRIX, 2.55);
+    LIBS.translateZ(leftWingBone2.MOVE_MATRIX, -2.3);
+    LIBS.rotateY(leftWingBone2.MOVE_MATRIX, LIBS.degToRad(90));
+    LIBS.rotateZ(leftWingBone2.MOVE_MATRIX, LIBS.degToRad(20));
+
+    LIBS.translateX(rightWingBone2.MOVE_MATRIX, -1.1);
+    LIBS.translateY(rightWingBone2.MOVE_MATRIX, 2.55);
+    LIBS.translateZ(rightWingBone2.MOVE_MATRIX, -2.3);
+    LIBS.rotateY(rightWingBone2.MOVE_MATRIX, LIBS.degToRad(-90));
+    LIBS.rotateZ(rightWingBone2.MOVE_MATRIX, LIBS.degToRad(-20));
+
+    LIBS.translateX(leftBoneJoints2.MOVE_MATRIX, -2.4);
+    LIBS.translateY(leftBoneJoints2.MOVE_MATRIX, -0.6);
+    LIBS.translateZ(leftBoneJoints2.MOVE_MATRIX, -2.2);
+    LIBS.rotateY(leftBoneJoints2.MOVE_MATRIX, LIBS.degToRad(90));
+
+    LIBS.translateX(rightBoneJoints2.MOVE_MATRIX, 2.4);
+    LIBS.translateY(rightBoneJoints2.MOVE_MATRIX, -0.6);
+    LIBS.translateZ(rightBoneJoints2.MOVE_MATRIX, -2.2);
+    LIBS.rotateY(rightBoneJoints2.MOVE_MATRIX, LIBS.degToRad(-90));
+
+    LIBS.translateX(leftWingBone3.MOVE_MATRIX, -4.65);
+    LIBS.translateY(leftWingBone3.MOVE_MATRIX, -1.0);
+    LIBS.translateZ(leftWingBone3.MOVE_MATRIX, 2.0);
+    LIBS.rotateX(leftWingBone3.MOVE_MATRIX, LIBS.degToRad(-25));
+    LIBS.rotateZ(leftWingBone3.MOVE_MATRIX, LIBS.degToRad(-45));
+
+    LIBS.translateX(rightWingBone3.MOVE_MATRIX, 4.65);
+    LIBS.translateY(rightWingBone3.MOVE_MATRIX, -1.0);
+    LIBS.translateZ(rightWingBone3.MOVE_MATRIX, 2.0);
+    LIBS.rotateX(rightWingBone3.MOVE_MATRIX, LIBS.degToRad(-25));
+    LIBS.rotateZ(rightWingBone3.MOVE_MATRIX, LIBS.degToRad(45));
+
+    LIBS.translateX(leftWingBone4.MOVE_MATRIX, 0.3);
+    LIBS.translateY(leftWingBone4.MOVE_MATRIX, 1.2);
+    LIBS.translateZ(leftWingBone4.MOVE_MATRIX, -0.65);
+    LIBS.rotateX(leftWingBone4.MOVE_MATRIX, LIBS.degToRad(10));
+    LIBS.rotateZ(leftWingBone4.MOVE_MATRIX, LIBS.degToRad(30));
+
+    LIBS.translateX(rightWingBone4.MOVE_MATRIX, -0.3);
+    LIBS.translateY(rightWingBone4.MOVE_MATRIX, 1.2);
+    LIBS.translateZ(rightWingBone4.MOVE_MATRIX, -0.65);
+    LIBS.rotateX(rightWingBone4.MOVE_MATRIX, LIBS.degToRad(10));
+    LIBS.rotateZ(rightWingBone4.MOVE_MATRIX, LIBS.degToRad(-30));
+
+    LIBS.translateY(leftWingClaw.MOVE_MATRIX, 7.2);
+    LIBS.translateZ(leftWingClaw.MOVE_MATRIX, 3.6);
+    LIBS.rotateX(leftWingClaw.MOVE_MATRIX, LIBS.degToRad(-100));
+
+    LIBS.translateY(rightWingClaw.MOVE_MATRIX, 7.2);
+    LIBS.translateZ(rightWingClaw.MOVE_MATRIX, 3.6);
+    LIBS.rotateX(rightWingClaw.MOVE_MATRIX, LIBS.degToRad(-100));
+
+    LIBS.translateX(leftWingBone5.MOVE_MATRIX, 0.1);
+    LIBS.translateY(leftWingBone5.MOVE_MATRIX, 0.4);
+    LIBS.translateZ(leftWingBone5.MOVE_MATRIX, -0.02);
+    LIBS.rotateZ(leftWingBone5.MOVE_MATRIX, LIBS.degToRad(20));
+
+    LIBS.translateX(rightWingBone5.MOVE_MATRIX, -0.1);
+    LIBS.translateY(rightWingBone5.MOVE_MATRIX, 0.4);
+    LIBS.translateZ(rightWingBone5.MOVE_MATRIX, -0.02);
+    LIBS.rotateZ(rightWingBone5.MOVE_MATRIX, LIBS.degToRad(-20));
+
+    LIBS.translateX(leftWingBone6.MOVE_MATRIX, -2.9);
+    LIBS.translateY(leftWingBone6.MOVE_MATRIX, -5.65);
+    LIBS.translateZ(leftWingBone6.MOVE_MATRIX, 0.05);
+    LIBS.rotateZ(leftWingBone6.MOVE_MATRIX, LIBS.degToRad(-80));
+
+    LIBS.translateX(rightWingBone6.MOVE_MATRIX, 2.9);
+    LIBS.translateY(rightWingBone6.MOVE_MATRIX, -5.65);
+    LIBS.translateZ(rightWingBone6.MOVE_MATRIX, 0.05);
+    LIBS.rotateZ(rightWingBone6.MOVE_MATRIX, LIBS.degToRad(80));
     // ========== ROTATE SCALE TRANSLATE END ==========
 
     // ========== CHILDS PUSH START ==========
@@ -466,6 +594,26 @@ function main() {
     body.addChild(rightShoulder);
     body.addChild(tail);
     body.addChild(neck);
+    body.addChild(leftWingBone1);
+    body.addChild(rightWingBone1);
+    // body.addChild(leftWingBone6);
+    // body.addChild(rightWingBone6);
+    leftWingBone1.addChild(leftBoneJoints1);
+    leftBoneJoints1.addChild(leftWingBone2);
+    rightWingBone1.addChild(rightBoneJoints1);
+    rightBoneJoints1.addChild(rightWingBone2);
+    leftWingBone2.addChild(leftBoneJoints2);
+    rightWingBone2.addChild(rightBoneJoints2);
+    leftBoneJoints2.addChild(leftWingBone3);
+    leftBoneJoints2.addChild(leftWingClaw);
+    rightBoneJoints2.addChild(rightWingBone3);
+    rightBoneJoints2.addChild(rightWingClaw);
+    leftWingBone3.addChild(leftWingBone4);
+    rightWingBone3.addChild(rightWingBone4);
+    leftWingBone4.addChild(leftWingBone5);
+    rightWingBone4.addChild(rightWingBone5);
+    leftWingBone5.addChild(leftWingBone6);
+    rightWingBone5.addChild(rightWingBone6);
     neck.addChild(head);
     head.addChild(upperMouth);
     head.addChild(lowerMouth);
