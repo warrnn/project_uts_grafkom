@@ -137,137 +137,189 @@ function main() {
 
     // ========== GENERATE SHAPE OBJECT START =========
     const { vertices: body_vertices, indices: body_indices } = generateEllipsoid(2.1, 2.4, 1.5, 30, 30, [1.0, 0.5, 0.0]);
-    const body = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, body_vertices, body_indices);
+    const body = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, body_vertices, body_indices, GL.TRIANGLES);
 
     const { vertices: belly_vertices, indices: belly_indices } = generateEllipsoid(1.9, 2.1, 1.2, 30, 30, [1.0, 1.0, 0.6]);
-    const belly = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, belly_vertices, belly_indices);
+    const belly = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, belly_vertices, belly_indices, GL.TRIANGLES);
 
     const { vertices: thigh_vertices, indices: thigh_indices } = generateEllipsoid(1.0, 1.0, 1.0, 30, 30, [1.0, 0.5, 0.0]);
-    const leftThigh = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, thigh_vertices, thigh_indices);
-    const rightThigh = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, thigh_vertices, thigh_indices);
+    const leftThigh = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, thigh_vertices, thigh_indices, GL.TRIANGLES);
+    const rightThigh = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, thigh_vertices, thigh_indices, GL.TRIANGLES);
 
     const { vertices: leg_vertices, indices: leg_indices } = generateEllipsoid(0.9, 1.5, 1.0, 30, 30, [1.0, 0.5, 0.0]);
-    const leftLeg = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, leg_vertices, leg_indices);
-    const rightLeg = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, leg_vertices, leg_indices);
+    const leftLeg = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, leg_vertices, leg_indices, GL.TRIANGLES);
+    const rightLeg = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, leg_vertices, leg_indices, GL.TRIANGLES);
 
     const { vertices: foots_vertices, indices: foots_indices } = generateEllipsoid(0.9, 0.4, 1.3, 30, 30, [1.0, 0.5, 0.0]);
-    const leftFoot = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, foots_vertices, foots_indices);
-    const rightFoot = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, foots_vertices, foots_indices);
+    const leftFoot = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, foots_vertices, foots_indices, GL.TRIANGLES);
+    const rightFoot = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, foots_vertices, foots_indices, GL.TRIANGLES);
 
     const { vertices: shoulder_vertices, indices: shoulder_indices } = generateEllipsoid(0.9, 0.6, 0.6, 30, 30, [1.0, 0.5, 0.0]);
-    const leftShoulder = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, shoulder_vertices, shoulder_indices);
-    const rightShoulder = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, shoulder_vertices, shoulder_indices);
+    const leftShoulder = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, shoulder_vertices, shoulder_indices, GL.TRIANGLES);
+    const rightShoulder = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, shoulder_vertices, shoulder_indices, GL.TRIANGLES);
 
     const { vertices: arm_vertices, indices: arm_indices } = generateCurvedByStrengthCylinder(0.3, 0.3, 2.5, 30, 30, [1.0, 0.5, 0.0], 0.5);
-    const leftArm = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, arm_vertices, arm_indices);
-    const rightArm = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, arm_vertices, arm_indices);
+    const leftArm = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, arm_vertices, arm_indices, GL.TRIANGLES);
+    const rightArm = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, arm_vertices, arm_indices, GL.TRIANGLES);
 
     const { vertices: hand_palm_vertices, indices: hand_palm_indices } = generateEllipsoid(0.35, 0.35, 0.25, 30, 30, [1.0, 0.5, 0.0]);
-    const leftHandPalm = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, hand_palm_vertices, hand_palm_indices);
-    const rightHandPalm = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, hand_palm_vertices, hand_palm_indices);
+    const leftHandPalm = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, hand_palm_vertices, hand_palm_indices, GL.TRIANGLES);
+    const rightHandPalm = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, hand_palm_vertices, hand_palm_indices, GL.TRIANGLES);
 
     const { vertices: finger_vertices, indices: finger_indices } = generateEllipticParaboloid(0.1, 0.2, 0.4, 20, 10, [1.0, 0.5, 0.0]);
-    const leftFinger1 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, finger_vertices, finger_indices);
-    const leftFinger2 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, finger_vertices, finger_indices);
-    const leftFinger3 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, finger_vertices, finger_indices);
-    const rightFinger1 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, finger_vertices, finger_indices);
-    const rightFinger2 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, finger_vertices, finger_indices);
-    const rightFinger3 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, finger_vertices, finger_indices);
+    const leftFinger1 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, finger_vertices, finger_indices, GL.TRIANGLES);
+    const leftFinger2 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, finger_vertices, finger_indices, GL.TRIANGLES);
+    const leftFinger3 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, finger_vertices, finger_indices, GL.TRIANGLES);
+    const rightFinger1 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, finger_vertices, finger_indices, GL.TRIANGLES);
+    const rightFinger2 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, finger_vertices, finger_indices, GL.TRIANGLES);
+    const rightFinger3 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, finger_vertices, finger_indices, GL.TRIANGLES);
 
     const { vertices: foot_claw_vertices, indices: foot_claw_indices } = generateEagleTalon(0.25, 0.0, 0.55, 1.0, 30, 30, [1.0, 1.0, 1.0]);
-    const leftFootClaw1 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, foot_claw_vertices, foot_claw_indices);
-    const leftFootClaw2 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, foot_claw_vertices, foot_claw_indices);
-    const leftFootClaw3 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, foot_claw_vertices, foot_claw_indices);
-    const rightFootClaw1 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, foot_claw_vertices, foot_claw_indices);
-    const rightFootClaw2 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, foot_claw_vertices, foot_claw_indices);
-    const rightFootClaw3 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, foot_claw_vertices, foot_claw_indices);
+    const leftFootClaw1 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, foot_claw_vertices, foot_claw_indices, GL.TRIANGLES);
+    const leftFootClaw2 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, foot_claw_vertices, foot_claw_indices, GL.TRIANGLES);
+    const leftFootClaw3 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, foot_claw_vertices, foot_claw_indices, GL.TRIANGLES);
+    const rightFootClaw1 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, foot_claw_vertices, foot_claw_indices, GL.TRIANGLES);
+    const rightFootClaw2 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, foot_claw_vertices, foot_claw_indices, GL.TRIANGLES);
+    const rightFootClaw3 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, foot_claw_vertices, foot_claw_indices, GL.TRIANGLES);
 
     const { vertices: tail_vertices, indices: tail_indices } = generateCurvedCylinder(0.4, 0.2, 3.5, 20, 10, [1.0, 0.5, 0.0]);
-    const tail = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, tail_vertices, tail_indices);
+    const tail = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, tail_vertices, tail_indices, GL.TRIANGLES);
 
     const { vertices: tail_tip, indices: tail_tip_indices } = generateEllipsoidGradient(0.6, 0.6, 0.6, 30, 30, [1.0, 0.5, 0.0], [1.0, 1.0, 0.0]);
-    const tailTip = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, tail_tip, tail_tip_indices);
+    const tailTip = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, tail_tip, tail_tip_indices, GL.TRIANGLES);
 
     const { vertices: fire_vertices, indices: fire_indices } = generateCylinderDynamicRadius(0.6, 0.8, 0.0, 0.0, 1.1, 32, 32, [1.0, 0.3, 0.0], "sin");
-    const tailTipFire = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, fire_vertices, fire_indices);
+    const tailTipFire = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, fire_vertices, fire_indices, GL.TRIANGLES);
 
     const { vertices: neck_vertices, indices: neck_indices } = generateCylinderDynamicRadius(0.9, 0.9, 0.4, 0.4, 4.0, 32, 32, [1.0, 0.5, 0.0], "cos");
-    const neck = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, neck_vertices, neck_indices);
+    const neck = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, neck_vertices, neck_indices, GL.TRIANGLES);
 
     const { vertices: head_vertices, indices: head_indices } = generateEllipsoid(1.1, 0.9, 1.0, 30, 30, [1.0, 0.5, 0.0]);
-    const head = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, head_vertices, head_indices);
+    const head = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, head_vertices, head_indices, GL.TRIANGLES);
 
     const { vertices: upper_mouth_vertices, indices: upper_mouth_indices } = generateEllipticParaboloidFlexible(1.0, 0.5, 2.2, 30, 30, 0.2, [1.0, 0.5, 0.0]);
-    const upperMouth = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, upper_mouth_vertices, upper_mouth_indices);
+    const upperMouth = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, upper_mouth_vertices, upper_mouth_indices, GL.TRIANGLES);
 
     const { vertices: lower_mouth_vertices, indices: lower_mouth_indices } = generateEllipticParaboloidFlexible(0.85, 0.4, 2.0, 30, 30, 0.2, [1.0, 0.5, 0.0]);
-    const lowerMouth = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, lower_mouth_vertices, lower_mouth_indices);
+    const lowerMouth = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, lower_mouth_vertices, lower_mouth_indices, GL.TRIANGLES);
 
     const { vertices: cheeks_vertices, indices: cheeks_indices } = generateEllipsoid(1.1, 0.65, 0.8, 30, 30, [1.0, 0.5, 0.0]);
-    const cheeks = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, cheeks_vertices, cheeks_indices);
+    const cheeks = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, cheeks_vertices, cheeks_indices, GL.TRIANGLES);
 
     const { vertices: upper_teeth_vertices, indices: upper_teeth_indices } = generateEllipticParaboloid(0.1, 0.1, 0.3, 20, 10, [1.0, 1.0, 1.0]);
-    const upperTeethLeft = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, upper_teeth_vertices, upper_teeth_indices);
-    const upperTeethRight = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, upper_teeth_vertices, upper_teeth_indices);
+    const upperTeethLeft = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, upper_teeth_vertices, upper_teeth_indices, GL.TRIANGLES);
+    const upperTeethRight = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, upper_teeth_vertices, upper_teeth_indices, GL.TRIANGLES);
 
     const { vertices: lower_teeth_vertices, indices: lower_teeth_indices } = generateEllipticParaboloid(0.05, 0.05, 0.2, 20, 10, [1.0, 1.0, 1.0]);
-    const lowerTeethLeft = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, lower_teeth_vertices, lower_teeth_indices);
-    const lowerTeethRight = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, lower_teeth_vertices, lower_teeth_indices);
+    const lowerTeethLeft = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, lower_teeth_vertices, lower_teeth_indices, GL.TRIANGLES);
+    const lowerTeethRight = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, lower_teeth_vertices, lower_teeth_indices, GL.TRIANGLES);
 
     const { vertices: tongue_vertices, indices: tongue_indices } = generateEllipticParaboloid(0.7, 0.3, 1.8, 20, 10, [1.0, 0.6, 0.8]);
-    const tongue = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, tongue_vertices, tongue_indices);
+    const tongue = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, tongue_vertices, tongue_indices, GL.TRIANGLES);
 
     const { vertices: eyelid_vertices, indices: eyelid_indices } = generateEllipsoid(0.5, 0.4, 1.1, 30, 30, [1.0, 0.5, 0.0]);
-    const leftEyelid = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, eyelid_vertices, eyelid_indices);
-    const rightEyelid = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, eyelid_vertices, eyelid_indices);
+    const leftEyelid = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, eyelid_vertices, eyelid_indices, GL.TRIANGLES);
+    const rightEyelid = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, eyelid_vertices, eyelid_indices, GL.TRIANGLES);
 
     const { vertices: eye_white_vertices, indices: eye_white_indices } = generateEllipsoid(0.5, 0.3, 0.6, 30, 30, [1.0, 1.0, 1.0]);
-    const leftEyeWhite = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, eye_white_vertices, eye_white_indices);
-    const rightEyeWhite = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, eye_white_vertices, eye_white_indices);
+    const leftEyeWhite = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, eye_white_vertices, eye_white_indices, GL.TRIANGLES);
+    const rightEyeWhite = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, eye_white_vertices, eye_white_indices, GL.TRIANGLES);
 
     const { vertices: eye_black_vertices, indices: eye_black_indices } = generateEllipsoid(0.3, 0.2, 0.5, 30, 30, [0.0, 0.0, 0.0]);
-    const leftEyeBlack = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, eye_black_vertices, eye_black_indices);
-    const rightEyeBlack = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, eye_black_vertices, eye_black_indices);
+    const leftEyeBlack = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, eye_black_vertices, eye_black_indices, GL.TRIANGLES);
+    const rightEyeBlack = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, eye_black_vertices, eye_black_indices, GL.TRIANGLES);
 
     const { vertices: horn_vertices, indices: horn_indices } = generateEllipticParaboloidFlexible(0.25, 0.25, 2.0, 30, 30, 0.2, [1.0, 0.5, 0.0]);
-    const leftHorn = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, horn_vertices, horn_indices);
-    const rightHorn = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, horn_vertices, horn_indices);
+    const leftHorn = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, horn_vertices, horn_indices, GL.TRIANGLES);
+    const rightHorn = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, horn_vertices, horn_indices, GL.TRIANGLES);
 
     const { vertices: wing_bone_1, indices: wing_bone_1_indices } = generateCylinderDynamicRadius(0.1, 0.1, 0.1, 0.1, 3.0, 32, 32, [1.0, 0.5, 0.0], "linear");
-    const leftWingBone1 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_bone_1, wing_bone_1_indices);
-    const rightWingBone1 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_bone_1, wing_bone_1_indices);
+    const leftWingBone1 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_bone_1, wing_bone_1_indices, GL.TRIANGLES);
+    const rightWingBone1 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_bone_1, wing_bone_1_indices, GL.TRIANGLES);
 
-    const { vertices: bone_joints_1, indices: bone_joints_1_indices } = generateEllipsoid(0.3, 0.1, 0.15, 20, 10, [1.0, 0.5, 0.0]);
-    const leftBoneJoints1 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, bone_joints_1, bone_joints_1_indices);
-    const rightBoneJoints1 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, bone_joints_1, bone_joints_1_indices);
+    const { vertices: bone_joints_1, indices: bone_joints_1_indices } = generateEllipsoid(0.35, 0.2, 0.2, 20, 10, [1.0, 0.5, 0.0]);
+    const leftBoneJoints1 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, bone_joints_1, bone_joints_1_indices, GL.TRIANGLES);
+    const rightBoneJoints1 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, bone_joints_1, bone_joints_1_indices, GL.TRIANGLES);
 
     const { vertices: wing_bone_2, indices: wing_bone_2_indices } = generateCurvedByStrengthCylinder(0.1, 0.1, 2.0, 32, 32, [1.0, 0.5, 0.0], 0.8);
-    const leftWingBone2 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_bone_2, wing_bone_2_indices);
-    const rightWingBone2 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_bone_2, wing_bone_2_indices);
+    const leftWingBone2 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_bone_2, wing_bone_2_indices, GL.TRIANGLES);
+    const rightWingBone2 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_bone_2, wing_bone_2_indices, GL.TRIANGLES);
 
     const { vertices: bone_joints_2, indices: bone_joints_2_indices } = generateEllipsoid(0.4, 0.15, 0.15, 20, 10, [1.0, 0.5, 0.0]);
-    const leftBoneJoints2 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, bone_joints_2, bone_joints_2_indices);
-    const rightBoneJoints2 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, bone_joints_2, bone_joints_2_indices);
+    const leftBoneJoints2 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, bone_joints_2, bone_joints_2_indices, GL.TRIANGLES);
+    const rightBoneJoints2 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, bone_joints_2, bone_joints_2_indices, GL.TRIANGLES);
 
     const { vertices: wing_bone_3, indices: wing_bone_3_indices } = generateCylinderDynamicRadius(0.1, 0.1, 0.1, 0.1, 2.0, 32, 32, [1.0, 0.5, 0.0], "linear");
-    const leftWingBone3 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_bone_3, wing_bone_3_indices);
-    const rightWingBone3 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_bone_3, wing_bone_3_indices);
+    const leftWingBone3 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_bone_3, wing_bone_3_indices, GL.TRIANGLES);
+    const rightWingBone3 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_bone_3, wing_bone_3_indices, GL.TRIANGLES);
 
     const { vertices: wing_bone_4, indices: wing_bone_4_indices } = generateCylinderDynamicRadius(0.1, 0.1, 0.1, 0.1, 2.0, 32, 32, [1.0, 0.5, 0.0], "linear");
-    const leftWingBone4 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_bone_4, wing_bone_4_indices);
-    const rightWingBone4 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_bone_4, wing_bone_4_indices);
+    const leftWingBone4 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_bone_4, wing_bone_4_indices, GL.TRIANGLES);
+    const rightWingBone4 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_bone_4, wing_bone_4_indices, GL.TRIANGLES);
 
     const { vertices: wing_claw_vertices, indices: wing_claw_indices } = generateEllipticParaboloidFlexible(0.2, 0.1, 0.8, 30, 30, 0.2, [1.0, 0.5, 0.0]);
-    const leftWingClaw = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_claw_vertices, wing_claw_indices);
-    const rightWingClaw = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_claw_vertices, wing_claw_indices);
+    const leftWingClaw = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_claw_vertices, wing_claw_indices, GL.TRIANGLES);
+    const rightWingClaw = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_claw_vertices, wing_claw_indices, GL.TRIANGLES);
 
     const { vertices: wing_bone_5, indices: wing_bone_5_indices } = generateCylinderDynamicRadius(0.1, 0.1, 0.1, 0.1, 1.8, 32, 32, [1.0, 0.5, 0.0], "linear");
-    const leftWingBone5 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_bone_5, wing_bone_5_indices);
-    const rightWingBone5 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_bone_5, wing_bone_5_indices);
+    const leftWingBone5 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_bone_5, wing_bone_5_indices, GL.TRIANGLES);
+    const rightWingBone5 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_bone_5, wing_bone_5_indices, GL.TRIANGLES);
 
-    const { vertices: wing_bone_6, indices: wing_bone_6_indices } = generateCylinderDynamicRadius(0.1, 0.1, 0.1, 0.1, 6.3, 32, 32, [1.0, 0.5, 0.0], "linear");
-    const leftWingBone6 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_bone_6, wing_bone_6_indices);
-    const rightWingBone6 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_bone_6, wing_bone_6_indices);
+    const { vertices: wing_bone_6, indices: wing_bone_6_indices } = generateCylinderDynamicRadius(0.1, 0.1, 0.1, 0.1, 6.0, 32, 32, [1.0, 0.5, 0.0], "linear");
+    const leftWingBone6 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_bone_6, wing_bone_6_indices, GL.TRIANGLES);
+    const rightWingBone6 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_bone_6, wing_bone_6_indices, GL.TRIANGLES);
+
+    const wingPointsLeft = [
+        [-3.4, -0.2],  // kiri bawah
+        [-2.7, 0.5],  // kiri atas
+        [-1.8, 1.5],  // lengkung kiri
+        [0.0, 2.0],  // atas tengah kiri
+        [1.0, 2.6],  // atas tengah kanan
+        [2.2, 0.8],  // lengkung kanan
+        [2.3, -1.0],  // kanan atas
+        [1.9, -2.6]   // kanan bawah
+    ];
+    const { vertices: wing_membrane_left_vertices, indices: wing_membrane_left_indices } = generateWingFan(wingPointsLeft, [0.3, 0.4, 1.0]);
+    const leftWingMembrane = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_membrane_left_vertices, wing_membrane_left_indices, GL.TRIANGLE_FAN);
+
+    const wingPointsLeftClose = [
+        [-3.4, -0.2],  // kiri bawah
+        [-2.7, 0.5],  // kiri atas
+        [-1.8, 1.85],  // lengkung kiri
+        [0.0, 2.0],  // atas tengah kiri
+        [1.0, 2.6],  // atas tengah kanan
+        [2.2, 0.8],  // lengkung kanan
+        [2.3, -1.0],  // kanan atas
+        [1.9, -2.7]   // kanan bawah
+    ];
+    const { vertices: wing_membrane_left_close_vertices, indices: wing_membrane_left_close_indices } = generateWingFan(wingPointsLeftClose, [1.0, 0.5, 0.0]);
+    const leftWingMembranceClose = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_membrane_left_close_vertices, wing_membrane_left_close_indices, GL.TRIANGLE_FAN);
+
+    const wingPointsRight = [
+        [3.4, -0.2],  // kiri bawah
+        [2.7, 0.5],  // kiri atas
+        [1.8, 1.5],  // lengkung kiri
+        [0.0, 2.0],  // atas tengah kiri
+        [-1.0, 2.6],  // atas tengah kanan
+        [-2.2, 0.8],  // lengkung kanan
+        [-2.3, -1.0],  // kanan atas
+        [-1.9, -2.6]   // kanan bawah
+    ];
+    const { vertices: wing_membrane_right_vertices, indices: wing_membrane_right_indices } = generateWingFan(wingPointsRight, [0.3, 0.4, 1.0]);
+    const rightWingMembrane = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_membrane_right_vertices, wing_membrane_right_indices, GL.TRIANGLE_FAN);
+
+    const wingPointsRightClose = [
+        [3.4, -0.2],  // kiri bawah
+        [2.7, 0.5],  // kiri atas
+        [1.8, 1.85],  // lengkung kiri
+        [0.0, 2.0],  // atas tengah kiri
+        [-1.0, 2.6],  // atas tengah kanan
+        [-2.2, 0.8],  // lengkung kanan
+        [-2.3, -1.0],  // kanan atas
+        [-1.9, -2.7]   // kanan bawah
+    ];
+    const { vertices: wing_membrane_right_close_vertices, indices: wing_membrane_right_close_indices } = generateWingFan(wingPointsRightClose, [1.0, 0.5, 0.0]);
+    const rightWingMembranceClose = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_membrane_right_close_vertices, wing_membrane_right_close_indices, GL.TRIANGLE_FAN);
     // ========== GENERATE SHAPE OBJECT END ==========
 
     // ========== ROTATE SCALE TRANSLATE START ==========
@@ -577,13 +629,31 @@ function main() {
 
     LIBS.translateX(leftWingBone6.MOVE_MATRIX, -2.9);
     LIBS.translateY(leftWingBone6.MOVE_MATRIX, -5.65);
-    LIBS.translateZ(leftWingBone6.MOVE_MATRIX, 0.05);
+    LIBS.translateZ(leftWingBone6.MOVE_MATRIX, -0.2);
+    LIBS.rotateX(leftWingBone6.MOVE_MATRIX, LIBS.degToRad(-6));
     LIBS.rotateZ(leftWingBone6.MOVE_MATRIX, LIBS.degToRad(-80));
 
     LIBS.translateX(rightWingBone6.MOVE_MATRIX, 2.9);
     LIBS.translateY(rightWingBone6.MOVE_MATRIX, -5.65);
-    LIBS.translateZ(rightWingBone6.MOVE_MATRIX, 0.05);
+    LIBS.translateZ(rightWingBone6.MOVE_MATRIX, -0.2);
+    LIBS.rotateX(rightWingBone6.MOVE_MATRIX, LIBS.degToRad(-6));
     LIBS.rotateZ(rightWingBone6.MOVE_MATRIX, LIBS.degToRad(80));
+
+    LIBS.translateX(leftWingMembrane.MOVE_MATRIX, 4.0);
+    LIBS.translateZ(leftWingMembrane.MOVE_MATRIX, 0.4);
+    LIBS.rotateY(leftWingMembrane.MOVE_MATRIX, LIBS.degToRad(-6));
+
+    LIBS.translateX(rightWingMembrane.MOVE_MATRIX, -4.0);
+    LIBS.translateZ(rightWingMembrane.MOVE_MATRIX, 0.4);
+    LIBS.rotateY(rightWingMembrane.MOVE_MATRIX, LIBS.degToRad(6));
+
+    LIBS.translateX(leftWingMembranceClose.MOVE_MATRIX, 4.0);
+    LIBS.translateZ(leftWingMembranceClose.MOVE_MATRIX, 0.35);
+    LIBS.rotateY(leftWingMembranceClose.MOVE_MATRIX, LIBS.degToRad(-6));
+
+    LIBS.translateX(rightWingMembranceClose.MOVE_MATRIX, -4.0);
+    LIBS.translateZ(rightWingMembranceClose.MOVE_MATRIX, 0.35);
+    LIBS.rotateY(rightWingMembranceClose.MOVE_MATRIX, LIBS.degToRad(6));
     // ========== ROTATE SCALE TRANSLATE END ==========
 
     // ========== CHILDS PUSH START ==========
@@ -596,8 +666,10 @@ function main() {
     body.addChild(neck);
     body.addChild(leftWingBone1);
     body.addChild(rightWingBone1);
-    // body.addChild(leftWingBone6);
-    // body.addChild(rightWingBone6);
+    leftWingBone1.addChild(leftWingMembrane);
+    rightWingBone1.addChild(rightWingMembrane);
+    leftWingBone1.addChild(leftWingMembranceClose);
+    rightWingBone1.addChild(rightWingMembranceClose);
     leftWingBone1.addChild(leftBoneJoints1);
     leftBoneJoints1.addChild(leftWingBone2);
     rightWingBone1.addChild(rightBoneJoints1);

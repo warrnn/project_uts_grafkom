@@ -16,8 +16,9 @@ export class Object {
     MODEL_MATRIX = LIBS.get_I4();
 
     childs = [];
+    draw = null;
 
-    constructor(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, vertex = [], faces = []) {
+    constructor(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, vertex = [], faces = [], draw) {
         this.GL = GL;
         this.SHADER_PROGRAM = SHADER_PROGRAM;
 
@@ -27,6 +28,8 @@ export class Object {
 
         this.vertex = vertex;
         this.faces = faces;
+
+        this.draw = draw;
     }
 
     setup() {
@@ -61,7 +64,7 @@ export class Object {
         this.GL.vertexAttribPointer(this._color, 3, this.GL.FLOAT, false, 4 * (3 + 3), 4 * 3);
 
         // Draw
-        this.GL.drawElements(this.GL.TRIANGLES, this.faces.length, this.GL.UNSIGNED_SHORT, 0);
+        this.GL.drawElements(this.draw, this.faces.length, this.GL.UNSIGNED_SHORT, 0);
 
         // Render childs recursively
         this.childs.forEach(child => child.render(this.MODEL_MATRIX));

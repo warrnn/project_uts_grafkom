@@ -497,3 +497,26 @@ function generateEllipticParaboloidFlexible(a = 1.0, b = 1.0, height = 2.0, radi
 
     return { vertices, indices };
 }
+
+function generateWingFan(points, color = [1.0, 1.0, 1.0]) {
+    let vertices = [];
+    let indices = [];
+
+    // ===== Buat Vertices =====
+    // format: x, y, z, r, g, b
+    for (let i = 0; i < points.length; i++) {
+        let [x, y] = points[i];
+        vertices.push(x, y, 0, color[0], color[1], color[2]);
+    }
+
+    // ===== Buat Indices pakai TRIANGLE_FAN =====
+    for (let i = 1; i < points.length - 1; i++) {
+        indices.push(0, i, i + 1);
+    }
+
+    return {
+        vertices: new Float32Array(vertices),
+        indices: new Uint16Array(indices)
+    };
+}
+
