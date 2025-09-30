@@ -520,3 +520,64 @@ function generateWingFan(points, color = [1.0, 1.0, 1.0]) {
     };
 }
 
+function generateCircleDisk(radius = 1.0, height = 0.2, segments = 32, colorTop = [1.0, 1.0, 1.0], colorBottom = [1.0, 1.0, 1.0]) {
+    let vertices = [];
+    let indices = [];
+
+    let halfH = height / 2;
+
+    // ======================
+    // VERTEX ATAS
+    // ======================
+    vertices.push(0.0, 0.0, halfH, colorTop[0], colorTop[1], colorTop[2]); // pusat atas
+    for (let i = 0; i <= segments; i++) {
+        let theta = (i / segments) * 2 * Math.PI;
+        let x = radius * Math.cos(theta);
+        let y = radius * Math.sin(theta);
+        let z = halfH;
+        vertices.push(x, y, z, colorTop[0], colorTop[1], colorTop[2]);
+    }
+
+    // ======================
+    // VERTEX BAWAH
+    // ======================
+    vertices.push(0.0, 0.0, -halfH, colorBottom[0], colorBottom[1], colorBottom[2]); // pusat bawah
+    let offset = segments + 2;
+    for (let i = 0; i <= segments; i++) {
+        let theta = (i / segments) * 2 * Math.PI;
+        let x = radius * Math.cos(theta);
+        let y = radius * Math.sin(theta);
+        let z = -halfH;
+        vertices.push(x, y, z, colorBottom[0], colorBottom[1], colorBottom[2]);
+    }
+
+    // ======================
+    // INDEKS ATAS
+    // ======================
+    for (let i = 1; i <= segments; i++) {
+        indices.push(0, i, i + 1);
+    }
+
+    // ======================
+    // INDEKS BAWAH
+    // ======================
+    let centerBottom = offset;
+    for (let i = 1; i <= segments; i++) {
+        indices.push(centerBottom, centerBottom + i + 1, centerBottom + i);
+    }
+
+    // ======================
+    // INDEKS SAMPING
+    // ======================
+    for (let i = 1; i <= segments; i++) {
+        let top1 = i;
+        let top2 = i + 1;
+        let bot1 = offset + i;
+        let bot2 = offset + i + 1;
+
+        indices.push(top1, bot1, top2);
+        indices.push(top2, bot1, bot2);
+    }
+
+    return { vertices, indices };
+}
