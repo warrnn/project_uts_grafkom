@@ -226,6 +226,8 @@ function main() {
     LIBS.translateY(head.MOVE_MATRIX, 1.6);
     LIBS.translateZ(head.MOVE_MATRIX, 0.1);
 
+    LIBS.translateX(body.MOVE_MATRIX, 0.0);
+
     LIBS.translateX(leftEyebrow.MOVE_MATRIX, 0.6);
     LIBS.translateY(leftEyebrow.MOVE_MATRIX, 1.92);
     LIBS.translateZ(leftEyebrow.MOVE_MATRIX, -0.6);
@@ -411,13 +413,8 @@ function main() {
     // ========== ROTATE SCALE TRANSLATE END ==========
 
     // ========== CHILDS PUSH START ==========
-    body.addChild(head);
-    body.addChild(tail);
     body.addChild(belly);
-    body.addChild(leftarmShoulder);
-    body.addChild(rightarmShoulder);
-    body.addChild(leftLeg);
-    body.addChild(rightLeg);
+
     head.addChild(leftEye);
     head.addChild(rightEye);
     head.addChild(leftEyebrow);
@@ -425,31 +422,45 @@ function main() {
     head.addChild(cheeks);
     head.addChild(mouthBase);
     head.addChild(mouth);
+
     mouthBase.addChild(noseLeft);
     mouthBase.addChild(noseRight);
+
     tail.addChild(tailTip);
     tail.addChild(tailTipFire);
+
     leftEye.addChild(leftEyePupil);
-    rightEye.addChild(rightEyePupil);
     leftEye.addChild(leftEyePupil2);
+
+    rightEye.addChild(rightEyePupil);
     rightEye.addChild(rightEyePupil2);
+
     leftarmShoulder.addChild(leftArm);
+
     rightarmShoulder.addChild(rightArm);
+
     leftArm.addChild(leftFinger1);
     leftArm.addChild(leftFinger2);
     leftArm.addChild(leftFinger3);
     leftArm.addChild(leftFinger4);
+
     rightArm.addChild(rightFinger1);
     rightArm.addChild(rightFinger2);
     rightArm.addChild(rightFinger3);
     rightArm.addChild(rightFinger4);
+
     leftLeg.addChild(leftLegAnkle);
-    rightLeg.addChild(rightLegAnkle);
+
     leftLegAnkle.addChild(leftLegFoot);
-    rightLegAnkle.addChild(rightLegFoot);
+
     leftLegAnkle.addChild(leftLegClaw1);
     leftLegAnkle.addChild(leftLegClaw2);
     leftLegAnkle.addChild(leftLegClaw3);
+
+    rightLeg.addChild(rightLegAnkle);
+
+    rightLegAnkle.addChild(rightLegFoot);
+
     rightLegAnkle.addChild(rightLegClaw1);
     rightLegAnkle.addChild(rightLegClaw2);
     rightLegAnkle.addChild(rightLegClaw3);
@@ -457,6 +468,12 @@ function main() {
 
     // ========== SETUP START ==========
     body.setup();
+    head.setup();
+    tail.setup();
+    leftarmShoulder.setup();
+    rightarmShoulder.setup();
+    leftLeg.setup();
+    rightLeg.setup();
     // ========== SETUP END ==========
 
     GL.enable(GL.DEPTH_TEST);
@@ -492,6 +509,12 @@ function main() {
 
         // ========== RENDER PARENT OBJECT START ==========
         body.render(MODELMATRIX);
+        head.render(MODELMATRIX);
+        tail.render(MODELMATRIX);
+        leftarmShoulder.render(MODELMATRIX);
+        rightarmShoulder.render(MODELMATRIX);
+        leftLeg.render(MODELMATRIX);
+        rightLeg.render(MODELMATRIX);
         // ========== RENDER PARENT OBJECT END ==========
 
         GL.flush();

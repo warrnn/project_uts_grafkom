@@ -136,14 +136,14 @@ function main() {
     var VIEWMATRIX = LIBS.get_I4();
 
     // ========== GENERATE SHAPE OBJECT START =========
-    const { vertices: base_vertices, indices: base_indices } = generateCircleDisk(24.0, 0.6, 64, [0.1, 0.6, 0.1], [0.4, 0.25, 0.1]);
+    const { vertices: base_vertices, indices: base_indices } = generateCircleDisk(16.0, 0.6, 64, [0.1, 0.6, 0.1], [0.4, 0.25, 0.1]);
     const base = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, base_vertices, base_indices, GL.TRIANGLES);
 
-    const { vertices: body_vertices, indices: body_indices } = generateEllipsoid(1.1, 1.3, 0.8, 30, 30, [1.0, 0.5, 0.0]);
-    const charmanderBody = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, body_vertices, body_indices, GL.TRIANGLES);
+    const { vertices: charmander_body_vertices, indices: charmander_body_indices } = generateEllipsoid(1.1, 1.3, 0.8, 30, 30, [1.0, 0.5, 0.0]);
+    const charmanderBody = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, charmander_body_vertices, charmander_body_indices, GL.TRIANGLES);
 
-    const { vertices: head_vertices, indices: head_indices } = generateEllipsoid(0.8, 1.0, 0.9, 30, 30, [1.0, 0.5, 0.0]);
-    const charmanderHead = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, head_vertices, head_indices, GL.TRIANGLES);
+    const { vertices: charmander_head_vertices, indices: charmander_head_indices } = generateEllipsoid(0.8, 1.0, 0.9, 30, 30, [1.0, 0.5, 0.0]);
+    const charmanderHead = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, charmander_head_vertices, charmander_head_indices, GL.TRIANGLES);
 
     const { vertices: cheek_vertices, indices: cheek_indices } = generateEllipsoid(0.87, 0.8, 0.8, 30, 30, [1.0, 0.5, 0.0]);
     const charmanderCheeks = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, cheek_vertices, cheek_indices, GL.TRIANGLES);
@@ -174,39 +174,29 @@ function main() {
     const charmanderLeftEyePupil2 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, eyePupil2_vertices, eyePupil2_indices, GL.TRIANGLES);
     const charmanderRightEyePupil2 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, eyePupil2_vertices, eyePupil2_indices, GL.TRIANGLES);
 
-    const { vertices: tail_vertices, indices: tail_indices } = generateCurvedCylinder(0.4, 0.2, 1.5, 20, 10, [1.0, 0.5, 0.0]);
-    const charmanderTail = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, tail_vertices, tail_indices, GL.TRIANGLES);
+    const { vertices: charmander_tail_vertices, indices: charmander_tail_indices } = generateCurvedCylinder(0.4, 0.2, 1.5, 20, 10, [1.0, 0.5, 0.0]);
+    const charmanderTail = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, charmander_tail_vertices, charmander_tail_indices, GL.TRIANGLES);
 
-    const { vertices: tail_tip, indices: tail_tip_indices } = generateEllipsoidGradient(0.3, 0.3, 0.3, 30, 30, [1.0, 0.5, 0.0], [1.0, 1.0, 0.0]);
-    const charmanderTailTip = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, tail_tip, tail_tip_indices, GL.TRIANGLES);
+    const { vertices: charmander_tail_tip, indices: charmander_tail_tip_indices } = generateEllipsoidGradient(0.3, 0.3, 0.3, 30, 30, [1.0, 0.5, 0.0], [1.0, 1.0, 0.0]);
+    const charmanderTailTip = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, charmander_tail_tip, charmander_tail_tip_indices, GL.TRIANGLES);
 
-    const { vertices: fire_vertices, indices: fire_indices } = generateCylinderDynamicRadius(0.2, 0.5, 0.0, 0.0, 1.1, 32, 32, [1.0, 0.3, 0.0], "sin");
-    const charmanderTailTipFire = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, fire_vertices, fire_indices, GL.TRIANGLES);
+    const { vertices: charmander_fire_vertices, indices: charmander_fire_indices } = generateCylinderDynamicRadius(0.2, 0.5, 0.0, 0.0, 1.1, 32, 32, [1.0, 0.3, 0.0], "sin");
+    const charmanderTailTipFire = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, charmander_fire_vertices, charmander_fire_indices, GL.TRIANGLES);
 
-    const { vertices: belly_vertices, indices: belly_indices } = generateEllipsoid(0.9, 1.05, 0.4, 30, 30, [1.0, 1.0, 0.6]);
-    const charmanderBelly = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, belly_vertices, belly_indices, GL.TRIANGLES);
+    const { vertices: charmander_belly_vertices, indices: charmander_belly_indices } = generateEllipsoid(0.9, 1.05, 0.4, 30, 30, [1.0, 1.0, 0.6]);
+    const charmanderBelly = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, charmander_belly_vertices, charmander_belly_indices, GL.TRIANGLES);
 
-    const { vertices: shoulder_vertices, indices: shoulder_indices } = generateEllipsoid(0.3, 0.3, 0.3, 30, 30, [1.0, 0.5, 0.0]);
-    const charmanderLeftarmShoulder = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, shoulder_vertices, shoulder_indices, GL.TRIANGLES);
-    const charmanderRightarmShoulder = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, shoulder_vertices, shoulder_indices, GL.TRIANGLES);
+    const { vertices: charmander_shoulder_vertices, indices: charmander_shoulder_indices } = generateEllipsoid(0.3, 0.3, 0.3, 30, 30, [1.0, 0.5, 0.0]);
+    const charmanderLeftarmShoulder = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, charmander_shoulder_vertices, charmander_shoulder_indices, GL.TRIANGLES);
+    const charmanderRightarmShoulder = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, charmander_shoulder_vertices, charmander_shoulder_indices, GL.TRIANGLES);
 
-    const { vertices: arm_vertices, indices: arm_indices } = generateEllipsoid(0.6, 0.3, 0.3, 30, 30, [1.0, 0.5, 0.0]);
-    const charmanderLeftArm = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, arm_vertices, arm_indices, GL.TRIANGLES);
-    const charmanderRightArm = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, arm_vertices, arm_indices, GL.TRIANGLES);
+    const { vertices: charmander_arm_vertices, indices: charmander_arm_indices } = generateEllipsoid(0.6, 0.3, 0.3, 30, 30, [1.0, 0.5, 0.0]);
+    const charmanderLeftArm = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, charmander_arm_vertices, charmander_arm_indices, GL.TRIANGLES);
+    const charmanderRightArm = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, charmander_arm_vertices, charmander_arm_indices, GL.TRIANGLES);
 
-    const { vertices: finger_vertices, indices: finger_indices } = generateEllipticParaboloid(0.1, 0.1, 0.3, 20, 10, [1.0, 0.5, 0.0]);
-    const charmanderLeftFinger1 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, finger_vertices, finger_indices, GL.TRIANGLES);
-    const charmanderLeftFinger2 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, finger_vertices, finger_indices, GL.TRIANGLES);
-    const charmanderLeftFinger3 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, finger_vertices, finger_indices, GL.TRIANGLES);
-    const charmanderLeftFinger4 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, finger_vertices, finger_indices, GL.TRIANGLES);
-    const charmanderRightFinger1 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, finger_vertices, finger_indices, GL.TRIANGLES);
-    const charmanderRightFinger2 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, finger_vertices, finger_indices, GL.TRIANGLES);
-    const charmanderRightFinger3 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, finger_vertices, finger_indices, GL.TRIANGLES);
-    const charmanderRightFinger4 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, finger_vertices, finger_indices, GL.TRIANGLES);
-
-    const { vertices: leg_vertices, indices: leg_indices } = generateEllipsoid(0.4, 0.8, 0.4, 30, 30, [1.0, 0.5, 0.0]);
-    const charmanderLeftLeg = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, leg_vertices, leg_indices, GL.TRIANGLES);
-    const charmanderRightLeg = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, leg_vertices, leg_indices, GL.TRIANGLES);
+    const { vertices: charmander_leg_vertices, indices: charmander_leg_indices } = generateEllipsoid(0.4, 0.8, 0.4, 30, 30, [1.0, 0.5, 0.0]);
+    const charmanderLeftLeg = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, charmander_leg_vertices, charmander_leg_indices, GL.TRIANGLES);
+    const charmanderRightLeg = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, charmander_leg_vertices, charmander_leg_indices, GL.TRIANGLES);
 
     const { vertices: leg_ankle_vertices, indices: leg_ankle_indices } = generateEllipsoid(0.3, 0.3, 0.3, 30, 30, [1.0, 0.5, 0.0]);
     const charmanderLeftLegAnkle = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, leg_ankle_vertices, leg_ankle_indices, GL.TRIANGLES);
@@ -223,39 +213,219 @@ function main() {
     const charmanderRightLegClaw1 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, claw_vertices, claw_indices, GL.TRIANGLES);
     const charmanderRightLegClaw2 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, claw_vertices, claw_indices, GL.TRIANGLES);
     const charmanderRightLegClaw3 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, claw_vertices, claw_indices, GL.TRIANGLES);
+
+    const { vertices: body_vertices, indices: body_indices } = generateEllipsoid(2.1, 2.4, 1.5, 30, 30, [1.0, 0.5, 0.0]);
+    const charizardBody = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, body_vertices, body_indices, GL.TRIANGLES);
+
+    const { vertices: belly_vertices, indices: belly_indices } = generateEllipsoid(1.9, 2.1, 1.2, 30, 30, [1.0, 1.0, 0.6]);
+    const charizardBelly = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, belly_vertices, belly_indices, GL.TRIANGLES);
+
+    const { vertices: thigh_vertices, indices: thigh_indices } = generateEllipsoid(1.0, 1.0, 1.0, 30, 30, [1.0, 0.5, 0.0]);
+    const charizardLeftThigh = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, thigh_vertices, thigh_indices, GL.TRIANGLES);
+    const charizardRightThigh = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, thigh_vertices, thigh_indices, GL.TRIANGLES);
+
+    const { vertices: leg_vertices, indices: leg_indices } = generateEllipsoid(0.9, 1.5, 1.0, 30, 30, [1.0, 0.5, 0.0]);
+    const charizardLeftLeg = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, leg_vertices, leg_indices, GL.TRIANGLES);
+    const charizardRightLeg = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, leg_vertices, leg_indices, GL.TRIANGLES);
+
+    const { vertices: foots_vertices, indices: foots_indices } = generateEllipsoid(0.9, 0.4, 1.3, 30, 30, [1.0, 0.5, 0.0]);
+    const charizardLeftFoot = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, foots_vertices, foots_indices, GL.TRIANGLES);
+    const charizardRightFoot = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, foots_vertices, foots_indices, GL.TRIANGLES);
+
+    const { vertices: shoulder_vertices, indices: shoulder_indices } = generateEllipsoid(0.9, 0.6, 0.6, 30, 30, [1.0, 0.5, 0.0]);
+    const charizardLeftShoulder = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, shoulder_vertices, shoulder_indices, GL.TRIANGLES);
+    const charizardRightShoulder = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, shoulder_vertices, shoulder_indices, GL.TRIANGLES);
+
+    const { vertices: arm_vertices, indices: arm_indices } = generateCurvedByStrengthCylinder(0.3, 0.3, 2.5, 30, 30, [1.0, 0.5, 0.0], 0.5);
+    const charizardLeftArm = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, arm_vertices, arm_indices, GL.TRIANGLES);
+    const charizardRightArm = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, arm_vertices, arm_indices, GL.TRIANGLES);
+
+    const { vertices: hand_palm_vertices, indices: hand_palm_indices } = generateEllipsoid(0.5, 0.5, 0.25, 30, 30, [1.0, 0.5, 0.0]);
+    const charizardLeftHandPalm = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, hand_palm_vertices, hand_palm_indices, GL.TRIANGLES);
+    const charizardRightHandPalm = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, hand_palm_vertices, hand_palm_indices, GL.TRIANGLES);
+
+    const { vertices: foot_claw_vertices, indices: foot_claw_indices } = generateEagleTalon(0.25, 0.0, 0.55, 1.0, 30, 30, [1.0, 1.0, 1.0]);
+    const charizardLeftFootClaw1 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, foot_claw_vertices, foot_claw_indices, GL.TRIANGLES);
+    const charizardLeftFootClaw2 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, foot_claw_vertices, foot_claw_indices, GL.TRIANGLES);
+    const charizardLeftFootClaw3 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, foot_claw_vertices, foot_claw_indices, GL.TRIANGLES);
+    const charizardRightFootClaw1 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, foot_claw_vertices, foot_claw_indices, GL.TRIANGLES);
+    const charizardRightFootClaw2 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, foot_claw_vertices, foot_claw_indices, GL.TRIANGLES);
+    const charizardRightFootClaw3 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, foot_claw_vertices, foot_claw_indices, GL.TRIANGLES);
+
+    const { vertices: tail_vertices, indices: tail_indices } = generateCurvedCylinder(0.4, 0.2, 3.5, 20, 10, [1.0, 0.5, 0.0]);
+    const charizardTail = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, tail_vertices, tail_indices, GL.TRIANGLES);
+
+    const { vertices: tail_tip, indices: tail_tip_indices } = generateEllipsoidGradient(0.6, 0.6, 0.6, 30, 30, [1.0, 0.5, 0.0], [1.0, 1.0, 0.0]);
+    const charizardTailTip = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, tail_tip, tail_tip_indices, GL.TRIANGLES);
+
+    const { vertices: fire_vertices, indices: fire_indices } = generateCylinderDynamicRadius(0.6, 0.8, 0.0, 0.0, 1.1, 32, 32, [1.0, 0.3, 0.0], "sin");
+    const charizardTailTipFire = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, fire_vertices, fire_indices, GL.TRIANGLES);
+
+    const { vertices: neck_vertices, indices: neck_indices } = generateCylinderDynamicRadius(0.9, 0.9, 0.4, 0.4, 4.0, 32, 32, [1.0, 0.5, 0.0], "cos");
+    const charizardNeck = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, neck_vertices, neck_indices, GL.TRIANGLES);
+
+    const { vertices: head_vertices, indices: head_indices } = generateEllipsoid(1.1, 0.9, 1.0, 30, 30, [1.0, 0.5, 0.0]);
+    const charizardHead = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, head_vertices, head_indices, GL.TRIANGLES);
+
+    const { vertices: upper_mouth_vertices, indices: upper_mouth_indices } = generateEllipticParaboloidFlexible(1.0, 0.5, 2.2, 30, 30, 0.2, [1.0, 0.5, 0.0]);
+    const charizardUpperMouth = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, upper_mouth_vertices, upper_mouth_indices, GL.TRIANGLES);
+
+    const { vertices: lower_mouth_vertices, indices: lower_mouth_indices } = generateEllipticParaboloidFlexible(0.85, 0.4, 2.0, 30, 30, 0.2, [1.0, 0.5, 0.0]);
+    const charizardLowerMouth = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, lower_mouth_vertices, lower_mouth_indices, GL.TRIANGLES);
+
+    const { vertices: cheeks_vertices, indices: cheeks_indices } = generateEllipsoid(1.1, 0.65, 0.8, 30, 30, [1.0, 0.5, 0.0]);
+    const charizardCheeks = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, cheeks_vertices, cheeks_indices, GL.TRIANGLES);
+
+    const { vertices: upper_teeth_vertices, indices: upper_teeth_indices } = generateEllipticParaboloid(0.1, 0.1, 0.3, 20, 10, [1.0, 1.0, 1.0]);
+    const charizardUpperTeethLeft = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, upper_teeth_vertices, upper_teeth_indices, GL.TRIANGLES);
+    const charizardUpperTeethRight = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, upper_teeth_vertices, upper_teeth_indices, GL.TRIANGLES);
+
+    const { vertices: lower_teeth_vertices, indices: lower_teeth_indices } = generateEllipticParaboloid(0.05, 0.05, 0.2, 20, 10, [1.0, 1.0, 1.0]);
+    const charizardLowerTeethLeft = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, lower_teeth_vertices, lower_teeth_indices, GL.TRIANGLES);
+    const charizardLowerTeethRight = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, lower_teeth_vertices, lower_teeth_indices, GL.TRIANGLES);
+
+    const { vertices: tongue_vertices, indices: tongue_indices } = generateEllipticParaboloid(0.7, 0.3, 1.8, 20, 10, [1.0, 0.6, 0.8]);
+    const charizardTongue = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, tongue_vertices, tongue_indices, GL.TRIANGLES);
+
+    const { vertices: eyelid_vertices, indices: eyelid_indices } = generateEllipsoid(0.5, 0.4, 1.1, 30, 30, [1.0, 0.5, 0.0]);
+    const charizardLeftEyelid = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, eyelid_vertices, eyelid_indices, GL.TRIANGLES);
+    const charizardRightEyelid = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, eyelid_vertices, eyelid_indices, GL.TRIANGLES);
+
+    const { vertices: eye_white_vertices, indices: eye_white_indices } = generateEllipsoid(0.5, 0.3, 0.6, 30, 30, [1.0, 1.0, 1.0]);
+    const charizardLeftEyeWhite = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, eye_white_vertices, eye_white_indices, GL.TRIANGLES);
+    const charizardRightEyeWhite = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, eye_white_vertices, eye_white_indices, GL.TRIANGLES);
+
+    const { vertices: eye_black_vertices, indices: eye_black_indices } = generateEllipsoid(0.3, 0.2, 0.5, 30, 30, [0.0, 0.0, 0.0]);
+    const charizardLeftEyeBlack = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, eye_black_vertices, eye_black_indices, GL.TRIANGLES);
+    const charizardRightEyeBlack = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, eye_black_vertices, eye_black_indices, GL.TRIANGLES);
+
+    const { vertices: horn_vertices, indices: horn_indices } = generateEllipticParaboloidFlexible(0.25, 0.25, 2.0, 30, 30, 0.2, [1.0, 0.5, 0.0]);
+    const charizardLeftHorn = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, horn_vertices, horn_indices, GL.TRIANGLES);
+    const charizardRightHorn = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, horn_vertices, horn_indices, GL.TRIANGLES);
+
+    const { vertices: wing_bone_1, indices: wing_bone_1_indices } = generateCylinderDynamicRadius(0.1, 0.1, 0.1, 0.1, 3.0, 32, 32, [1.0, 0.5, 0.0], "linear");
+    const charizardLeftWingBone1 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_bone_1, wing_bone_1_indices, GL.TRIANGLES);
+    const charizardRightWingBone1 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_bone_1, wing_bone_1_indices, GL.TRIANGLES);
+
+    const { vertices: bone_joints_1, indices: bone_joints_1_indices } = generateEllipsoid(0.35, 0.2, 0.2, 20, 10, [1.0, 0.5, 0.0]);
+    const charizardLeftBoneJoints1 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, bone_joints_1, bone_joints_1_indices, GL.TRIANGLES);
+    const charizardRightBoneJoints1 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, bone_joints_1, bone_joints_1_indices, GL.TRIANGLES);
+
+    const { vertices: wing_bone_2, indices: wing_bone_2_indices } = generateCurvedByStrengthCylinder(0.1, 0.1, 2.0, 32, 32, [1.0, 0.5, 0.0], 0.8);
+    const charizardLeftWingBone2 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_bone_2, wing_bone_2_indices, GL.TRIANGLES);
+    const charizardRightWingBone2 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_bone_2, wing_bone_2_indices, GL.TRIANGLES);
+
+    const { vertices: bone_joints_2, indices: bone_joints_2_indices } = generateEllipsoid(0.4, 0.15, 0.15, 20, 10, [1.0, 0.5, 0.0]);
+    const charizardLeftBoneJoints2 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, bone_joints_2, bone_joints_2_indices, GL.TRIANGLES);
+    const charizardRightBoneJoints2 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, bone_joints_2, bone_joints_2_indices, GL.TRIANGLES);
+
+    const { vertices: wing_bone_3, indices: wing_bone_3_indices } = generateCylinderDynamicRadius(0.1, 0.1, 0.1, 0.1, 2.0, 32, 32, [1.0, 0.5, 0.0], "linear");
+    const charizardLeftWingBone3 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_bone_3, wing_bone_3_indices, GL.TRIANGLES);
+    const charizardRightWingBone3 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_bone_3, wing_bone_3_indices, GL.TRIANGLES);
+
+    const { vertices: wing_bone_4, indices: wing_bone_4_indices } = generateCylinderDynamicRadius(0.1, 0.1, 0.1, 0.1, 2.0, 32, 32, [1.0, 0.5, 0.0], "linear");
+    const charizardLeftWingBone4 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_bone_4, wing_bone_4_indices, GL.TRIANGLES);
+    const charizardRightWingBone4 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_bone_4, wing_bone_4_indices, GL.TRIANGLES);
+
+    const { vertices: wing_claw_vertices, indices: wing_claw_indices } = generateEllipticParaboloidFlexible(0.2, 0.1, 0.8, 30, 30, 0.2, [1.0, 0.5, 0.0]);
+    const charizardLeftWingClaw = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_claw_vertices, wing_claw_indices, GL.TRIANGLES);
+    const charizardRightWingClaw = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_claw_vertices, wing_claw_indices, GL.TRIANGLES);
+
+    const { vertices: wing_bone_5, indices: wing_bone_5_indices } = generateCylinderDynamicRadius(0.1, 0.1, 0.1, 0.1, 1.8, 32, 32, [1.0, 0.5, 0.0], "linear");
+    const charizardLeftWingBone5 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_bone_5, wing_bone_5_indices, GL.TRIANGLES);
+    const charizardRightWingBone5 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_bone_5, wing_bone_5_indices, GL.TRIANGLES);
+
+    const { vertices: wing_bone_6, indices: wing_bone_6_indices } = generateCylinderDynamicRadius(0.1, 0.1, 0.1, 0.1, 6.0, 32, 32, [1.0, 0.5, 0.0], "linear");
+    const charizardLeftWingBone6 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_bone_6, wing_bone_6_indices, GL.TRIANGLES);
+    const charizardRightWingBone6 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_bone_6, wing_bone_6_indices, GL.TRIANGLES);
+
+    const charizardWingPointsLeft = [
+        [-3.4, -0.2],  // kiri bawah
+        [-2.7, 0.5],  // kiri atas
+        [-1.8, 1.5],  // lengkung kiri
+        [0.0, 2.0],  // atas tengah kiri
+        [1.0, 2.6],  // atas tengah kanan
+        [2.2, 0.8],  // lengkung kanan
+        [2.3, -1.0],  // kanan atas
+        [1.9, -2.6]   // kanan bawah
+    ];
+    const { vertices: wing_membrane_left_vertices, indices: wing_membrane_left_indices } = generateWingFan(charizardWingPointsLeft, [0.3, 0.4, 1.0]);
+    const charizardLeftWingMembrane = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_membrane_left_vertices, wing_membrane_left_indices, GL.TRIANGLE_FAN);
+
+    const charizardWingPointsLeftClose = [
+        [-3.4, -0.2],  // kiri bawah
+        [-2.7, 0.5],  // kiri atas
+        [-1.8, 1.85],  // lengkung kiri
+        [0.0, 2.0],  // atas tengah kiri
+        [1.0, 2.6],  // atas tengah kanan
+        [2.2, 0.8],  // lengkung kanan
+        [2.3, -1.0],  // kanan atas
+        [1.9, -2.7]   // kanan bawah
+    ];
+    const { vertices: wing_membrane_left_close_vertices, indices: wing_membrane_left_close_indices } = generateWingFan(charizardWingPointsLeftClose, [1.0, 0.5, 0.0]);
+    const charizardLeftWingMembranceClose = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_membrane_left_close_vertices, wing_membrane_left_close_indices, GL.TRIANGLE_FAN);
+
+    const wingPointsRight = [
+        [3.4, -0.2],  // kiri bawah
+        [2.7, 0.5],  // kiri atas
+        [1.8, 1.5],  // lengkung kiri
+        [0.0, 2.0],  // atas tengah kiri
+        [-1.0, 2.6],  // atas tengah kanan
+        [-2.2, 0.8],  // lengkung kanan
+        [-2.3, -1.0],  // kanan atas
+        [-1.9, -2.6]   // kanan bawah
+    ];
+    const { vertices: wing_membrane_right_vertices, indices: wing_membrane_right_indices } = generateWingFan(wingPointsRight, [0.3, 0.4, 1.0]);
+    const rightWingMembrane = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_membrane_right_vertices, wing_membrane_right_indices, GL.TRIANGLE_FAN);
+
+    const wingPointsRightClose = [
+        [3.4, -0.2],  // kiri bawah
+        [2.7, 0.5],  // kiri atas
+        [1.8, 1.85],  // lengkung kiri
+        [0.0, 2.0],  // atas tengah kiri
+        [-1.0, 2.6],  // atas tengah kanan
+        [-2.2, 0.8],  // lengkung kanan
+        [-2.3, -1.0],  // kanan atas
+        [-1.9, -2.7]   // kanan bawah
+    ];
+    const { vertices: wing_membrane_right_close_vertices, indices: wing_membrane_right_close_indices } = generateWingFan(wingPointsRightClose, [1.0, 0.5, 0.0]);
+    const rightWingMembranceClose = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_membrane_right_close_vertices, wing_membrane_right_close_indices, GL.TRIANGLE_FAN);
     // ========== GENERATE SHAPE OBJECT END ==========
 
     // ========== ROTATE SCALE TRANSLATE START ==========
     LIBS.translateY(base.MOVE_MATRIX, -2.0);
     LIBS.rotateX(base.MOVE_MATRIX, -Math.PI / 2);
 
+    LIBS.translateX(charmanderBody.MOVE_MATRIX, -9.0);
+
+    LIBS.translateX(charmanderHead.MOVE_MATRIX, -9.0);
     LIBS.translateY(charmanderHead.MOVE_MATRIX, 1.6);
     LIBS.translateZ(charmanderHead.MOVE_MATRIX, 0.1);
 
-    LIBS.translateX(charmanderLeftEyebrow.MOVE_MATRIX, 0.6);
-    LIBS.translateY(charmanderLeftEyebrow.MOVE_MATRIX, 1.92);
+    LIBS.translateX(charmanderLeftEyebrow.MOVE_MATRIX, -6.0);
+    LIBS.translateY(charmanderLeftEyebrow.MOVE_MATRIX, 10.7);
     LIBS.translateZ(charmanderLeftEyebrow.MOVE_MATRIX, -0.6);
     LIBS.rotateX(charmanderLeftEyebrow.MOVE_MATRIX, LIBS.degToRad(45));
     LIBS.rotateZ(charmanderLeftEyebrow.MOVE_MATRIX, LIBS.degToRad(75));
 
-    LIBS.translateX(charmanderRightEyebrow.MOVE_MATRIX, -0.7);
-    LIBS.translateY(charmanderRightEyebrow.MOVE_MATRIX, 1.79);
-    LIBS.translateZ(charmanderRightEyebrow.MOVE_MATRIX, -0.45);
+    LIBS.translateX(charmanderRightEyebrow.MOVE_MATRIX, -12.8);
+    LIBS.translateY(charmanderRightEyebrow.MOVE_MATRIX, 10.33);
+    LIBS.translateZ(charmanderRightEyebrow.MOVE_MATRIX, -0.5);
     LIBS.rotateX(charmanderRightEyebrow.MOVE_MATRIX, LIBS.degToRad(-225));
     LIBS.rotateZ(charmanderRightEyebrow.MOVE_MATRIX, LIBS.degToRad(-250));
 
-    LIBS.translateX(charmanderLeftEye.MOVE_MATRIX, -0.45);
+    LIBS.translateX(charmanderLeftEye.MOVE_MATRIX, -3.6);
     LIBS.translateY(charmanderLeftEye.MOVE_MATRIX, 0.3);
-    LIBS.translateZ(charmanderLeftEye.MOVE_MATRIX, 0.6);
+    LIBS.translateZ(charmanderLeftEye.MOVE_MATRIX, 7.6);
     LIBS.rotateY(charmanderLeftEye.MOVE_MATRIX, LIBS.degToRad(-50));
 
     LIBS.translateX(charmanderLeftEyePupil.MOVE_MATRIX, 0.02);
     LIBS.translateY(charmanderLeftEyePupil.MOVE_MATRIX, 0.07);
     LIBS.translateZ(charmanderLeftEyePupil.MOVE_MATRIX, 0.09);
 
-    LIBS.translateX(charmanderRightEye.MOVE_MATRIX, 0.45);
+    LIBS.translateX(charmanderRightEye.MOVE_MATRIX, -2.75);
     LIBS.translateY(charmanderRightEye.MOVE_MATRIX, 0.3);
-    LIBS.translateZ(charmanderRightEye.MOVE_MATRIX, 0.6);
+    LIBS.translateZ(charmanderRightEye.MOVE_MATRIX, -6.3);
     LIBS.rotateY(charmanderRightEye.MOVE_MATRIX, LIBS.degToRad(50));
 
     LIBS.translateX(charmanderRightEyePupil.MOVE_MATRIX, -0.02);
@@ -276,6 +446,7 @@ function main() {
     LIBS.translateY(charmaderNoseRight.MOVE_MATRIX, -0.1);
     LIBS.translateZ(charmaderNoseRight.MOVE_MATRIX, 0.8);
 
+    LIBS.translateX(charmanderTail.MOVE_MATRIX, -9.0);
     LIBS.translateY(charmanderTail.MOVE_MATRIX, 0.6);
     LIBS.translateZ(charmanderTail.MOVE_MATRIX, -0.8);
     LIBS.rotateX(charmanderTail.MOVE_MATRIX, -Math.PI / 3);
@@ -293,76 +464,28 @@ function main() {
     LIBS.translateZ(charmanderBelly.MOVE_MATRIX, 0.41);
     LIBS.rotateX(charmanderBelly.MOVE_MATRIX, Math.PI / 16);
 
-    LIBS.translateX(charmanderLeftarmShoulder.MOVE_MATRIX, 0.8);
+    LIBS.translateX(charmanderLeftarmShoulder.MOVE_MATRIX, -9.8);
     LIBS.translateY(charmanderLeftarmShoulder.MOVE_MATRIX, 0.6);
 
-    LIBS.translateX(charmanderLeftArm.MOVE_MATRIX, 0.3);
-    LIBS.translateY(charmanderLeftArm.MOVE_MATRIX, 0.37);
-    LIBS.translateZ(charmanderLeftArm.MOVE_MATRIX, -0.3);
+    LIBS.translateX(charmanderLeftArm.MOVE_MATRIX, -0.75);
+    LIBS.translateY(charmanderLeftArm.MOVE_MATRIX, -4.2);
+    LIBS.translateZ(charmanderLeftArm.MOVE_MATRIX, 5.0);
     LIBS.rotateY(charmanderLeftArm.MOVE_MATRIX, LIBS.degToRad(-30));
     LIBS.rotateZ(charmanderLeftArm.MOVE_MATRIX, LIBS.degToRad(-30));
 
-    LIBS.translateX(charmanderLeftFinger1.MOVE_MATRIX, 2.1);
-    LIBS.translateY(charmanderLeftFinger1.MOVE_MATRIX, -0.7);
-    LIBS.translateZ(charmanderLeftFinger1.MOVE_MATRIX, 0.1);
-    LIBS.rotateY(charmanderLeftFinger1.MOVE_MATRIX, LIBS.degToRad(-150));
-    LIBS.rotateZ(charmanderLeftFinger1.MOVE_MATRIX, LIBS.degToRad(-30));
-
-    LIBS.translateX(charmanderLeftFinger2.MOVE_MATRIX, 1.62);
-    LIBS.translateY(charmanderLeftFinger2.MOVE_MATRIX, -0.41);
-    LIBS.translateZ(charmanderLeftFinger2.MOVE_MATRIX, -0.64);
-    LIBS.rotateY(charmanderLeftFinger2.MOVE_MATRIX, LIBS.degToRad(-100));
-    LIBS.rotateZ(charmanderLeftFinger2.MOVE_MATRIX, LIBS.degToRad(-30));
-
-    LIBS.translateX(charmanderLeftFinger3.MOVE_MATRIX, 1.55);
-    LIBS.translateY(charmanderLeftFinger3.MOVE_MATRIX, -0.35);
-    LIBS.translateZ(charmanderLeftFinger3.MOVE_MATRIX, -0.78);
-    LIBS.rotateY(charmanderLeftFinger3.MOVE_MATRIX, LIBS.degToRad(-90));
-    LIBS.rotateZ(charmanderLeftFinger3.MOVE_MATRIX, LIBS.degToRad(-30));
-
-    LIBS.translateX(charmanderLeftFinger4.MOVE_MATRIX, 1.15);
-    LIBS.translateY(charmanderLeftFinger4.MOVE_MATRIX, -0.15);
-    LIBS.translateZ(charmanderLeftFinger4.MOVE_MATRIX, -0.95);
-    LIBS.rotateY(charmanderLeftFinger4.MOVE_MATRIX, LIBS.degToRad(-70));
-    LIBS.rotateZ(charmanderLeftFinger4.MOVE_MATRIX, LIBS.degToRad(-30));
-
-    LIBS.translateX(charmanderRightFinger1.MOVE_MATRIX, -2.1 - 0.14);
-    LIBS.translateY(charmanderRightFinger1.MOVE_MATRIX, -0.7);
-    LIBS.translateZ(charmanderRightFinger1.MOVE_MATRIX, 0.1 + 0.02);
-    LIBS.rotateY(charmanderRightFinger1.MOVE_MATRIX, LIBS.degToRad(150));
-    LIBS.rotateZ(charmanderRightFinger1.MOVE_MATRIX, LIBS.degToRad(30));
-
-    LIBS.translateX(charmanderRightFinger2.MOVE_MATRIX, -1.62 - 0.14);
-    LIBS.translateY(charmanderRightFinger2.MOVE_MATRIX, -0.41);
-    LIBS.translateZ(charmanderRightFinger2.MOVE_MATRIX, -0.65 + 0.02);
-    LIBS.rotateY(charmanderRightFinger2.MOVE_MATRIX, LIBS.degToRad(100));
-    LIBS.rotateZ(charmanderRightFinger2.MOVE_MATRIX, LIBS.degToRad(30));
-
-    LIBS.translateX(charmanderRightFinger3.MOVE_MATRIX, -1.55 - 0.14);
-    LIBS.translateY(charmanderRightFinger3.MOVE_MATRIX, -0.35);
-    LIBS.translateZ(charmanderRightFinger3.MOVE_MATRIX, -0.78 + 0.02);
-    LIBS.rotateY(charmanderRightFinger3.MOVE_MATRIX, LIBS.degToRad(90));
-    LIBS.rotateZ(charmanderRightFinger3.MOVE_MATRIX, LIBS.degToRad(30));
-
-    LIBS.translateX(charmanderRightFinger4.MOVE_MATRIX, -1.17 - 0.14);
-    LIBS.translateY(charmanderRightFinger4.MOVE_MATRIX, -0.15);
-    LIBS.translateZ(charmanderRightFinger4.MOVE_MATRIX, -0.95 + 0.02);
-    LIBS.rotateY(charmanderRightFinger4.MOVE_MATRIX, LIBS.degToRad(70));
-    LIBS.rotateZ(charmanderRightFinger4.MOVE_MATRIX, LIBS.degToRad(30));
-
-    LIBS.translateX(charmanderRightarmShoulder.MOVE_MATRIX, -0.9);
+    LIBS.translateX(charmanderRightarmShoulder.MOVE_MATRIX, -8.2);
     LIBS.translateY(charmanderRightarmShoulder.MOVE_MATRIX, 0.6);
 
-    LIBS.translateX(charmanderRightArm.MOVE_MATRIX, -0.3);
-    LIBS.translateY(charmanderRightArm.MOVE_MATRIX, 0.37);
-    LIBS.translateZ(charmanderRightArm.MOVE_MATRIX, -0.3);
+    LIBS.translateX(charmanderRightArm.MOVE_MATRIX, -3.8);
+    LIBS.translateY(charmanderRightArm.MOVE_MATRIX, 3.55);
+    LIBS.translateZ(charmanderRightArm.MOVE_MATRIX, -4.0);
     LIBS.rotateY(charmanderRightArm.MOVE_MATRIX, LIBS.degToRad(30));
     LIBS.rotateZ(charmanderRightArm.MOVE_MATRIX, LIBS.degToRad(30));
 
-    LIBS.translateX(charmanderLeftLeg.MOVE_MATRIX, 0.7);
+    LIBS.translateX(charmanderLeftLeg.MOVE_MATRIX, -8.3);
     LIBS.translateY(charmanderLeftLeg.MOVE_MATRIX, -0.8);
 
-    LIBS.translateX(charmanderRightLeg.MOVE_MATRIX, -0.7);
+    LIBS.translateX(charmanderRightLeg.MOVE_MATRIX, -9.7);
     LIBS.translateY(charmanderRightLeg.MOVE_MATRIX, -0.8);
 
     LIBS.translateY(charmanderLeftLegAnkle.MOVE_MATRIX, -0.55);
@@ -371,59 +494,345 @@ function main() {
 
     LIBS.translateX(charmanderLeftLegFoot.MOVE_MATRIX, 0.1);
     LIBS.translateY(charmanderLeftLegFoot.MOVE_MATRIX, -0.15);
-    LIBS.translateZ(charmanderLeftLegFoot.MOVE_MATRIX, 0.45);
-    LIBS.rotateY(charmanderLeftLegFoot.MOVE_MATRIX, LIBS.degToRad(20));
+    LIBS.translateZ(charmanderLeftLegFoot.MOVE_MATRIX, 0.25);
 
     LIBS.translateX(charmanderRightLegFoot.MOVE_MATRIX, -0.1);
     LIBS.translateY(charmanderRightLegFoot.MOVE_MATRIX, -0.15);
-    LIBS.translateZ(charmanderRightLegFoot.MOVE_MATRIX, 0.45);
-    LIBS.rotateY(charmanderRightLegFoot.MOVE_MATRIX, LIBS.degToRad(-20));
+    LIBS.translateZ(charmanderRightLegFoot.MOVE_MATRIX, 0.25);
 
-    LIBS.translateX(charmanderLeftLegClaw1.MOVE_MATRIX, 0.15);
+    LIBS.translateX(charmanderLeftLegClaw1.MOVE_MATRIX, -0.0);
     LIBS.translateY(charmanderLeftLegClaw1.MOVE_MATRIX, -2.85);
-    LIBS.translateZ(charmanderLeftLegClaw1.MOVE_MATRIX, 1.02);
+    LIBS.translateZ(charmanderLeftLegClaw1.MOVE_MATRIX, 0.85);
     LIBS.rotateX(charmanderLeftLegClaw1.MOVE_MATRIX, LIBS.degToRad(180));
-    LIBS.rotateY(charmanderLeftLegClaw1.MOVE_MATRIX, LIBS.degToRad(20));
 
-    LIBS.translateX(charmanderLeftLegClaw2.MOVE_MATRIX, 0.30);
+    LIBS.translateX(charmanderLeftLegClaw2.MOVE_MATRIX, 0.15);
     LIBS.translateY(charmanderLeftLegClaw2.MOVE_MATRIX, -2.85);
-    LIBS.translateZ(charmanderLeftLegClaw2.MOVE_MATRIX, 1.02);
+    LIBS.translateZ(charmanderLeftLegClaw2.MOVE_MATRIX, 0.85);
     LIBS.rotateX(charmanderLeftLegClaw2.MOVE_MATRIX, LIBS.degToRad(180));
-    LIBS.rotateY(charmanderLeftLegClaw2.MOVE_MATRIX, LIBS.degToRad(20));
 
-    LIBS.translateX(charmanderLeftLegClaw3.MOVE_MATRIX, 0.42);
+    LIBS.translateX(charmanderLeftLegClaw3.MOVE_MATRIX, 0.30);
     LIBS.translateY(charmanderLeftLegClaw3.MOVE_MATRIX, -2.85);
-    LIBS.translateZ(charmanderLeftLegClaw3.MOVE_MATRIX, 0.92);
+    LIBS.translateZ(charmanderLeftLegClaw3.MOVE_MATRIX, 0.75);
     LIBS.rotateX(charmanderLeftLegClaw3.MOVE_MATRIX, LIBS.degToRad(180));
-    LIBS.rotateY(charmanderLeftLegClaw3.MOVE_MATRIX, LIBS.degToRad(20));
 
-    LIBS.translateX(charmanderRightLegClaw1.MOVE_MATRIX, -0.15);
+    LIBS.translateX(charmanderRightLegClaw1.MOVE_MATRIX, 0.0);
     LIBS.translateY(charmanderRightLegClaw1.MOVE_MATRIX, -2.85);
-    LIBS.translateZ(charmanderRightLegClaw1.MOVE_MATRIX, 1.02);
+    LIBS.translateZ(charmanderRightLegClaw1.MOVE_MATRIX, 0.85);
     LIBS.rotateX(charmanderRightLegClaw1.MOVE_MATRIX, LIBS.degToRad(180));
-    LIBS.rotateY(charmanderRightLegClaw1.MOVE_MATRIX, LIBS.degToRad(-20));
 
-    LIBS.translateX(charmanderRightLegClaw2.MOVE_MATRIX, -0.30);
+    LIBS.translateX(charmanderRightLegClaw2.MOVE_MATRIX, -0.15);
     LIBS.translateY(charmanderRightLegClaw2.MOVE_MATRIX, -2.85);
-    LIBS.translateZ(charmanderRightLegClaw2.MOVE_MATRIX, 1.02);
+    LIBS.translateZ(charmanderRightLegClaw2.MOVE_MATRIX, 0.85);
     LIBS.rotateX(charmanderRightLegClaw2.MOVE_MATRIX, LIBS.degToRad(180));
-    LIBS.rotateY(charmanderRightLegClaw2.MOVE_MATRIX, LIBS.degToRad(-20));
 
-    LIBS.translateX(charmanderRightLegClaw3.MOVE_MATRIX, -0.42);
+    LIBS.translateX(charmanderRightLegClaw3.MOVE_MATRIX, -0.30);
     LIBS.translateY(charmanderRightLegClaw3.MOVE_MATRIX, -2.85);
-    LIBS.translateZ(charmanderRightLegClaw3.MOVE_MATRIX, 0.92);
+    LIBS.translateZ(charmanderRightLegClaw3.MOVE_MATRIX, 0.75);
     LIBS.rotateX(charmanderRightLegClaw3.MOVE_MATRIX, LIBS.degToRad(180));
-    LIBS.rotateY(charmanderRightLegClaw3.MOVE_MATRIX, LIBS.degToRad(-20));
+
+    LIBS.translateX(charizardBody.MOVE_MATRIX, 9.0);
+    LIBS.translateY(charizardBody.MOVE_MATRIX, 2.0);
+
+    LIBS.translateY(charizardBelly.MOVE_MATRIX, -0.2);
+    LIBS.translateZ(charizardBelly.MOVE_MATRIX, 0.2);
+    LIBS.rotateX(charizardBelly.MOVE_MATRIX, LIBS.degToRad(5));
+
+    LIBS.translateX(charizardLeftThigh.MOVE_MATRIX, 10.3);
+    LIBS.translateY(charizardLeftThigh.MOVE_MATRIX, 0.4);
+
+    LIBS.translateX(charizardRightThigh.MOVE_MATRIX, 7.3);
+    LIBS.translateY(charizardRightThigh.MOVE_MATRIX, 0.4);
+
+    LIBS.translateX(charizardLeftLeg.MOVE_MATRIX, 0.35);
+    LIBS.translateY(charizardLeftLeg.MOVE_MATRIX, -0.5);
+    LIBS.translateZ(charizardLeftLeg.MOVE_MATRIX, 0.2);
+
+    LIBS.translateX(charizardRightLeg.MOVE_MATRIX, -0.35);
+    LIBS.translateY(charizardRightLeg.MOVE_MATRIX, -0.5);
+    LIBS.translateZ(charizardRightLeg.MOVE_MATRIX, 0.2);
+
+    LIBS.translateY(charizardLeftFoot.MOVE_MATRIX, -1.2);
+    LIBS.translateZ(charizardLeftFoot.MOVE_MATRIX, 0.4);
+
+    LIBS.translateY(charizardRightFoot.MOVE_MATRIX, -1.2);
+    LIBS.translateZ(charizardRightFoot.MOVE_MATRIX, 0.4);
+
+    LIBS.translateX(charizardLeftShoulder.MOVE_MATRIX, 10.4);
+    LIBS.translateY(charizardLeftShoulder.MOVE_MATRIX, 3.0);
+    LIBS.translateZ(charizardLeftShoulder.MOVE_MATRIX, 0.2);
+
+    LIBS.translateX(charizardRightShoulder.MOVE_MATRIX, 7.45);
+    LIBS.translateY(charizardRightShoulder.MOVE_MATRIX, 3.0);
+    LIBS.translateZ(charizardRightShoulder.MOVE_MATRIX, 0.2);
+
+    LIBS.translateX(charizardLeftArm.MOVE_MATRIX, 13.6);
+    LIBS.translateY(charizardLeftArm.MOVE_MATRIX, -7.0);
+    LIBS.translateZ(charizardLeftArm.MOVE_MATRIX, -3.0);
+    LIBS.rotateY(charizardLeftArm.MOVE_MATRIX, LIBS.degToRad(-30));
+    LIBS.rotateZ(charizardLeftArm.MOVE_MATRIX, LIBS.degToRad(90));
+
+    LIBS.translateX(charizardRightArm.MOVE_MATRIX, 3.7);
+    LIBS.translateY(charizardRightArm.MOVE_MATRIX, 8.4);
+    LIBS.translateZ(charizardRightArm.MOVE_MATRIX, 5.8);
+    LIBS.rotateY(charizardRightArm.MOVE_MATRIX, LIBS.degToRad(30));
+    LIBS.rotateZ(charizardRightArm.MOVE_MATRIX, LIBS.degToRad(-90));
+
+    LIBS.translateX(charizardLeftHandPalm.MOVE_MATRIX, 4.3);
+    LIBS.translateY(charizardLeftHandPalm.MOVE_MATRIX, 0.9);
+    LIBS.translateZ(charizardLeftHandPalm.MOVE_MATRIX, -6.4);
+    LIBS.rotateY(charizardLeftHandPalm.MOVE_MATRIX, LIBS.degToRad(-30));
+
+    LIBS.translateX(charizardRightHandPalm.MOVE_MATRIX, -1.9);
+    LIBS.translateY(charizardRightHandPalm.MOVE_MATRIX, 0.9);
+    LIBS.translateZ(charizardRightHandPalm.MOVE_MATRIX, 2.2);
+    LIBS.rotateY(charizardRightHandPalm.MOVE_MATRIX, LIBS.degToRad(30));
+
+    LIBS.translateX(charizardLeftFootClaw1.MOVE_MATRIX, 9.2);
+    LIBS.translateY(charizardLeftFootClaw1.MOVE_MATRIX, -3.3);
+    LIBS.translateZ(charizardLeftFootClaw1.MOVE_MATRIX, -9.1);
+    LIBS.rotateX(charizardLeftFootClaw1.MOVE_MATRIX, LIBS.degToRad(-90));
+    LIBS.rotateY(charizardLeftFootClaw1.MOVE_MATRIX, LIBS.degToRad(-70));
+    LIBS.rotateZ(charizardLeftFootClaw1.MOVE_MATRIX, LIBS.degToRad(25));
+
+    LIBS.translateX(charizardLeftFootClaw2.MOVE_MATRIX, 8.9);
+    LIBS.translateY(charizardLeftFootClaw2.MOVE_MATRIX, -3.3);
+    LIBS.translateZ(charizardLeftFootClaw2.MOVE_MATRIX, -9.1);
+    LIBS.rotateX(charizardLeftFootClaw2.MOVE_MATRIX, LIBS.degToRad(-90));
+    LIBS.rotateY(charizardLeftFootClaw2.MOVE_MATRIX, LIBS.degToRad(-70));
+    LIBS.rotateZ(charizardLeftFootClaw2.MOVE_MATRIX, LIBS.degToRad(25));
+
+    LIBS.translateX(charizardLeftFootClaw3.MOVE_MATRIX, 8.6);
+    LIBS.translateY(charizardLeftFootClaw3.MOVE_MATRIX, -3.4);
+    LIBS.translateZ(charizardLeftFootClaw3.MOVE_MATRIX, -9.1);
+    LIBS.rotateX(charizardLeftFootClaw3.MOVE_MATRIX, LIBS.degToRad(-90));
+    LIBS.rotateY(charizardLeftFootClaw3.MOVE_MATRIX, LIBS.degToRad(-70));
+    LIBS.rotateZ(charizardLeftFootClaw3.MOVE_MATRIX, LIBS.degToRad(25));
+
+    LIBS.translateX(charizardRightFootClaw1.MOVE_MATRIX, 6.0);
+    LIBS.translateY(charizardRightFootClaw1.MOVE_MATRIX, -2.8);
+    LIBS.translateZ(charizardRightFootClaw1.MOVE_MATRIX, -5.7);
+    LIBS.rotateX(charizardRightFootClaw1.MOVE_MATRIX, LIBS.degToRad(-90));
+    LIBS.rotateY(charizardRightFootClaw1.MOVE_MATRIX, LIBS.degToRad(-70));
+    LIBS.rotateZ(charizardRightFootClaw1.MOVE_MATRIX, LIBS.degToRad(25));
+
+    LIBS.translateX(charizardRightFootClaw2.MOVE_MATRIX, 6.3);
+    LIBS.translateY(charizardRightFootClaw2.MOVE_MATRIX, -2.7);
+    LIBS.translateZ(charizardRightFootClaw2.MOVE_MATRIX, -5.7);
+    LIBS.rotateX(charizardRightFootClaw2.MOVE_MATRIX, LIBS.degToRad(-90));
+    LIBS.rotateY(charizardRightFootClaw2.MOVE_MATRIX, LIBS.degToRad(-70));
+    LIBS.rotateZ(charizardRightFootClaw2.MOVE_MATRIX, LIBS.degToRad(25));
+
+    LIBS.translateX(charizardRightFootClaw3.MOVE_MATRIX, 6.6);
+    LIBS.translateY(charizardRightFootClaw3.MOVE_MATRIX, -2.7);
+    LIBS.translateZ(charizardRightFootClaw3.MOVE_MATRIX, -5.7);
+    LIBS.rotateX(charizardRightFootClaw3.MOVE_MATRIX, LIBS.degToRad(-90));
+    LIBS.rotateY(charizardRightFootClaw3.MOVE_MATRIX, LIBS.degToRad(-70));
+    LIBS.rotateZ(charizardRightFootClaw3.MOVE_MATRIX, LIBS.degToRad(25));
+
+    LIBS.translateX(charizardTail.MOVE_MATRIX, 9.0);
+    LIBS.translateY(charizardTail.MOVE_MATRIX, 3.0);
+    LIBS.translateZ(charizardTail.MOVE_MATRIX, -2.5);
+    LIBS.rotateX(charizardTail.MOVE_MATRIX, LIBS.degToRad(-60));
+    LIBS.rotateY(charizardTail.MOVE_MATRIX, LIBS.degToRad(180));
+
+    LIBS.translateY(charizardTailTip.MOVE_MATRIX, 1.6);
+    LIBS.translateZ(charizardTailTip.MOVE_MATRIX, -1.3);
+    LIBS.rotateX(charizardTailTip.MOVE_MATRIX, LIBS.degToRad(-60));
+
+    LIBS.translateY(charizardTailTipFire.MOVE_MATRIX, 0.6);
+
+    LIBS.translateX(charizardNeck.MOVE_MATRIX, 9.0);
+    LIBS.translateY(charizardNeck.MOVE_MATRIX, 6.0);
+    LIBS.translateZ(charizardNeck.MOVE_MATRIX, 0.4);
+    LIBS.rotateX(charizardNeck.MOVE_MATRIX, LIBS.degToRad(10));
+
+    LIBS.translateY(charizardHead.MOVE_MATRIX, 2.0);
+    LIBS.translateZ(charizardHead.MOVE_MATRIX, 0.9);
+
+    LIBS.translateY(charizardUpperMouth.MOVE_MATRIX, 16.0);
+    LIBS.translateZ(charizardUpperMouth.MOVE_MATRIX, 3.8);
+    LIBS.rotateX(charizardUpperMouth.MOVE_MATRIX, LIBS.degToRad(170));
+
+    LIBS.translateY(charizardLowerMouth.MOVE_MATRIX, 14.3);
+    LIBS.translateZ(charizardLowerMouth.MOVE_MATRIX, 6.3);
+    LIBS.rotateX(charizardLowerMouth.MOVE_MATRIX, LIBS.degToRad(190));
+
+    LIBS.translateY(charizardCheeks.MOVE_MATRIX, -0.4);
+    LIBS.translateZ(charizardCheeks.MOVE_MATRIX, 0.2);
+
+    LIBS.translateX(charizardUpperTeethLeft.MOVE_MATRIX, 0.4);
+    LIBS.translateY(charizardUpperTeethLeft.MOVE_MATRIX, 11.25);
+    LIBS.translateZ(charizardUpperTeethLeft.MOVE_MATRIX, -4.4);
+    LIBS.rotateX(charizardUpperTeethLeft.MOVE_MATRIX, LIBS.degToRad(90));
+
+    LIBS.translateX(charizardUpperTeethRight.MOVE_MATRIX, -0.4);
+    LIBS.translateY(charizardUpperTeethRight.MOVE_MATRIX, 11.25);
+    LIBS.translateZ(charizardUpperTeethRight.MOVE_MATRIX, -4.4);
+    LIBS.rotateX(charizardUpperTeethRight.MOVE_MATRIX, LIBS.degToRad(90));
+
+    LIBS.translateX(charizardLowerTeethLeft.MOVE_MATRIX, -0.2);
+    LIBS.translateY(charizardLowerTeethLeft.MOVE_MATRIX, 3.5);
+    LIBS.translateZ(charizardLowerTeethLeft.MOVE_MATRIX, 10.2);
+    LIBS.rotateX(charizardLowerTeethLeft.MOVE_MATRIX, LIBS.degToRad(-90));
+
+    LIBS.translateX(charizardLowerTeethRight.MOVE_MATRIX, 0.2);
+    LIBS.translateY(charizardLowerTeethRight.MOVE_MATRIX, 3.5);
+    LIBS.translateZ(charizardLowerTeethRight.MOVE_MATRIX, 10.2);
+    LIBS.rotateX(charizardLowerTeethRight.MOVE_MATRIX, LIBS.degToRad(-90));
+
+    LIBS.translateY(charizardTongue.MOVE_MATRIX, 0.25);
+    LIBS.translateZ(charizardTongue.MOVE_MATRIX, -0.1);
+
+    LIBS.translateX(charizardLeftEyelid.MOVE_MATRIX, 0.4);
+    LIBS.translateY(charizardLeftEyelid.MOVE_MATRIX, 0.3);
+    LIBS.translateZ(charizardLeftEyelid.MOVE_MATRIX, 0.4);
+
+    LIBS.translateX(charizardRightEyelid.MOVE_MATRIX, -0.4);
+    LIBS.translateY(charizardRightEyelid.MOVE_MATRIX, 0.3);
+    LIBS.translateZ(charizardRightEyelid.MOVE_MATRIX, 0.4);
+
+    LIBS.translateX(charizardLeftEyeWhite.MOVE_MATRIX, 0.1);
+    LIBS.translateY(charizardLeftEyeWhite.MOVE_MATRIX, 0.3);
+    LIBS.translateZ(charizardLeftEyeWhite.MOVE_MATRIX, -1.0);
+    LIBS.rotateX(charizardLeftEyeWhite.MOVE_MATRIX, LIBS.degToRad(10));
+
+    LIBS.translateX(charizardRightEyeWhite.MOVE_MATRIX, -0.1);
+    LIBS.translateY(charizardRightEyeWhite.MOVE_MATRIX, 0.3);
+    LIBS.translateZ(charizardRightEyeWhite.MOVE_MATRIX, -1.0);
+    LIBS.rotateX(charizardRightEyeWhite.MOVE_MATRIX, LIBS.degToRad(10));
+
+    LIBS.translateX(charizardLeftEyeBlack.MOVE_MATRIX, 0.2);
+    LIBS.translateY(charizardLeftEyeBlack.MOVE_MATRIX, -0.05);
+    LIBS.translateZ(charizardLeftEyeBlack.MOVE_MATRIX, 0.2);
+
+    LIBS.translateX(charizardRightEyeBlack.MOVE_MATRIX, -0.2);
+    LIBS.translateY(charizardRightEyeBlack.MOVE_MATRIX, -0.05);
+    LIBS.translateZ(charizardRightEyeBlack.MOVE_MATRIX, 0.2);
+
+    LIBS.translateX(charizardLeftHorn.MOVE_MATRIX, 0.7);
+    LIBS.translateY(charizardLeftHorn.MOVE_MATRIX, 1.9);
+    LIBS.translateZ(charizardLeftHorn.MOVE_MATRIX, -4.4);
+    LIBS.rotateX(charizardLeftHorn.MOVE_MATRIX, LIBS.degToRad(20));
+
+    LIBS.translateX(charizardRightHorn.MOVE_MATRIX, -0.7);
+    LIBS.translateY(charizardRightHorn.MOVE_MATRIX, 1.9);
+    LIBS.translateZ(charizardRightHorn.MOVE_MATRIX, -4.4);
+    LIBS.rotateX(charizardRightHorn.MOVE_MATRIX, LIBS.degToRad(20));
+
+    LIBS.translateX(charizardLeftWingBone1.MOVE_MATRIX, -0.7);
+    LIBS.translateY(charizardLeftWingBone1.MOVE_MATRIX, 2.0);
+    LIBS.translateZ(charizardLeftWingBone1.MOVE_MATRIX, -1.3);
+    LIBS.rotateZ(charizardLeftWingBone1.MOVE_MATRIX, LIBS.degToRad(20));
+
+    LIBS.translateX(charizardRightWingBone1.MOVE_MATRIX, 0.7);
+    LIBS.translateY(charizardRightWingBone1.MOVE_MATRIX, 2.0);
+    LIBS.translateZ(charizardRightWingBone1.MOVE_MATRIX, -1.3);
+    LIBS.rotateZ(charizardRightWingBone1.MOVE_MATRIX, LIBS.degToRad(-20));
+
+    LIBS.translateX(charizardLeftBoneJoints1.MOVE_MATRIX, -1.0);
+    LIBS.translateY(charizardLeftBoneJoints1.MOVE_MATRIX, 1.23);
+    LIBS.rotateZ(charizardLeftBoneJoints1.MOVE_MATRIX, LIBS.degToRad(-10));
+
+    LIBS.translateX(charizardRightBoneJoints1.MOVE_MATRIX, 1.0);
+    LIBS.translateY(charizardRightBoneJoints1.MOVE_MATRIX, 1.23);
+    LIBS.rotateZ(charizardRightBoneJoints1.MOVE_MATRIX, LIBS.degToRad(10));
+
+    LIBS.translateX(charizardLeftWingBone2.MOVE_MATRIX, 1.1);
+    LIBS.translateY(charizardLeftWingBone2.MOVE_MATRIX, 2.55);
+    LIBS.translateZ(charizardLeftWingBone2.MOVE_MATRIX, -2.3);
+    LIBS.rotateY(charizardLeftWingBone2.MOVE_MATRIX, LIBS.degToRad(90));
+    LIBS.rotateZ(charizardLeftWingBone2.MOVE_MATRIX, LIBS.degToRad(20));
+
+    LIBS.translateX(charizardRightWingBone2.MOVE_MATRIX, -1.1);
+    LIBS.translateY(charizardRightWingBone2.MOVE_MATRIX, 2.55);
+    LIBS.translateZ(charizardRightWingBone2.MOVE_MATRIX, -2.3);
+    LIBS.rotateY(charizardRightWingBone2.MOVE_MATRIX, LIBS.degToRad(-90));
+    LIBS.rotateZ(charizardRightWingBone2.MOVE_MATRIX, LIBS.degToRad(-20));
+
+    LIBS.translateX(charizardLeftBoneJoints2.MOVE_MATRIX, -2.4);
+    LIBS.translateY(charizardLeftBoneJoints2.MOVE_MATRIX, -0.6);
+    LIBS.translateZ(charizardLeftBoneJoints2.MOVE_MATRIX, -2.2);
+    LIBS.rotateY(charizardLeftBoneJoints2.MOVE_MATRIX, LIBS.degToRad(90));
+
+    LIBS.translateX(charizardRightBoneJoints2.MOVE_MATRIX, 2.4);
+    LIBS.translateY(charizardRightBoneJoints2.MOVE_MATRIX, -0.6);
+    LIBS.translateZ(charizardRightBoneJoints2.MOVE_MATRIX, -2.2);
+    LIBS.rotateY(charizardRightBoneJoints2.MOVE_MATRIX, LIBS.degToRad(-90));
+
+    LIBS.translateX(charizardLeftWingBone3.MOVE_MATRIX, -4.65);
+    LIBS.translateY(charizardLeftWingBone3.MOVE_MATRIX, -1.0);
+    LIBS.translateZ(charizardLeftWingBone3.MOVE_MATRIX, 2.0);
+    LIBS.rotateX(charizardLeftWingBone3.MOVE_MATRIX, LIBS.degToRad(-25));
+    LIBS.rotateZ(charizardLeftWingBone3.MOVE_MATRIX, LIBS.degToRad(-45));
+
+    LIBS.translateX(charizardRightWingBone3.MOVE_MATRIX, 4.65);
+    LIBS.translateY(charizardRightWingBone3.MOVE_MATRIX, -1.0);
+    LIBS.translateZ(charizardRightWingBone3.MOVE_MATRIX, 2.0);
+    LIBS.rotateX(charizardRightWingBone3.MOVE_MATRIX, LIBS.degToRad(-25));
+    LIBS.rotateZ(charizardRightWingBone3.MOVE_MATRIX, LIBS.degToRad(45));
+
+    LIBS.translateX(charizardLeftWingBone4.MOVE_MATRIX, 0.3);
+    LIBS.translateY(charizardLeftWingBone4.MOVE_MATRIX, 1.2);
+    LIBS.translateZ(charizardLeftWingBone4.MOVE_MATRIX, -0.65);
+    LIBS.rotateX(charizardLeftWingBone4.MOVE_MATRIX, LIBS.degToRad(10));
+    LIBS.rotateZ(charizardLeftWingBone4.MOVE_MATRIX, LIBS.degToRad(30));
+
+    LIBS.translateX(charizardRightWingBone4.MOVE_MATRIX, -0.3);
+    LIBS.translateY(charizardRightWingBone4.MOVE_MATRIX, 1.2);
+    LIBS.translateZ(charizardRightWingBone4.MOVE_MATRIX, -0.65);
+    LIBS.rotateX(charizardRightWingBone4.MOVE_MATRIX, LIBS.degToRad(10));
+    LIBS.rotateZ(charizardRightWingBone4.MOVE_MATRIX, LIBS.degToRad(-30));
+
+    LIBS.translateY(charizardLeftWingClaw.MOVE_MATRIX, 7.2);
+    LIBS.translateZ(charizardLeftWingClaw.MOVE_MATRIX, 3.6);
+    LIBS.rotateX(charizardLeftWingClaw.MOVE_MATRIX, LIBS.degToRad(-100));
+
+    LIBS.translateY(charizardRightWingClaw.MOVE_MATRIX, 7.2);
+    LIBS.translateZ(charizardRightWingClaw.MOVE_MATRIX, 3.6);
+    LIBS.rotateX(charizardRightWingClaw.MOVE_MATRIX, LIBS.degToRad(-100));
+
+    LIBS.translateX(charizardLeftWingBone5.MOVE_MATRIX, 0.1);
+    LIBS.translateY(charizardLeftWingBone5.MOVE_MATRIX, 0.4);
+    LIBS.translateZ(charizardLeftWingBone5.MOVE_MATRIX, -0.02);
+    LIBS.rotateZ(charizardLeftWingBone5.MOVE_MATRIX, LIBS.degToRad(20));
+
+    LIBS.translateX(charizardRightWingBone5.MOVE_MATRIX, -0.1);
+    LIBS.translateY(charizardRightWingBone5.MOVE_MATRIX, 0.4);
+    LIBS.translateZ(charizardRightWingBone5.MOVE_MATRIX, -0.02);
+    LIBS.rotateZ(charizardRightWingBone5.MOVE_MATRIX, LIBS.degToRad(-20));
+
+    LIBS.translateX(charizardLeftWingBone6.MOVE_MATRIX, -2.9);
+    LIBS.translateY(charizardLeftWingBone6.MOVE_MATRIX, -5.65);
+    LIBS.translateZ(charizardLeftWingBone6.MOVE_MATRIX, -0.2);
+    LIBS.rotateX(charizardLeftWingBone6.MOVE_MATRIX, LIBS.degToRad(-6));
+    LIBS.rotateZ(charizardLeftWingBone6.MOVE_MATRIX, LIBS.degToRad(-80));
+
+    LIBS.translateX(charizardRightWingBone6.MOVE_MATRIX, 2.9);
+    LIBS.translateY(charizardRightWingBone6.MOVE_MATRIX, -5.65);
+    LIBS.translateZ(charizardRightWingBone6.MOVE_MATRIX, -0.2);
+    LIBS.rotateX(charizardRightWingBone6.MOVE_MATRIX, LIBS.degToRad(-6));
+    LIBS.rotateZ(charizardRightWingBone6.MOVE_MATRIX, LIBS.degToRad(80));
+
+    LIBS.translateX(charizardLeftWingMembrane.MOVE_MATRIX, 4.0);
+    LIBS.translateZ(charizardLeftWingMembrane.MOVE_MATRIX, 0.4);
+    LIBS.rotateY(charizardLeftWingMembrane.MOVE_MATRIX, LIBS.degToRad(-6));
+
+    LIBS.translateX(rightWingMembrane.MOVE_MATRIX, -4.0);
+    LIBS.translateZ(rightWingMembrane.MOVE_MATRIX, 0.4);
+    LIBS.rotateY(rightWingMembrane.MOVE_MATRIX, LIBS.degToRad(6));
+
+    LIBS.translateX(charizardLeftWingMembranceClose.MOVE_MATRIX, 4.0);
+    LIBS.translateZ(charizardLeftWingMembranceClose.MOVE_MATRIX, 0.35);
+    LIBS.rotateY(charizardLeftWingMembranceClose.MOVE_MATRIX, LIBS.degToRad(-6));
+
+    LIBS.translateX(rightWingMembranceClose.MOVE_MATRIX, -4.0);
+    LIBS.translateZ(rightWingMembranceClose.MOVE_MATRIX, 0.35);
+    LIBS.rotateY(rightWingMembranceClose.MOVE_MATRIX, LIBS.degToRad(6));
     // ========== ROTATE SCALE TRANSLATE END ==========
 
     // ========== CHILDS PUSH START ==========
-    charmanderBody.addChild(charmanderHead);
-    charmanderBody.addChild(charmanderTail);
     charmanderBody.addChild(charmanderBelly);
-    charmanderBody.addChild(charmanderLeftarmShoulder);
-    charmanderBody.addChild(charmanderRightarmShoulder);
-    charmanderBody.addChild(charmanderLeftLeg);
-    charmanderBody.addChild(charmanderRightLeg);
+
     charmanderHead.addChild(charmanderLeftEye);
     charmanderHead.addChild(charmanderRightEye);
     charmanderHead.addChild(charmanderLeftEyebrow);
@@ -431,39 +840,147 @@ function main() {
     charmanderHead.addChild(charmanderCheeks);
     charmanderHead.addChild(charmanderMouthBase);
     charmanderHead.addChild(charmanderMouth);
+
     charmanderMouthBase.addChild(charmanderNoseLeft);
     charmanderMouthBase.addChild(charmaderNoseRight);
+
     charmanderTail.addChild(charmanderTailTip);
     charmanderTail.addChild(charmanderTailTipFire);
+
     charmanderLeftEye.addChild(charmanderLeftEyePupil);
-    charmanderRightEye.addChild(charmanderRightEyePupil);
     charmanderLeftEye.addChild(charmanderLeftEyePupil2);
+
+    charmanderRightEye.addChild(charmanderRightEyePupil);
     charmanderRightEye.addChild(charmanderRightEyePupil2);
+
     charmanderLeftarmShoulder.addChild(charmanderLeftArm);
+
     charmanderRightarmShoulder.addChild(charmanderRightArm);
-    charmanderLeftArm.addChild(charmanderLeftFinger1);
-    charmanderLeftArm.addChild(charmanderLeftFinger2);
-    charmanderLeftArm.addChild(charmanderLeftFinger3);
-    charmanderLeftArm.addChild(charmanderLeftFinger4);
-    charmanderRightArm.addChild(charmanderRightFinger1);
-    charmanderRightArm.addChild(charmanderRightFinger2);
-    charmanderRightArm.addChild(charmanderRightFinger3);
-    charmanderRightArm.addChild(charmanderRightFinger4);
+
     charmanderLeftLeg.addChild(charmanderLeftLegAnkle);
+
     charmanderRightLeg.addChild(charmanderRightLegAnkle);
+
     charmanderLeftLegAnkle.addChild(charmanderLeftLegFoot);
-    charmanderRightLegAnkle.addChild(charmanderRightLegFoot);
     charmanderLeftLegAnkle.addChild(charmanderLeftLegClaw1);
     charmanderLeftLegAnkle.addChild(charmanderLeftLegClaw2);
     charmanderLeftLegAnkle.addChild(charmanderLeftLegClaw3);
+
+    charmanderRightLegAnkle.addChild(charmanderRightLegFoot);
     charmanderRightLegAnkle.addChild(charmanderRightLegClaw1);
     charmanderRightLegAnkle.addChild(charmanderRightLegClaw2);
     charmanderRightLegAnkle.addChild(charmanderRightLegClaw3);
+
+    charizardBody.addChild(charizardBelly);
+
+    charizardLeftWingBone1.addChild(charizardLeftWingMembrane);
+    charizardLeftWingBone1.addChild(charizardLeftWingMembranceClose);
+    charizardLeftWingBone1.addChild(charizardLeftBoneJoints1);
+
+    charizardRightWingBone1.addChild(rightWingMembrane);
+    charizardRightWingBone1.addChild(rightWingMembranceClose);
+    charizardRightWingBone1.addChild(charizardRightBoneJoints1);
+
+    charizardLeftBoneJoints1.addChild(charizardLeftWingBone2);
+
+    charizardRightBoneJoints1.addChild(charizardRightWingBone2);
+
+    charizardLeftWingBone2.addChild(charizardLeftBoneJoints2);
+
+    charizardRightWingBone2.addChild(charizardRightBoneJoints2);
+
+    charizardLeftBoneJoints2.addChild(charizardLeftWingBone3);
+    charizardLeftBoneJoints2.addChild(charizardLeftWingClaw);
+
+    charizardRightBoneJoints2.addChild(charizardRightWingBone3);
+    charizardRightBoneJoints2.addChild(charizardRightWingClaw);
+
+    charizardLeftWingBone3.addChild(charizardLeftWingBone4);
+
+    charizardRightWingBone3.addChild(charizardRightWingBone4);
+
+    charizardLeftWingBone4.addChild(charizardLeftWingBone5);
+
+    charizardRightWingBone4.addChild(charizardRightWingBone5);
+
+    charizardLeftWingBone5.addChild(charizardLeftWingBone6);
+
+    charizardRightWingBone5.addChild(charizardRightWingBone6);
+
+    charizardNeck.addChild(charizardHead);
+
+    charizardHead.addChild(charizardUpperMouth);
+    charizardHead.addChild(charizardLowerMouth);
+    charizardHead.addChild(charizardCheeks);
+    charizardHead.addChild(charizardLeftEyelid);
+    charizardHead.addChild(charizardRightEyelid);
+    charizardHead.addChild(charizardLeftHorn);
+    charizardHead.addChild(charizardRightHorn);
+
+    charizardLeftEyelid.addChild(charizardLeftEyeWhite);
+
+    charizardRightEyelid.addChild(charizardRightEyeWhite);
+
+    charizardLeftEyeWhite.addChild(charizardLeftEyeBlack);
+
+    charizardRightEyeWhite.addChild(charizardRightEyeBlack);
+
+    charizardUpperMouth.addChild(charizardUpperTeethLeft);
+    charizardUpperMouth.addChild(charizardUpperTeethRight);
+
+    charizardLowerMouth.addChild(charizardLowerTeethLeft);
+    charizardLowerMouth.addChild(charizardLowerTeethRight);
+    charizardLowerMouth.addChild(charizardTongue);
+
+    charizardTail.addChild(charizardTailTip);
+
+    charizardTailTip.addChild(charizardTailTipFire);
+
+    charizardLeftShoulder.addChild(charizardLeftArm);
+
+    charizardRightShoulder.addChild(charizardRightArm);
+
+    charizardLeftArm.addChild(charizardLeftHandPalm);
+
+    charizardRightArm.addChild(charizardRightHandPalm);
+
+    charizardLeftThigh.addChild(charizardLeftLeg);
+
+    charizardRightThigh.addChild(charizardRightLeg);
+
+    charizardLeftLeg.addChild(charizardLeftFoot);
+
+    charizardRightLeg.addChild(charizardRightFoot);
+
+    charizardLeftFoot.addChild(charizardLeftFootClaw1);
+    charizardLeftFoot.addChild(charizardLeftFootClaw2);
+    charizardLeftFoot.addChild(charizardLeftFootClaw3);
+
+    charizardRightFoot.addChild(charizardRightFootClaw1);
+    charizardRightFoot.addChild(charizardRightFootClaw2);
+    charizardRightFoot.addChild(charizardRightFootClaw3);
     // ========== CHIILDS PUSH END ==========
 
     // ========== SETUP START ==========
     base.setup();
+
     charmanderBody.setup();
+    charmanderHead.setup();
+    charmanderTail.setup();
+    charmanderLeftarmShoulder.setup();
+    charmanderRightarmShoulder.setup();
+    charmanderLeftLeg.setup();
+    charmanderRightLeg.setup();
+
+    charizardBody.setup();
+    charizardLeftThigh.setup();
+    charizardRightThigh.setup();
+    charizardLeftShoulder.setup();
+    charizardRightShoulder.setup();
+    charizardTail.setup();
+    charizardNeck.setup();
+    charizardLeftWingBone1.setup();
+    charizardRightWingBone1.setup();
     // ========== SETUP END ==========
 
     GL.enable(GL.DEPTH_TEST);
@@ -499,7 +1016,24 @@ function main() {
 
         // ========== RENDER PARENT OBJECT START ==========
         base.render(MODELMATRIX);
+
         charmanderBody.render(MODELMATRIX);
+        charmanderHead.render(MODELMATRIX);
+        charmanderTail.render(MODELMATRIX);
+        charmanderLeftarmShoulder.render(MODELMATRIX);
+        charmanderRightarmShoulder.render(MODELMATRIX);
+        charmanderLeftLeg.render(MODELMATRIX);
+        charmanderRightLeg.render(MODELMATRIX);
+
+        charizardBody.render(MODELMATRIX);
+        charizardLeftThigh.render(MODELMATRIX);
+        charizardRightThigh.render(MODELMATRIX);
+        charizardLeftShoulder.render(MODELMATRIX);
+        charizardRightShoulder.render(MODELMATRIX);
+        charizardTail.render(MODELMATRIX);
+        charizardNeck.render(MODELMATRIX);
+        charizardLeftWingBone1.render(MODELMATRIX);
+        charizardRightWingBone1.render(MODELMATRIX);
         // ========== RENDER PARENT OBJECT END ==========
 
         GL.flush();

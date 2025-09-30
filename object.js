@@ -50,7 +50,6 @@ export class Object {
     render(PARENT_MATRIX) {
         this.GL.useProgram(this.SHADER_PROGRAM);
 
-        // MODEL_MATRIX = PARENT_MATRIX * MOVE_MATRIX
         this.MODEL_MATRIX = LIBS.multiply(PARENT_MATRIX, this.MOVE_MATRIX);
 
         // Set uniform

@@ -658,35 +658,43 @@ function main() {
 
     // ========== CHILDS PUSH START ==========
     body.addChild(belly);
-    body.addChild(leftThigh);
-    body.addChild(rightThigh);
-    body.addChild(leftShoulder);
-    body.addChild(rightShoulder);
-    body.addChild(tail);
-    body.addChild(neck);
-    body.addChild(leftWingBone1);
-    body.addChild(rightWingBone1);
+
     leftWingBone1.addChild(leftWingMembrane);
-    rightWingBone1.addChild(rightWingMembrane);
     leftWingBone1.addChild(leftWingMembranceClose);
-    rightWingBone1.addChild(rightWingMembranceClose);
     leftWingBone1.addChild(leftBoneJoints1);
-    leftBoneJoints1.addChild(leftWingBone2);
+
+    rightWingBone1.addChild(rightWingMembrane);
+    rightWingBone1.addChild(rightWingMembranceClose);
     rightWingBone1.addChild(rightBoneJoints1);
+
+    leftBoneJoints1.addChild(leftWingBone2);
+
     rightBoneJoints1.addChild(rightWingBone2);
+
     leftWingBone2.addChild(leftBoneJoints2);
+
     rightWingBone2.addChild(rightBoneJoints2);
+
     leftBoneJoints2.addChild(leftWingBone3);
     leftBoneJoints2.addChild(leftWingClaw);
+
     rightBoneJoints2.addChild(rightWingBone3);
     rightBoneJoints2.addChild(rightWingClaw);
+
     leftWingBone3.addChild(leftWingBone4);
+
     rightWingBone3.addChild(rightWingBone4);
+
     leftWingBone4.addChild(leftWingBone5);
+
     rightWingBone4.addChild(rightWingBone5);
+
     leftWingBone5.addChild(leftWingBone6);
+
     rightWingBone5.addChild(rightWingBone6);
+
     neck.addChild(head);
+
     head.addChild(upperMouth);
     head.addChild(lowerMouth);
     head.addChild(cheeks);
@@ -694,34 +702,54 @@ function main() {
     head.addChild(rightEyelid);
     head.addChild(leftHorn);
     head.addChild(rightHorn);
+
     leftEyelid.addChild(leftEyeWhite);
+
     rightEyelid.addChild(rightEyeWhite);
+
     leftEyeWhite.addChild(leftEyeBlack);
+
     rightEyeWhite.addChild(rightEyeBlack);
+
     upperMouth.addChild(upperTeethLeft);
     upperMouth.addChild(upperTeethRight);
+
     lowerMouth.addChild(lowerTeethLeft);
     lowerMouth.addChild(lowerTeethRight);
     lowerMouth.addChild(tongue);
+
     tail.addChild(tailTip);
+
     tailTip.addChild(tailTipFire);
+
     leftShoulder.addChild(leftArm);
+
     rightShoulder.addChild(rightArm);
+
     leftArm.addChild(leftHandPalm);
+
     rightArm.addChild(rightHandPalm);
+
     leftHandPalm.addChild(leftFinger1);
     leftHandPalm.addChild(leftFinger2);
     leftHandPalm.addChild(leftFinger3);
+
     rightHandPalm.addChild(rightFinger1);
     rightHandPalm.addChild(rightFinger2);
     rightHandPalm.addChild(rightFinger3);
+
     leftThigh.addChild(leftLeg);
+
     rightThigh.addChild(rightLeg);
+
     leftLeg.addChild(leftFoot);
+
     rightLeg.addChild(rightFoot);
+
     leftFoot.addChild(leftFootClaw1);
     leftFoot.addChild(leftFootClaw2);
     leftFoot.addChild(leftFootClaw3);
+
     rightFoot.addChild(rightFootClaw1);
     rightFoot.addChild(rightFootClaw2);
     rightFoot.addChild(rightFootClaw3);
@@ -729,6 +757,14 @@ function main() {
 
     // ========== SETUP START ==========
     body.setup();
+    leftThigh.setup();
+    rightThigh.setup();
+    leftShoulder.setup();
+    rightShoulder.setup();
+    tail.setup();
+    neck.setup();
+    leftWingBone1.setup();
+    rightWingBone1.setup();
     // ========== SETUP END ==========
 
     GL.enable(GL.DEPTH_TEST);
@@ -764,6 +800,14 @@ function main() {
 
         // ========== RENDER PARENT OBJECT START ==========
         body.render(MODELMATRIX);
+        leftThigh.render(MODELMATRIX);
+        rightThigh.render(MODELMATRIX);
+        leftShoulder.render(MODELMATRIX);
+        rightShoulder.render(MODELMATRIX);
+        tail.render(MODELMATRIX);
+        neck.render(MODELMATRIX);
+        leftWingBone1.render(MODELMATRIX);
+        rightWingBone1.render(MODELMATRIX);
         // ========== RENDER PARENT OBJECT END ==========
 
         GL.flush();
