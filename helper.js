@@ -498,19 +498,46 @@ function generateEllipticParaboloidFlexible(a = 1.0, b = 1.0, height = 2.0, radi
     return { vertices, indices };
 }
 
-function generateWingFan(points, color = [1.0, 1.0, 1.0]) {
+// Cubic Bezier
+function cubicBezier3D(p0, p1, p2, p3, t) {
+    let u = 1 - t;
+    let tt = t * t;
+    let uu = u * u;
+    let uuu = uu * u;
+    let ttt = tt * t;
+
+    let x = uuu * p0[0] + 3 * uu * t * p1[0] + 3 * u * tt * p2[0] + ttt * p3[0];
+    let y = uuu * p0[1] + 3 * uu * t * p1[1] + 3 * u * tt * p2[1] + ttt * p3[1];
+    let z = uuu * p0[2] + 3 * uu * t * p1[2] + 3 * u * tt * p2[2] + ttt * p3[2];
+
+    return [x, y, z];
+}
+
+function generateWingFanBezier3D(points, segments = 20, color = [1, 1, 1]) {
     let vertices = [];
     let indices = [];
 
-    // ===== Buat Vertices =====
-    // format: x, y, z, r, g, b
-    for (let i = 0; i < points.length; i++) {
-        let [x, y] = points[i];
-        vertices.push(x, y, 0, color[0], color[1], color[2]);
+    // titik pusat fan
+    vertices.push(0, 0, 0, color[0], color[1], color[2]);
+
+    let curvePoints = [];
+    for (let i = 0; i <= points.length - 4; i += 3) {
+        let p0 = points[i];
+        let p1 = points[i + 1];
+        let p2 = points[i + 2];
+        let p3 = points[i + 3];
+
+        for (let j = 0; j <= segments; j++) {
+            let t = j / segments;
+            curvePoints.push(cubicBezier3D(p0, p1, p2, p3, t));
+        }
     }
 
-    // ===== Buat Indices pakai TRIANGLE_FAN =====
-    for (let i = 1; i < points.length - 1; i++) {
+    for (let [x, y, z] of curvePoints) {
+        vertices.push(x, y, z, color[0], color[1], color[2]);
+    }
+
+    for (let i = 1; i < curvePoints.length; i++) {
         indices.push(0, i, i + 1);
     }
 
