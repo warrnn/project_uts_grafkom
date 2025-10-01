@@ -311,7 +311,7 @@ function main() {
     const charizardLeftBoneJoints1 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, bone_joints_1, bone_joints_1_indices, GL.TRIANGLES);
     const charizardRightBoneJoints1 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, bone_joints_1, bone_joints_1_indices, GL.TRIANGLES);
 
-    const { vertices: wing_bone_2, indices: wing_bone_2_indices } = generateCurvedByStrengthCylinder(0.1, 0.1, 2.0, 32, 32, [1.0, 0.5, 0.0], 0.8);
+    const { vertices: wing_bone_2, indices: wing_bone_2_indices } = generateCurvedByStrengthCylinder(0.13, 0.13, 2.0, 32, 32, [1.0, 0.5, 0.0], 0.8);
     const charizardLeftWingBone2 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_bone_2, wing_bone_2_indices, GL.TRIANGLES);
     const charizardRightWingBone2 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_bone_2, wing_bone_2_indices, GL.TRIANGLES);
 
@@ -365,7 +365,7 @@ function main() {
     const { vertices: wing_membrane_left_close_vertices, indices: wing_membrane_left_close_indices } = generateWingFan(charizardWingPointsLeftClose, [1.0, 0.5, 0.0]);
     const charizardLeftWingMembranceClose = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_membrane_left_close_vertices, wing_membrane_left_close_indices, GL.TRIANGLE_FAN);
 
-    const wingPointsRight = [
+    const charizardWingPointsRight = [
         [3.4, -0.2],  // kiri bawah
         [2.7, 0.5],  // kiri atas
         [1.8, 1.5],  // lengkung kiri
@@ -375,10 +375,10 @@ function main() {
         [-2.3, -1.0],  // kanan atas
         [-1.9, -2.6]   // kanan bawah
     ];
-    const { vertices: wing_membrane_right_vertices, indices: wing_membrane_right_indices } = generateWingFan(wingPointsRight, [0.3, 0.4, 1.0]);
-    const rightWingMembrane = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_membrane_right_vertices, wing_membrane_right_indices, GL.TRIANGLE_FAN);
+    const { vertices: wing_membrane_right_vertices, indices: wing_membrane_right_indices } = generateWingFan(charizardWingPointsRight, [0.3, 0.4, 1.0]);
+    const charizardRightWingMembrane = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_membrane_right_vertices, wing_membrane_right_indices, GL.TRIANGLE_FAN);
 
-    const wingPointsRightClose = [
+    const charizardWingPointsRightClose = [
         [3.4, -0.2],  // kiri bawah
         [2.7, 0.5],  // kiri atas
         [1.8, 1.85],  // lengkung kiri
@@ -388,8 +388,8 @@ function main() {
         [-2.3, -1.0],  // kanan atas
         [-1.9, -2.7]   // kanan bawah
     ];
-    const { vertices: wing_membrane_right_close_vertices, indices: wing_membrane_right_close_indices } = generateWingFan(wingPointsRightClose, [1.0, 0.5, 0.0]);
-    const rightWingMembranceClose = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_membrane_right_close_vertices, wing_membrane_right_close_indices, GL.TRIANGLE_FAN);
+    const { vertices: wing_membrane_right_close_vertices, indices: wing_membrane_right_close_indices } = generateWingFan(charizardWingPointsRightClose, [1.0, 0.5, 0.0]);
+    const charizardRightWingMembranceClose = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_membrane_right_close_vertices, wing_membrane_right_close_indices, GL.TRIANGLE_FAN);
     // ========== GENERATE SHAPE OBJECT END ==========
 
     // ========== ROTATE SCALE TRANSLATE START ==========
@@ -642,42 +642,42 @@ function main() {
     LIBS.translateY(charizardTailTipFire.MOVE_MATRIX, 0.6);
 
     LIBS.translateX(charizardNeck.MOVE_MATRIX, 9.0);
-    LIBS.translateY(charizardNeck.MOVE_MATRIX, 6.0);
+    LIBS.translateY(charizardNeck.MOVE_MATRIX, 5.5);
     LIBS.translateZ(charizardNeck.MOVE_MATRIX, 0.4);
     LIBS.rotateX(charizardNeck.MOVE_MATRIX, LIBS.degToRad(10));
 
     LIBS.translateY(charizardHead.MOVE_MATRIX, 2.0);
     LIBS.translateZ(charizardHead.MOVE_MATRIX, 0.9);
 
-    LIBS.translateY(charizardUpperMouth.MOVE_MATRIX, 16.0);
+    LIBS.translateY(charizardUpperMouth.MOVE_MATRIX, 15.1);
     LIBS.translateZ(charizardUpperMouth.MOVE_MATRIX, 3.8);
     LIBS.rotateX(charizardUpperMouth.MOVE_MATRIX, LIBS.degToRad(170));
 
-    LIBS.translateY(charizardLowerMouth.MOVE_MATRIX, 14.3);
-    LIBS.translateZ(charizardLowerMouth.MOVE_MATRIX, 6.3);
+    LIBS.translateY(charizardLowerMouth.MOVE_MATRIX, 13.45);
+    LIBS.translateZ(charizardLowerMouth.MOVE_MATRIX, 6.05);
     LIBS.rotateX(charizardLowerMouth.MOVE_MATRIX, LIBS.degToRad(190));
 
     LIBS.translateY(charizardCheeks.MOVE_MATRIX, -0.4);
     LIBS.translateZ(charizardCheeks.MOVE_MATRIX, 0.2);
 
     LIBS.translateX(charizardUpperTeethLeft.MOVE_MATRIX, 0.4);
-    LIBS.translateY(charizardUpperTeethLeft.MOVE_MATRIX, 11.25);
-    LIBS.translateZ(charizardUpperTeethLeft.MOVE_MATRIX, -4.4);
+    LIBS.translateY(charizardUpperTeethLeft.MOVE_MATRIX, 10.8);
+    LIBS.translateZ(charizardUpperTeethLeft.MOVE_MATRIX, -4.0);
     LIBS.rotateX(charizardUpperTeethLeft.MOVE_MATRIX, LIBS.degToRad(90));
 
     LIBS.translateX(charizardUpperTeethRight.MOVE_MATRIX, -0.4);
-    LIBS.translateY(charizardUpperTeethRight.MOVE_MATRIX, 11.25);
-    LIBS.translateZ(charizardUpperTeethRight.MOVE_MATRIX, -4.4);
+    LIBS.translateY(charizardUpperTeethRight.MOVE_MATRIX, 10.8);
+    LIBS.translateZ(charizardUpperTeethRight.MOVE_MATRIX, -4.0);
     LIBS.rotateX(charizardUpperTeethRight.MOVE_MATRIX, LIBS.degToRad(90));
 
     LIBS.translateX(charizardLowerTeethLeft.MOVE_MATRIX, -0.2);
-    LIBS.translateY(charizardLowerTeethLeft.MOVE_MATRIX, 3.5);
-    LIBS.translateZ(charizardLowerTeethLeft.MOVE_MATRIX, 10.2);
+    LIBS.translateY(charizardLowerTeethLeft.MOVE_MATRIX, 3.25);
+    LIBS.translateZ(charizardLowerTeethLeft.MOVE_MATRIX, 9.7);
     LIBS.rotateX(charizardLowerTeethLeft.MOVE_MATRIX, LIBS.degToRad(-90));
 
     LIBS.translateX(charizardLowerTeethRight.MOVE_MATRIX, 0.2);
-    LIBS.translateY(charizardLowerTeethRight.MOVE_MATRIX, 3.5);
-    LIBS.translateZ(charizardLowerTeethRight.MOVE_MATRIX, 10.2);
+    LIBS.translateY(charizardLowerTeethRight.MOVE_MATRIX, 3.25);
+    LIBS.translateZ(charizardLowerTeethRight.MOVE_MATRIX, 9.7);
     LIBS.rotateX(charizardLowerTeethRight.MOVE_MATRIX, LIBS.degToRad(-90));
 
     LIBS.translateY(charizardTongue.MOVE_MATRIX, 0.25);
@@ -710,124 +710,124 @@ function main() {
     LIBS.translateZ(charizardRightEyeBlack.MOVE_MATRIX, 0.2);
 
     LIBS.translateX(charizardLeftHorn.MOVE_MATRIX, 0.7);
-    LIBS.translateY(charizardLeftHorn.MOVE_MATRIX, 1.9);
+    LIBS.translateY(charizardLeftHorn.MOVE_MATRIX, 2.2);
     LIBS.translateZ(charizardLeftHorn.MOVE_MATRIX, -4.4);
     LIBS.rotateX(charizardLeftHorn.MOVE_MATRIX, LIBS.degToRad(20));
 
     LIBS.translateX(charizardRightHorn.MOVE_MATRIX, -0.7);
-    LIBS.translateY(charizardRightHorn.MOVE_MATRIX, 1.9);
+    LIBS.translateY(charizardRightHorn.MOVE_MATRIX, 2.2);
     LIBS.translateZ(charizardRightHorn.MOVE_MATRIX, -4.4);
     LIBS.rotateX(charizardRightHorn.MOVE_MATRIX, LIBS.degToRad(20));
 
-    LIBS.translateX(charizardLeftWingBone1.MOVE_MATRIX, -0.7);
-    LIBS.translateY(charizardLeftWingBone1.MOVE_MATRIX, 2.0);
+    LIBS.translateX(charizardLeftWingBone1.MOVE_MATRIX, -0.7 + 9.0);
+    LIBS.translateY(charizardLeftWingBone1.MOVE_MATRIX, 2.0 + 2.0);
     LIBS.translateZ(charizardLeftWingBone1.MOVE_MATRIX, -1.3);
     LIBS.rotateZ(charizardLeftWingBone1.MOVE_MATRIX, LIBS.degToRad(20));
 
-    LIBS.translateX(charizardRightWingBone1.MOVE_MATRIX, 0.7);
-    LIBS.translateY(charizardRightWingBone1.MOVE_MATRIX, 2.0);
+    LIBS.translateX(charizardRightWingBone1.MOVE_MATRIX, 0.7 + 9.0);
+    LIBS.translateY(charizardRightWingBone1.MOVE_MATRIX, 2.0 + 2.0);
     LIBS.translateZ(charizardRightWingBone1.MOVE_MATRIX, -1.3);
     LIBS.rotateZ(charizardRightWingBone1.MOVE_MATRIX, LIBS.degToRad(-20));
 
-    LIBS.translateX(charizardLeftBoneJoints1.MOVE_MATRIX, -1.0);
-    LIBS.translateY(charizardLeftBoneJoints1.MOVE_MATRIX, 1.23);
+    LIBS.translateX(charizardLeftBoneJoints1.MOVE_MATRIX, -1.1);
+    LIBS.translateY(charizardLeftBoneJoints1.MOVE_MATRIX, 2.8);
     LIBS.rotateZ(charizardLeftBoneJoints1.MOVE_MATRIX, LIBS.degToRad(-10));
 
-    LIBS.translateX(charizardRightBoneJoints1.MOVE_MATRIX, 1.0);
-    LIBS.translateY(charizardRightBoneJoints1.MOVE_MATRIX, 1.23);
+    LIBS.translateX(charizardRightBoneJoints1.MOVE_MATRIX, 1.4);
+    LIBS.translateY(charizardRightBoneJoints1.MOVE_MATRIX, -0.25);
     LIBS.rotateZ(charizardRightBoneJoints1.MOVE_MATRIX, LIBS.degToRad(10));
 
-    LIBS.translateX(charizardLeftWingBone2.MOVE_MATRIX, 1.1);
-    LIBS.translateY(charizardLeftWingBone2.MOVE_MATRIX, 2.55);
-    LIBS.translateZ(charizardLeftWingBone2.MOVE_MATRIX, -2.3);
+    LIBS.translateX(charizardLeftWingBone2.MOVE_MATRIX, 1.1 + 9.5);
+    LIBS.translateY(charizardLeftWingBone2.MOVE_MATRIX, 2.7);
+    LIBS.translateZ(charizardLeftWingBone2.MOVE_MATRIX, 6.8);
     LIBS.rotateY(charizardLeftWingBone2.MOVE_MATRIX, LIBS.degToRad(90));
     LIBS.rotateZ(charizardLeftWingBone2.MOVE_MATRIX, LIBS.degToRad(20));
 
-    LIBS.translateX(charizardRightWingBone2.MOVE_MATRIX, -1.1);
-    LIBS.translateY(charizardRightWingBone2.MOVE_MATRIX, 2.55);
-    LIBS.translateZ(charizardRightWingBone2.MOVE_MATRIX, -2.3);
+    LIBS.translateX(charizardRightWingBone2.MOVE_MATRIX, -1.1 + 8.45);
+    LIBS.translateY(charizardRightWingBone2.MOVE_MATRIX, 2.75);
+    LIBS.translateZ(charizardRightWingBone2.MOVE_MATRIX, -11.25);
     LIBS.rotateY(charizardRightWingBone2.MOVE_MATRIX, LIBS.degToRad(-90));
     LIBS.rotateZ(charizardRightWingBone2.MOVE_MATRIX, LIBS.degToRad(-20));
 
-    LIBS.translateX(charizardLeftBoneJoints2.MOVE_MATRIX, -2.4);
-    LIBS.translateY(charizardLeftBoneJoints2.MOVE_MATRIX, -0.6);
-    LIBS.translateZ(charizardLeftBoneJoints2.MOVE_MATRIX, -2.2);
+    LIBS.translateX(charizardLeftBoneJoints2.MOVE_MATRIX, -2.4 + 8.9);
+    LIBS.translateY(charizardLeftBoneJoints2.MOVE_MATRIX, -0.65);
+    LIBS.translateZ(charizardLeftBoneJoints2.MOVE_MATRIX, 6.6);
     LIBS.rotateY(charizardLeftBoneJoints2.MOVE_MATRIX, LIBS.degToRad(90));
 
-    LIBS.translateX(charizardRightBoneJoints2.MOVE_MATRIX, 2.4);
+    LIBS.translateX(charizardRightBoneJoints2.MOVE_MATRIX, 2.4 + 9.0);
     LIBS.translateY(charizardRightBoneJoints2.MOVE_MATRIX, -0.6);
-    LIBS.translateZ(charizardRightBoneJoints2.MOVE_MATRIX, -2.2);
+    LIBS.translateZ(charizardRightBoneJoints2.MOVE_MATRIX, -11.4);
     LIBS.rotateY(charizardRightBoneJoints2.MOVE_MATRIX, LIBS.degToRad(-90));
 
-    LIBS.translateX(charizardLeftWingBone3.MOVE_MATRIX, -4.65);
-    LIBS.translateY(charizardLeftWingBone3.MOVE_MATRIX, -1.0);
-    LIBS.translateZ(charizardLeftWingBone3.MOVE_MATRIX, 2.0);
+    LIBS.translateX(charizardLeftWingBone3.MOVE_MATRIX, -3.4);
+    LIBS.translateY(charizardLeftWingBone3.MOVE_MATRIX, 6.05);
+    LIBS.translateZ(charizardLeftWingBone3.MOVE_MATRIX, 2.8);
     LIBS.rotateX(charizardLeftWingBone3.MOVE_MATRIX, LIBS.degToRad(-25));
     LIBS.rotateZ(charizardLeftWingBone3.MOVE_MATRIX, LIBS.degToRad(-45));
 
-    LIBS.translateX(charizardRightWingBone3.MOVE_MATRIX, 4.65);
-    LIBS.translateY(charizardRightWingBone3.MOVE_MATRIX, -1.0);
-    LIBS.translateZ(charizardRightWingBone3.MOVE_MATRIX, 2.0);
+    LIBS.translateX(charizardRightWingBone3.MOVE_MATRIX, 4.65 + 4.0);
+    LIBS.translateY(charizardRightWingBone3.MOVE_MATRIX, -6.6);
+    LIBS.translateZ(charizardRightWingBone3.MOVE_MATRIX, 2.8);
     LIBS.rotateX(charizardRightWingBone3.MOVE_MATRIX, LIBS.degToRad(-25));
     LIBS.rotateZ(charizardRightWingBone3.MOVE_MATRIX, LIBS.degToRad(45));
 
-    LIBS.translateX(charizardLeftWingBone4.MOVE_MATRIX, 0.3);
-    LIBS.translateY(charizardLeftWingBone4.MOVE_MATRIX, 1.2);
-    LIBS.translateZ(charizardLeftWingBone4.MOVE_MATRIX, -0.65);
+    LIBS.translateX(charizardLeftWingBone4.MOVE_MATRIX, 2.5);
+    LIBS.translateY(charizardLeftWingBone4.MOVE_MATRIX, -2.85);
+    LIBS.translateZ(charizardLeftWingBone4.MOVE_MATRIX, -1.0);
     LIBS.rotateX(charizardLeftWingBone4.MOVE_MATRIX, LIBS.degToRad(10));
     LIBS.rotateZ(charizardLeftWingBone4.MOVE_MATRIX, LIBS.degToRad(30));
 
-    LIBS.translateX(charizardRightWingBone4.MOVE_MATRIX, -0.3);
-    LIBS.translateY(charizardRightWingBone4.MOVE_MATRIX, 1.2);
-    LIBS.translateZ(charizardRightWingBone4.MOVE_MATRIX, -0.65);
+    LIBS.translateX(charizardRightWingBone4.MOVE_MATRIX, -0.15);
+    LIBS.translateY(charizardRightWingBone4.MOVE_MATRIX, 6.05);
+    LIBS.translateZ(charizardRightWingBone4.MOVE_MATRIX, -1.0);
     LIBS.rotateX(charizardRightWingBone4.MOVE_MATRIX, LIBS.degToRad(10));
     LIBS.rotateZ(charizardRightWingBone4.MOVE_MATRIX, LIBS.degToRad(-30));
 
-    LIBS.translateY(charizardLeftWingClaw.MOVE_MATRIX, 7.2);
-    LIBS.translateZ(charizardLeftWingClaw.MOVE_MATRIX, 3.6);
+    LIBS.translateY(charizardLeftWingClaw.MOVE_MATRIX, 9.5);
+    LIBS.translateZ(charizardLeftWingClaw.MOVE_MATRIX, 5.5);
     LIBS.rotateX(charizardLeftWingClaw.MOVE_MATRIX, LIBS.degToRad(-100));
 
-    LIBS.translateY(charizardRightWingClaw.MOVE_MATRIX, 7.2);
-    LIBS.translateZ(charizardRightWingClaw.MOVE_MATRIX, 3.6);
+    LIBS.translateY(charizardRightWingClaw.MOVE_MATRIX, 9.6);
+    LIBS.translateZ(charizardRightWingClaw.MOVE_MATRIX, 5.62);
     LIBS.rotateX(charizardRightWingClaw.MOVE_MATRIX, LIBS.degToRad(-100));
 
-    LIBS.translateX(charizardLeftWingBone5.MOVE_MATRIX, 0.1);
-    LIBS.translateY(charizardLeftWingBone5.MOVE_MATRIX, 0.4);
+    LIBS.translateX(charizardLeftWingBone5.MOVE_MATRIX, 1.35);
+    LIBS.translateY(charizardLeftWingBone5.MOVE_MATRIX, -2.55);
     LIBS.translateZ(charizardLeftWingBone5.MOVE_MATRIX, -0.02);
     LIBS.rotateZ(charizardLeftWingBone5.MOVE_MATRIX, LIBS.degToRad(20));
 
-    LIBS.translateX(charizardRightWingBone5.MOVE_MATRIX, -0.1);
-    LIBS.translateY(charizardRightWingBone5.MOVE_MATRIX, 0.4);
+    LIBS.translateX(charizardRightWingBone5.MOVE_MATRIX, -0.27);
+    LIBS.translateY(charizardRightWingBone5.MOVE_MATRIX, 3.5);
     LIBS.translateZ(charizardRightWingBone5.MOVE_MATRIX, -0.02);
     LIBS.rotateZ(charizardRightWingBone5.MOVE_MATRIX, LIBS.degToRad(-20));
 
-    LIBS.translateX(charizardLeftWingBone6.MOVE_MATRIX, -2.9);
-    LIBS.translateY(charizardLeftWingBone6.MOVE_MATRIX, -5.65);
-    LIBS.translateZ(charizardLeftWingBone6.MOVE_MATRIX, -0.2);
+    LIBS.translateX(charizardLeftWingBone6.MOVE_MATRIX, 2.4);
+    LIBS.translateY(charizardLeftWingBone6.MOVE_MATRIX, 4.7);
+    LIBS.translateZ(charizardLeftWingBone6.MOVE_MATRIX, 0.1);
     LIBS.rotateX(charizardLeftWingBone6.MOVE_MATRIX, LIBS.degToRad(-6));
     LIBS.rotateZ(charizardLeftWingBone6.MOVE_MATRIX, LIBS.degToRad(-80));
 
-    LIBS.translateX(charizardRightWingBone6.MOVE_MATRIX, 2.9);
-    LIBS.translateY(charizardRightWingBone6.MOVE_MATRIX, -5.65);
-    LIBS.translateZ(charizardRightWingBone6.MOVE_MATRIX, -0.2);
+    LIBS.translateX(charizardRightWingBone6.MOVE_MATRIX, 12.41);
+    LIBS.translateY(charizardRightWingBone6.MOVE_MATRIX, -12.95);
+    LIBS.translateZ(charizardRightWingBone6.MOVE_MATRIX, 0.1);
     LIBS.rotateX(charizardRightWingBone6.MOVE_MATRIX, LIBS.degToRad(-6));
     LIBS.rotateZ(charizardRightWingBone6.MOVE_MATRIX, LIBS.degToRad(80));
 
     LIBS.translateX(charizardLeftWingMembrane.MOVE_MATRIX, 4.0);
-    LIBS.translateZ(charizardLeftWingMembrane.MOVE_MATRIX, 0.4);
+    LIBS.translateZ(charizardLeftWingMembrane.MOVE_MATRIX, -0.61);
     LIBS.rotateY(charizardLeftWingMembrane.MOVE_MATRIX, LIBS.degToRad(-6));
 
-    LIBS.translateX(rightWingMembrane.MOVE_MATRIX, -4.0);
-    LIBS.translateZ(rightWingMembrane.MOVE_MATRIX, 0.4);
-    LIBS.rotateY(rightWingMembrane.MOVE_MATRIX, LIBS.degToRad(6));
+    LIBS.translateX(charizardRightWingMembrane.MOVE_MATRIX, -4.0);
+    LIBS.translateZ(charizardRightWingMembrane.MOVE_MATRIX, 1.3);
+    LIBS.rotateY(charizardRightWingMembrane.MOVE_MATRIX, LIBS.degToRad(6));
 
     LIBS.translateX(charizardLeftWingMembranceClose.MOVE_MATRIX, 4.0);
-    LIBS.translateZ(charizardLeftWingMembranceClose.MOVE_MATRIX, 0.35);
+    LIBS.translateZ(charizardLeftWingMembranceClose.MOVE_MATRIX, -0.62);
     LIBS.rotateY(charizardLeftWingMembranceClose.MOVE_MATRIX, LIBS.degToRad(-6));
 
-    LIBS.translateX(rightWingMembranceClose.MOVE_MATRIX, -4.0);
-    LIBS.translateZ(rightWingMembranceClose.MOVE_MATRIX, 0.35);
-    LIBS.rotateY(rightWingMembranceClose.MOVE_MATRIX, LIBS.degToRad(6));
+    LIBS.translateX(charizardRightWingMembranceClose.MOVE_MATRIX, -4.0);
+    LIBS.translateZ(charizardRightWingMembranceClose.MOVE_MATRIX, 1.25);
+    LIBS.rotateY(charizardRightWingMembranceClose.MOVE_MATRIX, LIBS.degToRad(6));
     // ========== ROTATE SCALE TRANSLATE END ==========
 
     // ========== CHILDS PUSH START ==========
@@ -877,8 +877,8 @@ function main() {
     charizardLeftWingBone1.addChild(charizardLeftWingMembranceClose);
     charizardLeftWingBone1.addChild(charizardLeftBoneJoints1);
 
-    charizardRightWingBone1.addChild(rightWingMembrane);
-    charizardRightWingBone1.addChild(rightWingMembranceClose);
+    charizardRightWingBone1.addChild(charizardRightWingMembrane);
+    charizardRightWingBone1.addChild(charizardRightWingMembranceClose);
     charizardRightWingBone1.addChild(charizardRightBoneJoints1);
 
     charizardLeftBoneJoints1.addChild(charizardLeftWingBone2);
@@ -1035,6 +1035,9 @@ function main() {
         charizardLeftWingBone1.render(MODELMATRIX);
         charizardRightWingBone1.render(MODELMATRIX);
         // ========== RENDER PARENT OBJECT END ==========
+
+        // ========== ANIMATE OBJECT START ==========
+        // ========== ANIMATE OBJECT END ==========
 
         GL.flush();
         window.requestAnimationFrame(animate);
