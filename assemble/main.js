@@ -244,7 +244,7 @@ function main() {
     const charizardLeftHandPalm = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, hand_palm_vertices, hand_palm_indices, GL.TRIANGLES);
     const charizardRightHandPalm = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, hand_palm_vertices, hand_palm_indices, GL.TRIANGLES);
 
-    const { vertices: foot_claw_vertices, indices: foot_claw_indices } = generateEagleTalon(0.25, 0.0, 0.55, 1.0, 30, 30, [1.0, 1.0, 1.0]);
+    const { vertices: foot_claw_vertices, indices: foot_claw_indices } = generateEllipticParaboloid(0.15, 0.15, 0.8, 20, 10, [1.0, 1.0, 1.0]);
     const charizardLeftFootClaw1 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, foot_claw_vertices, foot_claw_indices, GL.TRIANGLES);
     const charizardLeftFootClaw2 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, foot_claw_vertices, foot_claw_indices, GL.TRIANGLES);
     const charizardLeftFootClaw3 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, foot_claw_vertices, foot_claw_indices, GL.TRIANGLES);
@@ -515,9 +515,11 @@ function main() {
 
     LIBS.translateY(charizardLeftFoot.MOVE_MATRIX, -1.2);
     LIBS.translateZ(charizardLeftFoot.MOVE_MATRIX, 0.4);
+    LIBS.rotateX(charizardLeftFoot.MOVE_MATRIX, LIBS.degToRad(15));
 
     LIBS.translateY(charizardRightFoot.MOVE_MATRIX, -1.2);
     LIBS.translateZ(charizardRightFoot.MOVE_MATRIX, 0.4);
+    LIBS.rotateX(charizardRightFoot.MOVE_MATRIX, LIBS.degToRad(15));
 
     LIBS.translateX(charizardLeftShoulder.MOVE_MATRIX, 10.4);
     LIBS.translateY(charizardLeftShoulder.MOVE_MATRIX, 3.0);
@@ -549,47 +551,35 @@ function main() {
     LIBS.translateZ(charizardRightHandPalm.MOVE_MATRIX, 2.2);
     LIBS.rotateY(charizardRightHandPalm.MOVE_MATRIX, LIBS.degToRad(30));
 
-    LIBS.translateX(charizardLeftFootClaw1.MOVE_MATRIX, 9.2);
-    LIBS.translateY(charizardLeftFootClaw1.MOVE_MATRIX, -3.3);
-    LIBS.translateZ(charizardLeftFootClaw1.MOVE_MATRIX, -9.1);
-    LIBS.rotateX(charizardLeftFootClaw1.MOVE_MATRIX, LIBS.degToRad(-90));
-    LIBS.rotateY(charizardLeftFootClaw1.MOVE_MATRIX, LIBS.degToRad(-70));
-    LIBS.rotateZ(charizardLeftFootClaw1.MOVE_MATRIX, LIBS.degToRad(25));
+    LIBS.translateX(charizardLeftFootClaw1.MOVE_MATRIX, 9.2 - 8.9);
+    LIBS.translateY(charizardLeftFootClaw1.MOVE_MATRIX, -3.2);
+    LIBS.translateZ(charizardLeftFootClaw1.MOVE_MATRIX, 2.75);
+    LIBS.rotateX(charizardLeftFootClaw1.MOVE_MATRIX, LIBS.degToRad(-180));
 
-    LIBS.translateX(charizardLeftFootClaw2.MOVE_MATRIX, 8.9);
-    LIBS.translateY(charizardLeftFootClaw2.MOVE_MATRIX, -3.3);
-    LIBS.translateZ(charizardLeftFootClaw2.MOVE_MATRIX, -9.1);
-    LIBS.rotateX(charizardLeftFootClaw2.MOVE_MATRIX, LIBS.degToRad(-90));
-    LIBS.rotateY(charizardLeftFootClaw2.MOVE_MATRIX, LIBS.degToRad(-70));
-    LIBS.rotateZ(charizardLeftFootClaw2.MOVE_MATRIX, LIBS.degToRad(25));
+    LIBS.translateX(charizardLeftFootClaw2.MOVE_MATRIX, 8.9 - 8.9);
+    LIBS.translateY(charizardLeftFootClaw2.MOVE_MATRIX, -3.2);
+    LIBS.translateZ(charizardLeftFootClaw2.MOVE_MATRIX, 2.85);
+    LIBS.rotateX(charizardLeftFootClaw2.MOVE_MATRIX, LIBS.degToRad(-180));
 
-    LIBS.translateX(charizardLeftFootClaw3.MOVE_MATRIX, 8.6);
-    LIBS.translateY(charizardLeftFootClaw3.MOVE_MATRIX, -3.4);
-    LIBS.translateZ(charizardLeftFootClaw3.MOVE_MATRIX, -9.1);
-    LIBS.rotateX(charizardLeftFootClaw3.MOVE_MATRIX, LIBS.degToRad(-90));
-    LIBS.rotateY(charizardLeftFootClaw3.MOVE_MATRIX, LIBS.degToRad(-70));
-    LIBS.rotateZ(charizardLeftFootClaw3.MOVE_MATRIX, LIBS.degToRad(25));
+    LIBS.translateX(charizardLeftFootClaw3.MOVE_MATRIX, 8.6 - 8.9);
+    LIBS.translateY(charizardLeftFootClaw3.MOVE_MATRIX, -3.2);
+    LIBS.translateZ(charizardLeftFootClaw3.MOVE_MATRIX, 2.75);
+    LIBS.rotateX(charizardLeftFootClaw3.MOVE_MATRIX, LIBS.degToRad(-180));
 
-    LIBS.translateX(charizardRightFootClaw1.MOVE_MATRIX, 6.0);
-    LIBS.translateY(charizardRightFootClaw1.MOVE_MATRIX, -2.8);
-    LIBS.translateZ(charizardRightFootClaw1.MOVE_MATRIX, -5.7);
-    LIBS.rotateX(charizardRightFootClaw1.MOVE_MATRIX, LIBS.degToRad(-90));
-    LIBS.rotateY(charizardRightFootClaw1.MOVE_MATRIX, LIBS.degToRad(-70));
-    LIBS.rotateZ(charizardRightFootClaw1.MOVE_MATRIX, LIBS.degToRad(25));
+    LIBS.translateX(charizardRightFootClaw1.MOVE_MATRIX, 9.2 - 8.9);
+    LIBS.translateY(charizardRightFootClaw1.MOVE_MATRIX, -3.2);
+    LIBS.translateZ(charizardRightFootClaw1.MOVE_MATRIX, 2.75);
+    LIBS.rotateX(charizardRightFootClaw1.MOVE_MATRIX, LIBS.degToRad(-180));
 
-    LIBS.translateX(charizardRightFootClaw2.MOVE_MATRIX, 6.3);
-    LIBS.translateY(charizardRightFootClaw2.MOVE_MATRIX, -2.7);
-    LIBS.translateZ(charizardRightFootClaw2.MOVE_MATRIX, -5.7);
-    LIBS.rotateX(charizardRightFootClaw2.MOVE_MATRIX, LIBS.degToRad(-90));
-    LIBS.rotateY(charizardRightFootClaw2.MOVE_MATRIX, LIBS.degToRad(-70));
-    LIBS.rotateZ(charizardRightFootClaw2.MOVE_MATRIX, LIBS.degToRad(25));
+    LIBS.translateX(charizardRightFootClaw2.MOVE_MATRIX, 8.9 - 8.9);
+    LIBS.translateY(charizardRightFootClaw2.MOVE_MATRIX, -3.2);
+    LIBS.translateZ(charizardRightFootClaw2.MOVE_MATRIX, 2.85);
+    LIBS.rotateX(charizardRightFootClaw2.MOVE_MATRIX, LIBS.degToRad(-180));
 
-    LIBS.translateX(charizardRightFootClaw3.MOVE_MATRIX, 6.6);
-    LIBS.translateY(charizardRightFootClaw3.MOVE_MATRIX, -2.7);
-    LIBS.translateZ(charizardRightFootClaw3.MOVE_MATRIX, -5.7);
-    LIBS.rotateX(charizardRightFootClaw3.MOVE_MATRIX, LIBS.degToRad(-90));
-    LIBS.rotateY(charizardRightFootClaw3.MOVE_MATRIX, LIBS.degToRad(-70));
-    LIBS.rotateZ(charizardRightFootClaw3.MOVE_MATRIX, LIBS.degToRad(25));
+    LIBS.translateX(charizardRightFootClaw3.MOVE_MATRIX, 8.6 - 8.9);
+    LIBS.translateY(charizardRightFootClaw3.MOVE_MATRIX, -3.2);
+    LIBS.translateZ(charizardRightFootClaw3.MOVE_MATRIX, 2.75);
+    LIBS.rotateX(charizardRightFootClaw3.MOVE_MATRIX, LIBS.degToRad(-180));
 
     LIBS.translateX(charizardTail.MOVE_MATRIX, 9.0);
     LIBS.translateY(charizardTail.MOVE_MATRIX, 3.0);
@@ -832,10 +822,12 @@ function main() {
     GL.clearColor(0.5, 0.7, 0.9, 1.0);
     GL.clearDepth(1.0);
 
+    // ========== ANIMATION VARIABLES START ==========
     var charizardCurrentFlap = 0;
     var charizardFlapDirection = 1;
     var charizardCurrentTranslate = 0;
     var charizardTranslateDirection = 1;
+    // ========== ANIMATION VARIABLES END ==========
 
     var animate = function (time) {
         GL.viewport(0, 0, CANVAS.width, CANVAS.height);
@@ -891,15 +883,15 @@ function main() {
         charizardCurrentFlap += charizardFlapDirection * 0.001;
         charizardCurrentTranslate += charizardTranslateDirection * 0.001;
 
-        if (charizardCurrentFlap > 0.02) {
+        if (charizardCurrentFlap >= 0.02) {
             charizardFlapDirection = -1;
-        } else if (charizardCurrentFlap < -0.02) {
+        } else if (charizardCurrentFlap <= -0.02) {
             charizardFlapDirection = 1;
         }
 
-        if (charizardCurrentTranslate > 0.05) {
+        if (charizardCurrentTranslate >= 0.05) {
             charizardTranslateDirection = -1;
-        } else if (charizardCurrentTranslate < -0.05) {
+        } else if (charizardCurrentTranslate <= -0.05) {
             charizardTranslateDirection = 1;
         }
 
@@ -909,26 +901,15 @@ function main() {
         LIBS.rotateY(charizardRightWingMembraneClose.MOVE_MATRIX, -charizardCurrentFlap);
 
         LIBS.translateY(charizardBody.MOVE_MATRIX, charizardCurrentTranslate);
+        LIBS.translateZ(charizardBelly.MOVE_MATRIX, charizardCurrentTranslate * -0.05);
         LIBS.translateY(charizardLeftThigh.MOVE_MATRIX, charizardCurrentTranslate);
         LIBS.translateY(charizardRightThigh.MOVE_MATRIX, charizardCurrentTranslate);
-        LIBS.translateX(charizardLeftFootClaw1.MOVE_MATRIX, -charizardCurrentTranslate * 0.8);
-        LIBS.translateX(charizardLeftFootClaw2.MOVE_MATRIX, -charizardCurrentTranslate * 0.8);
-        LIBS.translateX(charizardLeftFootClaw3.MOVE_MATRIX, -charizardCurrentTranslate * 0.8);
-        LIBS.translateY(charizardLeftFootClaw1.MOVE_MATRIX, charizardCurrentTranslate * 0.6);
-        LIBS.translateY(charizardLeftFootClaw2.MOVE_MATRIX, charizardCurrentTranslate * 0.6);
-        LIBS.translateY(charizardLeftFootClaw3.MOVE_MATRIX, charizardCurrentTranslate * 0.6);
-        LIBS.translateZ(charizardLeftFootClaw1.MOVE_MATRIX, charizardCurrentTranslate * 0.3);
-        LIBS.translateZ(charizardLeftFootClaw2.MOVE_MATRIX, charizardCurrentTranslate * 0.3);
-        LIBS.translateZ(charizardLeftFootClaw3.MOVE_MATRIX, charizardCurrentTranslate * 0.3);
-        LIBS.translateX(charizardRightFootClaw1.MOVE_MATRIX, -charizardCurrentTranslate * 0.8);
-        LIBS.translateX(charizardRightFootClaw2.MOVE_MATRIX, -charizardCurrentTranslate * 0.8);
-        LIBS.translateX(charizardRightFootClaw3.MOVE_MATRIX, -charizardCurrentTranslate * 0.8);
-        LIBS.translateY(charizardRightFootClaw1.MOVE_MATRIX, charizardCurrentTranslate * 0.6);
-        LIBS.translateY(charizardRightFootClaw2.MOVE_MATRIX, charizardCurrentTranslate * 0.6);
-        LIBS.translateY(charizardRightFootClaw3.MOVE_MATRIX, charizardCurrentTranslate * 0.6);
-        LIBS.translateZ(charizardRightFootClaw1.MOVE_MATRIX, charizardCurrentTranslate * 0.3);
-        LIBS.translateZ(charizardRightFootClaw2.MOVE_MATRIX, charizardCurrentTranslate * 0.3);
-        LIBS.translateZ(charizardRightFootClaw3.MOVE_MATRIX, charizardCurrentTranslate * 0.3);
+        LIBS.translateY(charizardLeftFootClaw1.MOVE_MATRIX, charizardCurrentTranslate * 2.0);
+        LIBS.translateY(charizardLeftFootClaw2.MOVE_MATRIX, charizardCurrentTranslate * 2.0);
+        LIBS.translateY(charizardLeftFootClaw3.MOVE_MATRIX, charizardCurrentTranslate * 2.0);
+        LIBS.translateY(charizardRightFootClaw1.MOVE_MATRIX, charizardCurrentTranslate * 2.0);
+        LIBS.translateY(charizardRightFootClaw2.MOVE_MATRIX, charizardCurrentTranslate * 2.0);
+        LIBS.translateY(charizardRightFootClaw3.MOVE_MATRIX, charizardCurrentTranslate * 2.0);
         LIBS.translateY(charizardLeftShoulder.MOVE_MATRIX, charizardCurrentTranslate);
         LIBS.translateY(charizardRightShoulder.MOVE_MATRIX, charizardCurrentTranslate);
         LIBS.translateX(charizardLeftArm.MOVE_MATRIX, charizardCurrentTranslate);
@@ -959,12 +940,25 @@ function main() {
         LIBS.translateY(charizardLowerTeethRight.MOVE_MATRIX, charizardCurrentTranslate * 1.0);
         LIBS.translateZ(charizardLowerTeethLeft.MOVE_MATRIX, charizardCurrentTranslate * 1.0);
         LIBS.translateZ(charizardLowerTeethRight.MOVE_MATRIX, charizardCurrentTranslate * 1.0);
+        LIBS.translateZ(charizardLeftFoot.MOVE_MATRIX, charizardCurrentTranslate * -0.3);
+        LIBS.translateZ(charizardRightFoot.MOVE_MATRIX, charizardCurrentTranslate * -0.3);
+        LIBS.translateY(charizardLeftFootClaw1.MOVE_MATRIX, charizardCurrentTranslate * -0.07);
+        LIBS.translateY(charizardLeftFootClaw2.MOVE_MATRIX, charizardCurrentTranslate * -0.07);
+        LIBS.translateY(charizardLeftFootClaw3.MOVE_MATRIX, charizardCurrentTranslate * -0.07);
+        LIBS.translateY(charizardRightFootClaw1.MOVE_MATRIX, charizardCurrentTranslate * -0.07);
+        LIBS.translateY(charizardRightFootClaw2.MOVE_MATRIX, charizardCurrentTranslate * -0.07);
+        LIBS.translateY(charizardRightFootClaw3.MOVE_MATRIX, charizardCurrentTranslate * -0.07);
+        LIBS.translateZ(charizardLeftFootClaw1.MOVE_MATRIX, charizardCurrentTranslate * -0.07);
+        LIBS.translateZ(charizardLeftFootClaw2.MOVE_MATRIX, charizardCurrentTranslate * -0.07);
+        LIBS.translateZ(charizardLeftFootClaw3.MOVE_MATRIX, charizardCurrentTranslate * -0.07);
+        LIBS.translateZ(charizardRightFootClaw1.MOVE_MATRIX, charizardCurrentTranslate * -0.07);
+        LIBS.translateZ(charizardRightFootClaw2.MOVE_MATRIX, charizardCurrentTranslate * -0.07);
+        LIBS.translateZ(charizardRightFootClaw3.MOVE_MATRIX, charizardCurrentTranslate * -0.07);
         // ========== ANIMATE OBJECT END ==========
 
         GL.flush();
         window.requestAnimationFrame(animate);
     }
-
     animate(0);
 }
 
