@@ -127,6 +127,41 @@ function generateCurvedCylinder(radiusStart = 0.2, radiusEnd = 0.1, length = 2.0
     return { vertices, indices };
 }
 
+function generateStraightCylinder(radiusStart = 0.2, radiusEnd = 0.1, height = 2.0, segments = 20, rings = 10, color = [1.0, 1.0, 1.0]) {
+    let vertices = [];
+    let indices = [];
+
+    for (let i = 0; i <= segments; i++) {
+        let t = i / segments;
+        let r = radiusStart * (1 - t) + radiusEnd * t;
+        let y = -height / 2 + t * height; // lurus sepanjang Y
+
+        for (let j = 0; j <= rings; j++) {
+            let theta = (j / rings) * 2 * Math.PI;
+            let x = r * Math.cos(theta);
+            let z = r * Math.sin(theta);
+            vertices.push(x, y, z, ...color);
+        }
+    }
+
+    for (let i = 0; i < segments; i++) {
+        for (let j = 0; j < rings; j++) {
+            let a = i * (rings + 1) + j;
+            let b = a + rings + 1;
+            let c = b + 1;
+            let d = a + 1;
+            indices.push(a, b, d);
+            indices.push(b, c, d);
+        }
+    }
+
+    return {
+        vertices: new Float32Array(vertices),
+        indices: new Uint16Array(indices)
+    };
+}
+
+
 function generateCurvedByStrengthCylinder(radiusStart = 0.2, radiusEnd = 0.1, length = 2.0, segments = 20, rings = 10, color = [1.0, 1.0, 1.0], curveStrength = 1.0) {
     let vertices = [];
     let indices = [];
@@ -161,7 +196,6 @@ function generateCurvedByStrengthCylinder(radiusStart = 0.2, radiusEnd = 0.1, le
 
     return { vertices, indices };
 }
-
 
 function generateCylinderDynamicRadius(minStart, maxStart, minEnd, maxEnd, height, radialSegments, heightSegments, color, mode = "linear") {
     let vertices = [];

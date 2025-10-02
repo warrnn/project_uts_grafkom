@@ -139,6 +139,24 @@ function main() {
     const { vertices: base_vertices, indices: base_indices } = generateCircleDisk(18.0, 0.6, 64, [0.1, 0.6, 0.1], [0.4, 0.25, 0.1]);
     const base = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, base_vertices, base_indices, GL.TRIANGLES);
 
+    const { vertices: tree_log_vertices, indices: tree_log_indices } = generateStraightCylinder(1.4, 1.4, 14.0, 30, 30, [0.2, 0.2, 0.2]);
+    const treeLog1 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, tree_log_vertices, tree_log_indices, GL.TRIANGLES);
+    const treeLog2 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, tree_log_vertices, tree_log_indices, GL.TRIANGLES);
+
+    const { vertices: tree_leaves_vertices, indices: tree_leaves_indices } = generateEllipsoid(2.4, 2.4, 2.4, 30, 30, [0.0, 0.5, 0.0]);
+    const treeLeaves1 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, tree_leaves_vertices, tree_leaves_indices, GL.TRIANGLES);
+    const treeLeaves2 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, tree_leaves_vertices, tree_leaves_indices, GL.TRIANGLES);
+    const treeLeaves3 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, tree_leaves_vertices, tree_leaves_indices, GL.TRIANGLES);
+    const treeLeaves4 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, tree_leaves_vertices, tree_leaves_indices, GL.TRIANGLES);
+    const treeLeaves5 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, tree_leaves_vertices, tree_leaves_indices, GL.TRIANGLES);
+    const treeLeaves6 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, tree_leaves_vertices, tree_leaves_indices, GL.TRIANGLES);
+    const treeLeaves7 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, tree_leaves_vertices, tree_leaves_indices, GL.TRIANGLES);
+    const treeLeaves8 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, tree_leaves_vertices, tree_leaves_indices, GL.TRIANGLES);
+    const treeLeaves9 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, tree_leaves_vertices, tree_leaves_indices, GL.TRIANGLES);
+    const treeLeaves10 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, tree_leaves_vertices, tree_leaves_indices, GL.TRIANGLES);
+    const treeLeaves11 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, tree_leaves_vertices, tree_leaves_indices, GL.TRIANGLES);
+    const treeLeaves12 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, tree_leaves_vertices, tree_leaves_indices, GL.TRIANGLES);
+
     const { vertices: charmander_body_vertices, indices: charmander_body_indices } = generateEllipsoid(1.1, 1.3, 0.8, 30, 30, [1.0, 0.5, 0.0]);
     const charmanderBody = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, charmander_body_vertices, charmander_body_indices, GL.TRIANGLES);
 
@@ -357,6 +375,62 @@ function main() {
     // ========== ROTATE SCALE TRANSLATE START ==========
     LIBS.translateY(base.MOVE_MATRIX, -2.0);
     LIBS.rotateX(base.MOVE_MATRIX, -Math.PI / 2);
+
+    LIBS.translateX(treeLog1.MOVE_MATRIX, 6.0);
+    LIBS.translateY(treeLog1.MOVE_MATRIX, 5.0);
+    LIBS.translateZ(treeLog1.MOVE_MATRIX, -10.0);
+
+    LIBS.translateX(treeLog2.MOVE_MATRIX, -6.0);
+    LIBS.translateY(treeLog2.MOVE_MATRIX, 5.0);
+    LIBS.translateZ(treeLog2.MOVE_MATRIX, -10.0);
+
+    LIBS.translateX(treeLeaves1.MOVE_MATRIX, -6.0);
+    LIBS.translateY(treeLeaves1.MOVE_MATRIX, 12.0);
+    LIBS.translateZ(treeLeaves1.MOVE_MATRIX, -10.0);
+
+    LIBS.translateX(treeLeaves2.MOVE_MATRIX, 6.0);
+    LIBS.translateY(treeLeaves2.MOVE_MATRIX, 12.0);
+    LIBS.translateZ(treeLeaves2.MOVE_MATRIX, -10.0);
+
+    LIBS.translateX(treeLeaves3.MOVE_MATRIX, -8.0);
+    LIBS.translateY(treeLeaves3.MOVE_MATRIX, 12.0);
+    LIBS.translateZ(treeLeaves3.MOVE_MATRIX, -10.0);
+
+    LIBS.translateX(treeLeaves4.MOVE_MATRIX, 8.0);
+    LIBS.translateY(treeLeaves4.MOVE_MATRIX, 12.0);
+    LIBS.translateZ(treeLeaves4.MOVE_MATRIX, -10.0);
+
+    LIBS.translateX(treeLeaves5.MOVE_MATRIX, -4.0);
+    LIBS.translateY(treeLeaves5.MOVE_MATRIX, 12.0);
+    LIBS.translateZ(treeLeaves5.MOVE_MATRIX, -10.0);
+
+    LIBS.translateX(treeLeaves6.MOVE_MATRIX, 4.0);
+    LIBS.translateY(treeLeaves6.MOVE_MATRIX, 12.0);
+    LIBS.translateZ(treeLeaves6.MOVE_MATRIX, -10.0);
+
+    LIBS.translateX(treeLeaves7.MOVE_MATRIX, -6.0);
+    LIBS.translateY(treeLeaves7.MOVE_MATRIX, 12.0);
+    LIBS.translateZ(treeLeaves7.MOVE_MATRIX, -8.0);
+
+    LIBS.translateX(treeLeaves8.MOVE_MATRIX, 6.0);
+    LIBS.translateY(treeLeaves8.MOVE_MATRIX, 12.0);
+    LIBS.translateZ(treeLeaves8.MOVE_MATRIX, -8.0);
+
+    LIBS.translateX(treeLeaves9.MOVE_MATRIX, -6.0);
+    LIBS.translateY(treeLeaves9.MOVE_MATRIX, 12.0);
+    LIBS.translateZ(treeLeaves9.MOVE_MATRIX, -12.0);
+
+    LIBS.translateX(treeLeaves10.MOVE_MATRIX, 6.0);
+    LIBS.translateY(treeLeaves10.MOVE_MATRIX, 12.0);
+    LIBS.translateZ(treeLeaves10.MOVE_MATRIX, -12.0);
+
+    LIBS.translateX(treeLeaves11.MOVE_MATRIX, -6.0);
+    LIBS.translateY(treeLeaves11.MOVE_MATRIX, 14.0);
+    LIBS.translateZ(treeLeaves11.MOVE_MATRIX, -10.0);
+
+    LIBS.translateX(treeLeaves12.MOVE_MATRIX, 6.0);
+    LIBS.translateY(treeLeaves12.MOVE_MATRIX, 14.0);
+    LIBS.translateZ(treeLeaves12.MOVE_MATRIX, -10.0);
 
     LIBS.translateX(charmanderBody.MOVE_MATRIX, -9.0);
 
@@ -795,6 +869,20 @@ function main() {
 
     // ========== SETUP START ==========
     base.setup();
+    treeLog1.setup();
+    treeLog2.setup();
+    treeLeaves1.setup();
+    treeLeaves2.setup();
+    treeLeaves3.setup();
+    treeLeaves4.setup();
+    treeLeaves5.setup();
+    treeLeaves6.setup();
+    treeLeaves7.setup();
+    treeLeaves8.setup();
+    treeLeaves9.setup();
+    treeLeaves10.setup();
+    treeLeaves11.setup();
+    treeLeaves12.setup();
 
     charmanderBody.setup();
     charmanderHead.setup();
@@ -827,6 +915,12 @@ function main() {
     var charizardFlapDirection = 1;
     var charizardCurrentTranslate = 0;
     var charizardTranslateDirection = 1;
+    const allTreeLeaves = [
+        treeLeaves1, treeLeaves2, treeLeaves3, treeLeaves4,
+        treeLeaves5, treeLeaves6, treeLeaves7, treeLeaves8,
+        treeLeaves9, treeLeaves10, treeLeaves11, treeLeaves12
+    ];
+    const initialTreeLeavesMatrices = allTreeLeaves.map(leaf => [...leaf.MOVE_MATRIX]);
     // ========== ANIMATION VARIABLES END ==========
 
     var animate = function (time) {
@@ -857,6 +951,20 @@ function main() {
 
         // ========== RENDER PARENT OBJECT START ==========
         base.render(MODELMATRIX);
+        treeLog1.render(MODELMATRIX);
+        treeLog2.render(MODELMATRIX);
+        treeLeaves1.render(MODELMATRIX);
+        treeLeaves2.render(MODELMATRIX);
+        treeLeaves3.render(MODELMATRIX);
+        treeLeaves4.render(MODELMATRIX);
+        treeLeaves5.render(MODELMATRIX);
+        treeLeaves6.render(MODELMATRIX);
+        treeLeaves7.render(MODELMATRIX);
+        treeLeaves8.render(MODELMATRIX);
+        treeLeaves9.render(MODELMATRIX);
+        treeLeaves10.render(MODELMATRIX);
+        treeLeaves11.render(MODELMATRIX);
+        treeLeaves12.render(MODELMATRIX);
 
         charmanderBody.render(MODELMATRIX);
         charmanderHead.render(MODELMATRIX);
@@ -894,6 +1002,14 @@ function main() {
         } else if (charizardCurrentTranslate <= -0.05) {
             charizardTranslateDirection = 1;
         }
+
+        allTreeLeaves.forEach((leaf, index) => {
+            const leavesScale = 1.0 + Math.sin((time / 500) + index) * 0.05;
+            leaf.MOVE_MATRIX = [...initialTreeLeavesMatrices[index]];
+            LIBS.scaleX(leaf.MOVE_MATRIX, leavesScale);
+            LIBS.scaleY(leaf.MOVE_MATRIX, leavesScale);
+            LIBS.scaleZ(leaf.MOVE_MATRIX, leavesScale);
+        });
 
         LIBS.rotateY(charizardLeftWingMembrane.MOVE_MATRIX, charizardCurrentFlap);
         LIBS.rotateY(charizardRightWingMembrane.MOVE_MATRIX, -charizardCurrentFlap);

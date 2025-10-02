@@ -233,93 +233,55 @@ function main() {
     const leftHorn = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, horn_vertices, horn_indices, GL.TRIANGLES);
     const rightHorn = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, horn_vertices, horn_indices, GL.TRIANGLES);
 
-    const { vertices: wing_bone_1, indices: wing_bone_1_indices } = generateCylinderDynamicRadius(0.1, 0.1, 0.1, 0.1, 3.0, 32, 32, [1.0, 0.5, 0.0], "linear");
-    const leftWingBone1 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_bone_1, wing_bone_1_indices, GL.TRIANGLES);
-    const rightWingBone1 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_bone_1, wing_bone_1_indices, GL.TRIANGLES);
+    const charizardWingPointsLeft = [
+        [1.0, 1.0, 1.0],
+        [2.0, 1.0, 1.0],
+        [3.0, 2.0, 1.0],
+        [4.0, 2.0, 1.0],
 
-    const { vertices: bone_joints_1, indices: bone_joints_1_indices } = generateEllipsoid(0.35, 0.2, 0.2, 20, 10, [1.0, 0.5, 0.0]);
-    const leftBoneJoints1 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, bone_joints_1, bone_joints_1_indices, GL.TRIANGLES);
-    const rightBoneJoints1 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, bone_joints_1, bone_joints_1_indices, GL.TRIANGLES);
+        [5.0, -1.0, 0.0],
+        [4.0, 2.0, 0.0],
+        [5.0, -3.0, 0.0],
 
-    const { vertices: wing_bone_2, indices: wing_bone_2_indices } = generateCurvedByStrengthCylinder(0.1, 0.1, 2.0, 32, 32, [1.0, 0.5, 0.0], 0.8);
-    const leftWingBone2 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_bone_2, wing_bone_2_indices, GL.TRIANGLES);
-    const rightWingBone2 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_bone_2, wing_bone_2_indices, GL.TRIANGLES);
+        [5.0, -9.0, 0.0],
+        [4.0, 2.0, 0.0],
+        [4.0, -3.0, 0.0],
 
-    const { vertices: bone_joints_2, indices: bone_joints_2_indices } = generateEllipsoid(0.4, 0.15, 0.15, 20, 10, [1.0, 0.5, 0.0]);
-    const leftBoneJoints2 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, bone_joints_2, bone_joints_2_indices, GL.TRIANGLES);
-    const rightBoneJoints2 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, bone_joints_2, bone_joints_2_indices, GL.TRIANGLES);
-
-    const { vertices: wing_bone_3, indices: wing_bone_3_indices } = generateCylinderDynamicRadius(0.1, 0.1, 0.1, 0.1, 2.0, 32, 32, [1.0, 0.5, 0.0], "linear");
-    const leftWingBone3 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_bone_3, wing_bone_3_indices, GL.TRIANGLES);
-    const rightWingBone3 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_bone_3, wing_bone_3_indices, GL.TRIANGLES);
-
-    const { vertices: wing_bone_4, indices: wing_bone_4_indices } = generateCylinderDynamicRadius(0.1, 0.1, 0.1, 0.1, 2.0, 32, 32, [1.0, 0.5, 0.0], "linear");
-    const leftWingBone4 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_bone_4, wing_bone_4_indices, GL.TRIANGLES);
-    const rightWingBone4 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_bone_4, wing_bone_4_indices, GL.TRIANGLES);
-
-    const { vertices: wing_claw_vertices, indices: wing_claw_indices } = generateEllipticParaboloidFlexible(0.2, 0.1, 0.8, 30, 30, 0.2, [1.0, 0.5, 0.0]);
-    const leftWingClaw = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_claw_vertices, wing_claw_indices, GL.TRIANGLES);
-    const rightWingClaw = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_claw_vertices, wing_claw_indices, GL.TRIANGLES);
-
-    const { vertices: wing_bone_5, indices: wing_bone_5_indices } = generateCylinderDynamicRadius(0.1, 0.1, 0.1, 0.1, 1.8, 32, 32, [1.0, 0.5, 0.0], "linear");
-    const leftWingBone5 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_bone_5, wing_bone_5_indices, GL.TRIANGLES);
-    const rightWingBone5 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_bone_5, wing_bone_5_indices, GL.TRIANGLES);
-
-    const { vertices: wing_bone_6, indices: wing_bone_6_indices } = generateCylinderDynamicRadius(0.1, 0.1, 0.1, 0.1, 6.0, 32, 32, [1.0, 0.5, 0.0], "linear");
-    const leftWingBone6 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_bone_6, wing_bone_6_indices, GL.TRIANGLES);
-    const rightWingBone6 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_bone_6, wing_bone_6_indices, GL.TRIANGLES);
-
-    const wingPointsLeft = [
-        [-3.4, -0.2],  // kiri bawah
-        [-2.7, 0.5],  // kiri atas
-        [-1.8, 1.5],  // lengkung kiri
-        [0.0, 2.0],  // atas tengah kiri
-        [1.0, 2.6],  // atas tengah kanan
-        [2.2, 0.8],  // lengkung kanan
-        [2.3, -1.0],  // kanan atas
-        [1.9, -2.6]   // kanan bawah
+        [2.0, -8.0, 0.0],
+        [4.0, 2.0, 0.0],
+        [1.5, -3.5, 0.0],
     ];
-    const { vertices: wing_membrane_left_vertices, indices: wing_membrane_left_indices } = generateWingFan(wingPointsLeft, [0.3, 0.4, 1.0]);
-    const leftWingMembrane = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_membrane_left_vertices, wing_membrane_left_indices, GL.TRIANGLE_FAN);
+    const { vertices: wing_membrane_left_vertices, indices: wing_membrane_left_indices } = generateWingFanBezier3D(charizardWingPointsLeft, 30, [0.3, 0.4, 1.0]);
+    const charizardLeftWingMembrane = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_membrane_left_vertices, wing_membrane_left_indices, GL.TRIANGLE_FAN);
 
-    const wingPointsLeftClose = [
-        [-3.4, -0.2],  // kiri bawah
-        [-2.7, 0.5],  // kiri atas
-        [-1.8, 1.85],  // lengkung kiri
-        [0.0, 2.0],  // atas tengah kiri
-        [1.0, 2.6],  // atas tengah kanan
-        [2.2, 0.8],  // lengkung kanan
-        [2.3, -1.0],  // kanan atas
-        [1.9, -2.7]   // kanan bawah
-    ];
-    const { vertices: wing_membrane_left_close_vertices, indices: wing_membrane_left_close_indices } = generateWingFan(wingPointsLeftClose, [1.0, 0.5, 0.0]);
-    const leftWingMembranceClose = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_membrane_left_close_vertices, wing_membrane_left_close_indices, GL.TRIANGLE_FAN);
+    const charizardWingPointsLeftClose = [
+        [1.05, 1.1, 1.05],
+        [2.1, 1.05, 1.05],
+        [3.15, 2.1, 1.05],
+        [4.2, 2.1, 1.05],
 
-    const wingPointsRight = [
-        [3.4, -0.2],  // kiri bawah
-        [2.7, 0.5],  // kiri atas
-        [1.8, 1.5],  // lengkung kiri
-        [0.0, 2.0],  // atas tengah kiri
-        [-1.0, 2.6],  // atas tengah kanan
-        [-2.2, 0.8],  // lengkung kanan
-        [-2.3, -1.0],  // kanan atas
-        [-1.9, -2.6]   // kanan bawah
-    ];
-    const { vertices: wing_membrane_right_vertices, indices: wing_membrane_right_indices } = generateWingFan(wingPointsRight, [0.3, 0.4, 1.0]);
-    const rightWingMembrane = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_membrane_right_vertices, wing_membrane_right_indices, GL.TRIANGLE_FAN);
+        [5.25, -1.05, 0.0],
+        [4.2, 2.1, 0.0],
+        [5.25, -3.15, 0.0],
 
-    const wingPointsRightClose = [
-        [3.4, -0.2],  // kiri bawah
-        [2.7, 0.5],  // kiri atas
-        [1.8, 1.85],  // lengkung kiri
-        [0.0, 2.0],  // atas tengah kiri
-        [-1.0, 2.6],  // atas tengah kanan
-        [-2.2, 0.8],  // lengkung kanan
-        [-2.3, -1.0],  // kanan atas
-        [-1.9, -2.7]   // kanan bawah
+        [5.25, -9.45, 0.0],
+        [4.2, 2.1, 0.0],
+        [4.2, -3.15, 0.0],
+
+        [2.1, -8.4, 0.0],
+        [4.2, 2.1, 0.0],
+        [1.575, -3.675, 0.0],
     ];
-    const { vertices: wing_membrane_right_close_vertices, indices: wing_membrane_right_close_indices } = generateWingFan(wingPointsRightClose, [1.0, 0.5, 0.0]);
-    const rightWingMembranceClose = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_membrane_right_close_vertices, wing_membrane_right_close_indices, GL.TRIANGLE_FAN);
+    const { vertices: wing_membrane_left_close_vertices, indices: wing_membrane_left_close_indices } = generateWingFanBezier3D(charizardWingPointsLeftClose, 30, [1.0, 0.55, 0.0]);
+    const charizardLeftWingMembraneClose = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_membrane_left_close_vertices, wing_membrane_left_close_indices, GL.TRIANGLE_FAN);
+
+    const charizardWingPointsRight = charizardWingPointsLeft.map(p => [-p[0], p[1], p[2]]);
+    const { vertices: wing_membrane_right_vertices, indices: wing_membrane_right_indices } = generateWingFanBezier3D(charizardWingPointsRight, 30, [0.3, 0.4, 1.0]);
+    const charizardRightWingMembrane = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_membrane_right_vertices, wing_membrane_right_indices, GL.TRIANGLE_FAN);
+
+    const charizardWingPointsRightClose = charizardWingPointsLeftClose.map(p => [-p[0], p[1], p[2]]);
+    const { vertices: wing_membrane_right_close_vertices, indices: wing_membrane_right_close_indices } = generateWingFanBezier3D(charizardWingPointsRightClose, 30, [1.0, 0.55, 0.0]);
+    const charizardRightWingMembraneClose = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_membrane_right_close_vertices, wing_membrane_right_close_indices, GL.TRIANGLE_FAN);
     // ========== GENERATE SHAPE OBJECT END ==========
 
     // ========== ROTATE SCALE TRANSLATE START ==========
@@ -545,153 +507,33 @@ function main() {
     LIBS.translateZ(rightHorn.MOVE_MATRIX, -3.2);
     LIBS.rotateX(rightHorn.MOVE_MATRIX, LIBS.degToRad(20));
 
-    LIBS.translateX(leftWingBone1.MOVE_MATRIX, -0.7);
-    LIBS.translateY(leftWingBone1.MOVE_MATRIX, 2.0);
-    LIBS.translateZ(leftWingBone1.MOVE_MATRIX, -1.3);
-    LIBS.rotateZ(leftWingBone1.MOVE_MATRIX, LIBS.degToRad(20));
+    LIBS.translateX(charizardLeftWingMembrane.MOVE_MATRIX, 0.6);
+    LIBS.translateZ(charizardLeftWingMembrane.MOVE_MATRIX, -1.0);
+    LIBS.rotateY(charizardLeftWingMembrane.MOVE_MATRIX, LIBS.degToRad(-6));
+    LIBS.rotateZ(charizardLeftWingMembrane.MOVE_MATRIX, LIBS.degToRad(30));
 
-    LIBS.translateX(rightWingBone1.MOVE_MATRIX, 0.7);
-    LIBS.translateY(rightWingBone1.MOVE_MATRIX, 2.0);
-    LIBS.translateZ(rightWingBone1.MOVE_MATRIX, -1.3);
-    LIBS.rotateZ(rightWingBone1.MOVE_MATRIX, LIBS.degToRad(-20));
+    LIBS.translateX(charizardRightWingMembrane.MOVE_MATRIX, -0.6);
+    LIBS.translateZ(charizardRightWingMembrane.MOVE_MATRIX, -1.0);
+    LIBS.rotateY(charizardRightWingMembrane.MOVE_MATRIX, LIBS.degToRad(6));
+    LIBS.rotateZ(charizardRightWingMembrane.MOVE_MATRIX, LIBS.degToRad(-30));
 
-    LIBS.translateX(leftBoneJoints1.MOVE_MATRIX, -1.0);
-    LIBS.translateY(leftBoneJoints1.MOVE_MATRIX, 1.23);
-    LIBS.rotateZ(leftBoneJoints1.MOVE_MATRIX, LIBS.degToRad(-10));
+    LIBS.translateX(charizardLeftWingMembraneClose.MOVE_MATRIX, 0.6);
+    LIBS.translateZ(charizardLeftWingMembraneClose.MOVE_MATRIX, -1.05);
+    LIBS.rotateY(charizardLeftWingMembraneClose.MOVE_MATRIX, LIBS.degToRad(-6));
+    LIBS.rotateZ(charizardLeftWingMembraneClose.MOVE_MATRIX, LIBS.degToRad(30));
 
-    LIBS.translateX(rightBoneJoints1.MOVE_MATRIX, 1.0);
-    LIBS.translateY(rightBoneJoints1.MOVE_MATRIX, 1.23);
-    LIBS.rotateZ(rightBoneJoints1.MOVE_MATRIX, LIBS.degToRad(10));
-
-    LIBS.translateX(leftWingBone2.MOVE_MATRIX, 1.1);
-    LIBS.translateY(leftWingBone2.MOVE_MATRIX, 2.55);
-    LIBS.translateZ(leftWingBone2.MOVE_MATRIX, -2.3);
-    LIBS.rotateY(leftWingBone2.MOVE_MATRIX, LIBS.degToRad(90));
-    LIBS.rotateZ(leftWingBone2.MOVE_MATRIX, LIBS.degToRad(20));
-
-    LIBS.translateX(rightWingBone2.MOVE_MATRIX, -1.1);
-    LIBS.translateY(rightWingBone2.MOVE_MATRIX, 2.55);
-    LIBS.translateZ(rightWingBone2.MOVE_MATRIX, -2.3);
-    LIBS.rotateY(rightWingBone2.MOVE_MATRIX, LIBS.degToRad(-90));
-    LIBS.rotateZ(rightWingBone2.MOVE_MATRIX, LIBS.degToRad(-20));
-
-    LIBS.translateX(leftBoneJoints2.MOVE_MATRIX, -2.4);
-    LIBS.translateY(leftBoneJoints2.MOVE_MATRIX, -0.6);
-    LIBS.translateZ(leftBoneJoints2.MOVE_MATRIX, -2.2);
-    LIBS.rotateY(leftBoneJoints2.MOVE_MATRIX, LIBS.degToRad(90));
-
-    LIBS.translateX(rightBoneJoints2.MOVE_MATRIX, 2.4);
-    LIBS.translateY(rightBoneJoints2.MOVE_MATRIX, -0.6);
-    LIBS.translateZ(rightBoneJoints2.MOVE_MATRIX, -2.2);
-    LIBS.rotateY(rightBoneJoints2.MOVE_MATRIX, LIBS.degToRad(-90));
-
-    LIBS.translateX(leftWingBone3.MOVE_MATRIX, -4.65);
-    LIBS.translateY(leftWingBone3.MOVE_MATRIX, -1.0);
-    LIBS.translateZ(leftWingBone3.MOVE_MATRIX, 2.0);
-    LIBS.rotateX(leftWingBone3.MOVE_MATRIX, LIBS.degToRad(-25));
-    LIBS.rotateZ(leftWingBone3.MOVE_MATRIX, LIBS.degToRad(-45));
-
-    LIBS.translateX(rightWingBone3.MOVE_MATRIX, 4.65);
-    LIBS.translateY(rightWingBone3.MOVE_MATRIX, -1.0);
-    LIBS.translateZ(rightWingBone3.MOVE_MATRIX, 2.0);
-    LIBS.rotateX(rightWingBone3.MOVE_MATRIX, LIBS.degToRad(-25));
-    LIBS.rotateZ(rightWingBone3.MOVE_MATRIX, LIBS.degToRad(45));
-
-    LIBS.translateX(leftWingBone4.MOVE_MATRIX, 0.3);
-    LIBS.translateY(leftWingBone4.MOVE_MATRIX, 1.2);
-    LIBS.translateZ(leftWingBone4.MOVE_MATRIX, -0.65);
-    LIBS.rotateX(leftWingBone4.MOVE_MATRIX, LIBS.degToRad(10));
-    LIBS.rotateZ(leftWingBone4.MOVE_MATRIX, LIBS.degToRad(30));
-
-    LIBS.translateX(rightWingBone4.MOVE_MATRIX, -0.3);
-    LIBS.translateY(rightWingBone4.MOVE_MATRIX, 1.2);
-    LIBS.translateZ(rightWingBone4.MOVE_MATRIX, -0.65);
-    LIBS.rotateX(rightWingBone4.MOVE_MATRIX, LIBS.degToRad(10));
-    LIBS.rotateZ(rightWingBone4.MOVE_MATRIX, LIBS.degToRad(-30));
-
-    LIBS.translateY(leftWingClaw.MOVE_MATRIX, 7.2);
-    LIBS.translateZ(leftWingClaw.MOVE_MATRIX, 3.6);
-    LIBS.rotateX(leftWingClaw.MOVE_MATRIX, LIBS.degToRad(-100));
-
-    LIBS.translateY(rightWingClaw.MOVE_MATRIX, 7.2);
-    LIBS.translateZ(rightWingClaw.MOVE_MATRIX, 3.6);
-    LIBS.rotateX(rightWingClaw.MOVE_MATRIX, LIBS.degToRad(-100));
-
-    LIBS.translateX(leftWingBone5.MOVE_MATRIX, 0.1);
-    LIBS.translateY(leftWingBone5.MOVE_MATRIX, 0.4);
-    LIBS.translateZ(leftWingBone5.MOVE_MATRIX, -0.02);
-    LIBS.rotateZ(leftWingBone5.MOVE_MATRIX, LIBS.degToRad(20));
-
-    LIBS.translateX(rightWingBone5.MOVE_MATRIX, -0.1);
-    LIBS.translateY(rightWingBone5.MOVE_MATRIX, 0.4);
-    LIBS.translateZ(rightWingBone5.MOVE_MATRIX, -0.02);
-    LIBS.rotateZ(rightWingBone5.MOVE_MATRIX, LIBS.degToRad(-20));
-
-    LIBS.translateX(leftWingBone6.MOVE_MATRIX, -2.9);
-    LIBS.translateY(leftWingBone6.MOVE_MATRIX, -5.65);
-    LIBS.translateZ(leftWingBone6.MOVE_MATRIX, -0.2);
-    LIBS.rotateX(leftWingBone6.MOVE_MATRIX, LIBS.degToRad(-6));
-    LIBS.rotateZ(leftWingBone6.MOVE_MATRIX, LIBS.degToRad(-80));
-
-    LIBS.translateX(rightWingBone6.MOVE_MATRIX, 2.9);
-    LIBS.translateY(rightWingBone6.MOVE_MATRIX, -5.65);
-    LIBS.translateZ(rightWingBone6.MOVE_MATRIX, -0.2);
-    LIBS.rotateX(rightWingBone6.MOVE_MATRIX, LIBS.degToRad(-6));
-    LIBS.rotateZ(rightWingBone6.MOVE_MATRIX, LIBS.degToRad(80));
-
-    LIBS.translateX(leftWingMembrane.MOVE_MATRIX, 4.0);
-    LIBS.translateZ(leftWingMembrane.MOVE_MATRIX, 0.4);
-    LIBS.rotateY(leftWingMembrane.MOVE_MATRIX, LIBS.degToRad(-6));
-
-    LIBS.translateX(rightWingMembrane.MOVE_MATRIX, -4.0);
-    LIBS.translateZ(rightWingMembrane.MOVE_MATRIX, 0.4);
-    LIBS.rotateY(rightWingMembrane.MOVE_MATRIX, LIBS.degToRad(6));
-
-    LIBS.translateX(leftWingMembranceClose.MOVE_MATRIX, 4.0);
-    LIBS.translateZ(leftWingMembranceClose.MOVE_MATRIX, 0.35);
-    LIBS.rotateY(leftWingMembranceClose.MOVE_MATRIX, LIBS.degToRad(-6));
-
-    LIBS.translateX(rightWingMembranceClose.MOVE_MATRIX, -4.0);
-    LIBS.translateZ(rightWingMembranceClose.MOVE_MATRIX, 0.35);
-    LIBS.rotateY(rightWingMembranceClose.MOVE_MATRIX, LIBS.degToRad(6));
+    LIBS.translateX(charizardRightWingMembraneClose.MOVE_MATRIX, -0.6);
+    LIBS.translateZ(charizardRightWingMembraneClose.MOVE_MATRIX, -1.05);
+    LIBS.rotateY(charizardRightWingMembraneClose.MOVE_MATRIX, LIBS.degToRad(6));
+    LIBS.rotateZ(charizardRightWingMembraneClose.MOVE_MATRIX, LIBS.degToRad(-30));
     // ========== ROTATE SCALE TRANSLATE END ==========
 
     // ========== CHILDS PUSH START ==========
     body.addChild(belly);
-
-    leftWingBone1.addChild(leftWingMembrane);
-    leftWingBone1.addChild(leftWingMembranceClose);
-    leftWingBone1.addChild(leftBoneJoints1);
-
-    rightWingBone1.addChild(rightWingMembrane);
-    rightWingBone1.addChild(rightWingMembranceClose);
-    rightWingBone1.addChild(rightBoneJoints1);
-
-    leftBoneJoints1.addChild(leftWingBone2);
-
-    rightBoneJoints1.addChild(rightWingBone2);
-
-    leftWingBone2.addChild(leftBoneJoints2);
-
-    rightWingBone2.addChild(rightBoneJoints2);
-
-    leftBoneJoints2.addChild(leftWingBone3);
-    leftBoneJoints2.addChild(leftWingClaw);
-
-    rightBoneJoints2.addChild(rightWingBone3);
-    rightBoneJoints2.addChild(rightWingClaw);
-
-    leftWingBone3.addChild(leftWingBone4);
-
-    rightWingBone3.addChild(rightWingBone4);
-
-    leftWingBone4.addChild(leftWingBone5);
-
-    rightWingBone4.addChild(rightWingBone5);
-
-    leftWingBone5.addChild(leftWingBone6);
-
-    rightWingBone5.addChild(rightWingBone6);
+    body.addChild(charizardLeftWingMembrane);
+    body.addChild(charizardLeftWingMembraneClose);
+    body.addChild(charizardRightWingMembrane);
+    body.addChild(charizardRightWingMembraneClose);
 
     neck.addChild(head);
 
@@ -763,8 +605,6 @@ function main() {
     rightShoulder.setup();
     tail.setup();
     neck.setup();
-    leftWingBone1.setup();
-    rightWingBone1.setup();
     // ========== SETUP END ==========
 
     GL.enable(GL.DEPTH_TEST);
@@ -806,8 +646,6 @@ function main() {
         rightShoulder.render(MODELMATRIX);
         tail.render(MODELMATRIX);
         neck.render(MODELMATRIX);
-        leftWingBone1.render(MODELMATRIX);
-        rightWingBone1.render(MODELMATRIX);
         // ========== RENDER PARENT OBJECT END ==========
 
         GL.flush();
