@@ -5,7 +5,6 @@ function main() {
     CANVAS.width = window.innerWidth;
     CANVAS.height = window.innerHeight;
 
-    // ========== OBJECT DRAG START ==========
     var THETA = 0, PHI = 0;
     var drag = false;
     var x_prev, y_prev;
@@ -67,9 +66,7 @@ function main() {
     CANVAS.addEventListener("mousemove", mouseMove, false);
     window.addEventListener("keydown", keyDown, false);
     CANVAS.addEventListener("wheel", scroll, false);
-    // ========== OBJECT DRAG END ==========
 
-    // ========== WEBGL SETUP START ==========
     var GL;
     try {
         GL = CANVAS.getContext("webgl", { antialias: true });
@@ -130,12 +127,11 @@ function main() {
     var _Mmatrix = GL.getUniformLocation(SHADER_PROGRAM, "Mmatrix");
 
     GL.useProgram(SHADER_PROGRAM);
-    // ========== WEBGL SETUP END ==========
 
     var PROJMATRIX = LIBS.get_projection(40, CANVAS.width / CANVAS.height, 1, 100);
     var VIEWMATRIX = LIBS.get_I4();
 
-    // ========== GENERATE SHAPE OBJECT START =========
+    // ENVIROMENT OBJECT VARIABLE
     const { vertices: base_vertices, indices: base_indices } = generateCircleDisk(18.0, 0.6, 64, [0.1, 0.6, 0.1], [0.4, 0.25, 0.1]);
     const base = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, base_vertices, base_indices, GL.TRIANGLES);
 
@@ -156,7 +152,9 @@ function main() {
     const treeLeaves10 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, tree_leaves_vertices, tree_leaves_indices, GL.TRIANGLES);
     const treeLeaves11 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, tree_leaves_vertices, tree_leaves_indices, GL.TRIANGLES);
     const treeLeaves12 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, tree_leaves_vertices, tree_leaves_indices, GL.TRIANGLES);
+    // ENVIROMENT OBJECT VARIABLE END
 
+    // CHARMANDER OBJECT VARIABLE
     const { vertices: charmander_body_vertices, indices: charmander_body_indices } = generateEllipsoid(1.1, 1.3, 0.8, 30, 30, [1.0, 0.5, 0.0]);
     const charmanderBody = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, charmander_body_vertices, charmander_body_indices, GL.TRIANGLES);
 
@@ -231,7 +229,13 @@ function main() {
     const charmanderRightLegClaw1 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, claw_vertices, claw_indices, GL.TRIANGLES);
     const charmanderRightLegClaw2 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, claw_vertices, claw_indices, GL.TRIANGLES);
     const charmanderRightLegClaw3 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, claw_vertices, claw_indices, GL.TRIANGLES);
+    // CHARMANDER OBJECT VARIABLE END
 
+    // CHARMELEON OBJECT VARIABLE
+    // ...
+    // CHARMELEON OBJECT VARIABLE END
+
+    // CHARIZARD OBJECT VARIABLE
     const { vertices: body_vertices, indices: body_indices } = generateEllipsoid(2.1, 2.4, 1.5, 30, 30, [1.0, 0.5, 0.0]);
     const charizardBody = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, body_vertices, body_indices, GL.TRIANGLES);
 
@@ -370,68 +374,70 @@ function main() {
     const charizardWingPointsRightClose = charizardWingPointsLeftClose.map(p => [-p[0], p[1], p[2]]);
     const { vertices: wing_membrane_right_close_vertices, indices: wing_membrane_right_close_indices } = generateWingFanBezier3D(charizardWingPointsRightClose, 30, [1.0, 0.55, 0.0]);
     const charizardRightWingMembraneClose = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_membrane_right_close_vertices, wing_membrane_right_close_indices, GL.TRIANGLE_FAN);
-    // ========== GENERATE SHAPE OBJECT END ==========
+    // CHARMANDER OBJECT VARIABLE END
 
-    // ========== ROTATE SCALE TRANSLATE START ==========
+    // ENVIRONMENT TRANSFORMATION
     LIBS.translateY(base.MOVE_MATRIX, -2.0);
     LIBS.rotateX(base.MOVE_MATRIX, -Math.PI / 2);
 
-    LIBS.translateX(treeLog1.MOVE_MATRIX, 6.0);
+    LIBS.translateX(treeLog1.MOVE_MATRIX, 10.0);
     LIBS.translateY(treeLog1.MOVE_MATRIX, 5.0);
     LIBS.translateZ(treeLog1.MOVE_MATRIX, -10.0);
 
-    LIBS.translateX(treeLog2.MOVE_MATRIX, -6.0);
+    LIBS.translateX(treeLog2.MOVE_MATRIX, -10.0);
     LIBS.translateY(treeLog2.MOVE_MATRIX, 5.0);
     LIBS.translateZ(treeLog2.MOVE_MATRIX, -10.0);
 
-    LIBS.translateX(treeLeaves1.MOVE_MATRIX, -6.0);
+    LIBS.translateX(treeLeaves1.MOVE_MATRIX, -10.0);
     LIBS.translateY(treeLeaves1.MOVE_MATRIX, 12.0);
     LIBS.translateZ(treeLeaves1.MOVE_MATRIX, -10.0);
 
-    LIBS.translateX(treeLeaves2.MOVE_MATRIX, 6.0);
+    LIBS.translateX(treeLeaves2.MOVE_MATRIX, 10.0);
     LIBS.translateY(treeLeaves2.MOVE_MATRIX, 12.0);
     LIBS.translateZ(treeLeaves2.MOVE_MATRIX, -10.0);
 
-    LIBS.translateX(treeLeaves3.MOVE_MATRIX, -8.0);
+    LIBS.translateX(treeLeaves3.MOVE_MATRIX, -12.0);
     LIBS.translateY(treeLeaves3.MOVE_MATRIX, 12.0);
     LIBS.translateZ(treeLeaves3.MOVE_MATRIX, -10.0);
 
-    LIBS.translateX(treeLeaves4.MOVE_MATRIX, 8.0);
+    LIBS.translateX(treeLeaves4.MOVE_MATRIX, 12.0);
     LIBS.translateY(treeLeaves4.MOVE_MATRIX, 12.0);
     LIBS.translateZ(treeLeaves4.MOVE_MATRIX, -10.0);
 
-    LIBS.translateX(treeLeaves5.MOVE_MATRIX, -4.0);
+    LIBS.translateX(treeLeaves5.MOVE_MATRIX, -8.0);
     LIBS.translateY(treeLeaves5.MOVE_MATRIX, 12.0);
     LIBS.translateZ(treeLeaves5.MOVE_MATRIX, -10.0);
 
-    LIBS.translateX(treeLeaves6.MOVE_MATRIX, 4.0);
+    LIBS.translateX(treeLeaves6.MOVE_MATRIX, 8.0);
     LIBS.translateY(treeLeaves6.MOVE_MATRIX, 12.0);
     LIBS.translateZ(treeLeaves6.MOVE_MATRIX, -10.0);
 
-    LIBS.translateX(treeLeaves7.MOVE_MATRIX, -6.0);
+    LIBS.translateX(treeLeaves7.MOVE_MATRIX, -10.0);
     LIBS.translateY(treeLeaves7.MOVE_MATRIX, 12.0);
     LIBS.translateZ(treeLeaves7.MOVE_MATRIX, -8.0);
 
-    LIBS.translateX(treeLeaves8.MOVE_MATRIX, 6.0);
+    LIBS.translateX(treeLeaves8.MOVE_MATRIX, 10.0);
     LIBS.translateY(treeLeaves8.MOVE_MATRIX, 12.0);
     LIBS.translateZ(treeLeaves8.MOVE_MATRIX, -8.0);
 
-    LIBS.translateX(treeLeaves9.MOVE_MATRIX, -6.0);
+    LIBS.translateX(treeLeaves9.MOVE_MATRIX, -10.0);
     LIBS.translateY(treeLeaves9.MOVE_MATRIX, 12.0);
     LIBS.translateZ(treeLeaves9.MOVE_MATRIX, -12.0);
 
-    LIBS.translateX(treeLeaves10.MOVE_MATRIX, 6.0);
+    LIBS.translateX(treeLeaves10.MOVE_MATRIX, 10.0);
     LIBS.translateY(treeLeaves10.MOVE_MATRIX, 12.0);
     LIBS.translateZ(treeLeaves10.MOVE_MATRIX, -12.0);
 
-    LIBS.translateX(treeLeaves11.MOVE_MATRIX, -6.0);
+    LIBS.translateX(treeLeaves11.MOVE_MATRIX, -10.0);
     LIBS.translateY(treeLeaves11.MOVE_MATRIX, 14.0);
     LIBS.translateZ(treeLeaves11.MOVE_MATRIX, -10.0);
 
-    LIBS.translateX(treeLeaves12.MOVE_MATRIX, 6.0);
+    LIBS.translateX(treeLeaves12.MOVE_MATRIX, 10.0);
     LIBS.translateY(treeLeaves12.MOVE_MATRIX, 14.0);
     LIBS.translateZ(treeLeaves12.MOVE_MATRIX, -10.0);
+    // ENVIRONMENT TRANSFORMATION END
 
+    // CHARMANDER TRANSFORMATION
     LIBS.translateX(charmanderBody.MOVE_MATRIX, -9.0);
 
     LIBS.translateX(charmanderHead.MOVE_MATRIX, -9.0);
@@ -565,7 +571,13 @@ function main() {
     LIBS.translateY(charmanderRightLegClaw3.MOVE_MATRIX, -2.85);
     LIBS.translateZ(charmanderRightLegClaw3.MOVE_MATRIX, 0.75);
     LIBS.rotateX(charmanderRightLegClaw3.MOVE_MATRIX, LIBS.degToRad(180));
+    // CHARMANDER TRANSFORMATION END
 
+    // CHARMELEON TRANSFORMATION
+    // ...
+    // CHARMELEON TRANSFORMATION END
+
+    // CHARIZARD TRANSFORMATION
     LIBS.translateX(charizardBody.MOVE_MATRIX, 9.0);
     LIBS.translateY(charizardBody.MOVE_MATRIX, 2.0);
 
@@ -768,9 +780,9 @@ function main() {
     LIBS.translateZ(charizardRightWingMembraneClose.MOVE_MATRIX, 0.37 - 1.5);
     LIBS.rotateY(charizardRightWingMembraneClose.MOVE_MATRIX, LIBS.degToRad(6));
     LIBS.rotateZ(charizardRightWingMembraneClose.MOVE_MATRIX, LIBS.degToRad(-30));
-    // ========== ROTATE SCALE TRANSLATE END ==========
+    // CHARIZARD TRANSFORMATION END
 
-    // ========== CHILDS PUSH START ==========
+    // CHARMANDER HIERARCHY
     charmanderBody.addChild(charmanderBelly);
 
     charmanderHead.addChild(charmanderLeftEye);
@@ -810,7 +822,13 @@ function main() {
     charmanderRightLegAnkle.addChild(charmanderRightLegClaw1);
     charmanderRightLegAnkle.addChild(charmanderRightLegClaw2);
     charmanderRightLegAnkle.addChild(charmanderRightLegClaw3);
+    // CHARMANDER HIERARCHY END
 
+    // CHARMELEON HIERARCHY
+    // ...
+    // CHARMELEON HIERARCHY END
+
+    // CHARIZARD HIERARCHY
     charizardBody.addChild(charizardBelly);
 
     charizardNeck.addChild(charizardHead);
@@ -865,12 +883,14 @@ function main() {
     charizardRightFoot.addChild(charizardRightFootClaw1);
     charizardRightFoot.addChild(charizardRightFootClaw2);
     charizardRightFoot.addChild(charizardRightFootClaw3);
-    // ========== CHIILDS PUSH END ==========
+    // CHARIZARD HIERARCHY END
 
-    // ========== SETUP START ==========
+    // ENVIRONMENT SETUP OBJECT
     base.setup();
+
     treeLog1.setup();
     treeLog2.setup();
+
     treeLeaves1.setup();
     treeLeaves2.setup();
     treeLeaves3.setup();
@@ -883,7 +903,9 @@ function main() {
     treeLeaves10.setup();
     treeLeaves11.setup();
     treeLeaves12.setup();
+    // ENVIRONMENT SETUP OBJECT END
 
+    // CHARMANDER SETUP OBJECT
     charmanderBody.setup();
     charmanderHead.setup();
     charmanderTail.setup();
@@ -891,7 +913,13 @@ function main() {
     charmanderRightarmShoulder.setup();
     charmanderLeftLeg.setup();
     charmanderRightLeg.setup();
+    // CHARMANDER SETUP OBJECT END
 
+    // CHARMELEON SETUP OBJECT
+    // ...
+    // CHARMELEON SETUP OBJECT END
+
+    // CHARIZARD SETUP OBJECT
     charizardBody.setup();
     charizardLeftThigh.setup();
     charizardRightThigh.setup();
@@ -903,38 +931,35 @@ function main() {
     charizardLeftWingMembraneClose.setup();
     charizardRightWingMembrane.setup();
     charizardRightWingMembraneClose.setup();
-    // ========== SETUP END ==========
+    // CHARIZARD SETUP OBJECT END
 
     GL.enable(GL.DEPTH_TEST);
     GL.depthFunc(GL.LEQUAL);
     GL.clearColor(0.5, 0.7, 0.9, 1.0);
     GL.clearDepth(1.0);
 
-    // ========== ANIMATION VARIABLES START ==========
-    var charizardCurrentFlap = 0;
-    var charizardFlapDirection = 1;
-    var charizardCurrentTranslate = 0;
-    var charizardTranslateDirection = 1;
     const allTreeLeaves = [
         treeLeaves1, treeLeaves2, treeLeaves3, treeLeaves4,
         treeLeaves5, treeLeaves6, treeLeaves7, treeLeaves8,
         treeLeaves9, treeLeaves10, treeLeaves11, treeLeaves12
     ];
     const initialTreeLeavesMatrices = allTreeLeaves.map(leaf => [...leaf.MOVE_MATRIX]);
-    // ========== ANIMATION VARIABLES END ==========
+
+    var charizardCurrentFlap = 0;
+    var charizardFlapDirection = 1;
+    var charizardCurrentTranslate = 0;
+    var charizardTranslateDirection = 1;
 
     var animate = function (time) {
         GL.viewport(0, 0, CANVAS.width, CANVAS.height);
         GL.clear(GL.COLOR_BUFFER_BIT | GL.DEPTH_BUFFER_BIT);
 
-        // ========== OBJECT DRAG START ==========
         if (!drag) {
             dX *= (1 - FRICTION);
             dY *= (1 - FRICTION);
             THETA += dX;
             PHI += dY;
         }
-        // ========== OBJECT DRAG END ==========
 
         var MODELMATRIX = LIBS.get_I4();
         var VIEWMATRIX_dynamic = LIBS.get_I4();
@@ -949,7 +974,7 @@ function main() {
         GL.uniformMatrix4fv(_Vmatrix, false, VIEWMATRIX_dynamic);
         GL.uniformMatrix4fv(_Mmatrix, false, MODELMATRIX);
 
-        // ========== RENDER PARENT OBJECT START ==========
+        // ENVIRONMENT RENDER OBJECT
         base.render(MODELMATRIX);
         treeLog1.render(MODELMATRIX);
         treeLog2.render(MODELMATRIX);
@@ -965,7 +990,9 @@ function main() {
         treeLeaves10.render(MODELMATRIX);
         treeLeaves11.render(MODELMATRIX);
         treeLeaves12.render(MODELMATRIX);
+        // ENVIRONMENT RENDER OBJECT END
 
+        // CHARMANDER RENDER OBJECT
         charmanderBody.render(MODELMATRIX);
         charmanderHead.render(MODELMATRIX);
         charmanderTail.render(MODELMATRIX);
@@ -973,7 +1000,13 @@ function main() {
         charmanderRightarmShoulder.render(MODELMATRIX);
         charmanderLeftLeg.render(MODELMATRIX);
         charmanderRightLeg.render(MODELMATRIX);
+        // CHARMANDER RENDER OBJECT END
 
+        // CHARMELEON RENDER OBJECT
+        // ...
+        // CHARMELEON RENDER OBJECT END
+
+        // CHARIZARD RENDER OBJECT
         charizardBody.render(MODELMATRIX);
         charizardLeftThigh.render(MODELMATRIX);
         charizardRightThigh.render(MODELMATRIX);
@@ -985,9 +1018,27 @@ function main() {
         charizardLeftWingMembraneClose.render(MODELMATRIX);
         charizardRightWingMembrane.render(MODELMATRIX);
         charizardRightWingMembraneClose.render(MODELMATRIX);
-        // ========== RENDER PARENT OBJECT END ==========
+        // CHARIZARD RENDER OBJECT END
 
-        // ========== ANIMATE OBJECT START ==========
+        // ENVIRONMENT ANIMATION
+        allTreeLeaves.forEach((leaf, index) => {
+            const leavesScale = 1.0 + Math.sin((time / 500) + index) * 0.05;
+            leaf.MOVE_MATRIX = [...initialTreeLeavesMatrices[index]];
+            LIBS.scaleX(leaf.MOVE_MATRIX, leavesScale);
+            LIBS.scaleY(leaf.MOVE_MATRIX, leavesScale);
+            LIBS.scaleZ(leaf.MOVE_MATRIX, leavesScale);
+        });
+        // ENVIRONMENT ANIMATION END
+
+        // CHARMANDER ANIMATION
+        // ...
+        // CHARMANDER ANIMATION END
+
+        // CHARMELEON ANIMATION
+        // ...
+        // CHARMELEON ANIMATION END
+
+        // CHARIZARD ANIMATION
         charizardCurrentFlap += charizardFlapDirection * 0.001;
         charizardCurrentTranslate += charizardTranslateDirection * 0.001;
 
@@ -1002,14 +1053,6 @@ function main() {
         } else if (charizardCurrentTranslate <= -0.05) {
             charizardTranslateDirection = 1;
         }
-
-        allTreeLeaves.forEach((leaf, index) => {
-            const leavesScale = 1.0 + Math.sin((time / 500) + index) * 0.05;
-            leaf.MOVE_MATRIX = [...initialTreeLeavesMatrices[index]];
-            LIBS.scaleX(leaf.MOVE_MATRIX, leavesScale);
-            LIBS.scaleY(leaf.MOVE_MATRIX, leavesScale);
-            LIBS.scaleZ(leaf.MOVE_MATRIX, leavesScale);
-        });
 
         LIBS.rotateY(charizardLeftWingMembrane.MOVE_MATRIX, charizardCurrentFlap);
         LIBS.rotateY(charizardRightWingMembrane.MOVE_MATRIX, -charizardCurrentFlap);
@@ -1070,7 +1113,7 @@ function main() {
         LIBS.translateZ(charizardRightFootClaw1.MOVE_MATRIX, charizardCurrentTranslate * -0.07);
         LIBS.translateZ(charizardRightFootClaw2.MOVE_MATRIX, charizardCurrentTranslate * -0.07);
         LIBS.translateZ(charizardRightFootClaw3.MOVE_MATRIX, charizardCurrentTranslate * -0.07);
-        // ========== ANIMATE OBJECT END ==========
+        // CHARIZARD ANIMATION END
 
         GL.flush();
         window.requestAnimationFrame(animate);
