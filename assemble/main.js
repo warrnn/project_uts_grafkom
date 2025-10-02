@@ -12,7 +12,7 @@ function main() {
     var FRICTION = 0.05;
     var dX = 0, dY = 0;
     var SPEED = 0.05
-    var zoom = -20;
+    var zoom = -32;
 
     var mouseDown = function (e) {
         drag = true;
@@ -136,7 +136,7 @@ function main() {
     var VIEWMATRIX = LIBS.get_I4();
 
     // ========== GENERATE SHAPE OBJECT START =========
-    const { vertices: base_vertices, indices: base_indices } = generateCircleDisk(16.0, 0.6, 64, [0.1, 0.6, 0.1], [0.4, 0.25, 0.1]);
+    const { vertices: base_vertices, indices: base_indices } = generateCircleDisk(18.0, 0.6, 64, [0.1, 0.6, 0.1], [0.4, 0.25, 0.1]);
     const base = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, base_vertices, base_indices, GL.TRIANGLES);
 
     const { vertices: charmander_body_vertices, indices: charmander_body_indices } = generateEllipsoid(1.1, 1.3, 0.8, 30, 30, [1.0, 0.5, 0.0]);
@@ -832,8 +832,10 @@ function main() {
     GL.clearColor(0.5, 0.7, 0.9, 1.0);
     GL.clearDepth(1.0);
 
-    var currentFlap = 0;
-    var flapDirection = 1;
+    var charizardCurrentFlap = 0;
+    var charizardFlapDirection = 1;
+    var charizardCurrentTranslate = 0;
+    var charizardTranslateDirection = 1;
 
     var animate = function (time) {
         GL.viewport(0, 0, CANVAS.width, CANVAS.height);
@@ -886,18 +888,77 @@ function main() {
         // ========== RENDER PARENT OBJECT END ==========
 
         // ========== ANIMATE OBJECT START ==========
-        currentFlap += flapDirection * 0.001;
+        charizardCurrentFlap += charizardFlapDirection * 0.001;
+        charizardCurrentTranslate += charizardTranslateDirection * 0.001;
 
-        if (currentFlap > 0.02) {
-            flapDirection = -1;
-        } else if (currentFlap < -0.02) {
-            flapDirection = 1;
+        if (charizardCurrentFlap > 0.02) {
+            charizardFlapDirection = -1;
+        } else if (charizardCurrentFlap < -0.02) {
+            charizardFlapDirection = 1;
         }
 
-        LIBS.rotateY(charizardLeftWingMembrane.MOVE_MATRIX, currentFlap);
-        LIBS.rotateY(charizardRightWingMembrane.MOVE_MATRIX, -currentFlap);
-        LIBS.rotateY(charizardLeftWingMembraneClose.MOVE_MATRIX, currentFlap);
-        LIBS.rotateY(charizardRightWingMembraneClose.MOVE_MATRIX, -currentFlap);
+        if (charizardCurrentTranslate > 0.05) {
+            charizardTranslateDirection = -1;
+        } else if (charizardCurrentTranslate < -0.05) {
+            charizardTranslateDirection = 1;
+        }
+
+        LIBS.rotateY(charizardLeftWingMembrane.MOVE_MATRIX, charizardCurrentFlap);
+        LIBS.rotateY(charizardRightWingMembrane.MOVE_MATRIX, -charizardCurrentFlap);
+        LIBS.rotateY(charizardLeftWingMembraneClose.MOVE_MATRIX, charizardCurrentFlap);
+        LIBS.rotateY(charizardRightWingMembraneClose.MOVE_MATRIX, -charizardCurrentFlap);
+
+        LIBS.translateY(charizardBody.MOVE_MATRIX, charizardCurrentTranslate);
+        LIBS.translateY(charizardLeftThigh.MOVE_MATRIX, charizardCurrentTranslate);
+        LIBS.translateY(charizardRightThigh.MOVE_MATRIX, charizardCurrentTranslate);
+        LIBS.translateX(charizardLeftFootClaw1.MOVE_MATRIX, -charizardCurrentTranslate * 0.8);
+        LIBS.translateX(charizardLeftFootClaw2.MOVE_MATRIX, -charizardCurrentTranslate * 0.8);
+        LIBS.translateX(charizardLeftFootClaw3.MOVE_MATRIX, -charizardCurrentTranslate * 0.8);
+        LIBS.translateY(charizardLeftFootClaw1.MOVE_MATRIX, charizardCurrentTranslate * 0.6);
+        LIBS.translateY(charizardLeftFootClaw2.MOVE_MATRIX, charizardCurrentTranslate * 0.6);
+        LIBS.translateY(charizardLeftFootClaw3.MOVE_MATRIX, charizardCurrentTranslate * 0.6);
+        LIBS.translateZ(charizardLeftFootClaw1.MOVE_MATRIX, charizardCurrentTranslate * 0.3);
+        LIBS.translateZ(charizardLeftFootClaw2.MOVE_MATRIX, charizardCurrentTranslate * 0.3);
+        LIBS.translateZ(charizardLeftFootClaw3.MOVE_MATRIX, charizardCurrentTranslate * 0.3);
+        LIBS.translateX(charizardRightFootClaw1.MOVE_MATRIX, -charizardCurrentTranslate * 0.8);
+        LIBS.translateX(charizardRightFootClaw2.MOVE_MATRIX, -charizardCurrentTranslate * 0.8);
+        LIBS.translateX(charizardRightFootClaw3.MOVE_MATRIX, -charizardCurrentTranslate * 0.8);
+        LIBS.translateY(charizardRightFootClaw1.MOVE_MATRIX, charizardCurrentTranslate * 0.6);
+        LIBS.translateY(charizardRightFootClaw2.MOVE_MATRIX, charizardCurrentTranslate * 0.6);
+        LIBS.translateY(charizardRightFootClaw3.MOVE_MATRIX, charizardCurrentTranslate * 0.6);
+        LIBS.translateZ(charizardRightFootClaw1.MOVE_MATRIX, charizardCurrentTranslate * 0.3);
+        LIBS.translateZ(charizardRightFootClaw2.MOVE_MATRIX, charizardCurrentTranslate * 0.3);
+        LIBS.translateZ(charizardRightFootClaw3.MOVE_MATRIX, charizardCurrentTranslate * 0.3);
+        LIBS.translateY(charizardLeftShoulder.MOVE_MATRIX, charizardCurrentTranslate);
+        LIBS.translateY(charizardRightShoulder.MOVE_MATRIX, charizardCurrentTranslate);
+        LIBS.translateX(charizardLeftArm.MOVE_MATRIX, charizardCurrentTranslate);
+        LIBS.translateY(charizardLeftArm.MOVE_MATRIX, charizardCurrentTranslate);
+        LIBS.translateX(charizardRightArm.MOVE_MATRIX, -charizardCurrentTranslate);
+        LIBS.translateY(charizardRightArm.MOVE_MATRIX, charizardCurrentTranslate);
+        LIBS.translateY(charizardTail.MOVE_MATRIX, charizardCurrentTranslate);
+        LIBS.translateY(charizardTailTip.MOVE_MATRIX, charizardCurrentTranslate * 0.6);
+        LIBS.translateZ(charizardTailTip.MOVE_MATRIX, charizardCurrentTranslate * 0.8);
+        LIBS.translateY(charizardLeftWingMembrane.MOVE_MATRIX, charizardCurrentTranslate);
+        LIBS.translateY(charizardRightWingMembrane.MOVE_MATRIX, charizardCurrentTranslate);
+        LIBS.translateY(charizardLeftWingMembraneClose.MOVE_MATRIX, charizardCurrentTranslate);
+        LIBS.translateY(charizardRightWingMembraneClose.MOVE_MATRIX, charizardCurrentTranslate);
+        LIBS.translateY(charizardNeck.MOVE_MATRIX, charizardCurrentTranslate);
+        LIBS.translateY(charizardUpperMouth.MOVE_MATRIX, charizardCurrentTranslate * 2.0);
+        LIBS.translateY(charizardLowerMouth.MOVE_MATRIX, charizardCurrentTranslate * 2.0);
+        LIBS.translateZ(charizardUpperMouth.MOVE_MATRIX, charizardCurrentTranslate * -0.2);
+        LIBS.translateZ(charizardLowerMouth.MOVE_MATRIX, charizardCurrentTranslate * 0.2);
+        LIBS.translateZ(charizardLeftEyeWhite.MOVE_MATRIX, charizardCurrentTranslate * -0.2);
+        LIBS.translateZ(charizardRightEyeWhite.MOVE_MATRIX, charizardCurrentTranslate * -0.2);
+        LIBS.translateZ(charizardLeftHorn.MOVE_MATRIX, charizardCurrentTranslate * -0.2);
+        LIBS.translateZ(charizardRightHorn.MOVE_MATRIX, charizardCurrentTranslate * -0.2);
+        LIBS.translateY(charizardUpperTeethLeft.MOVE_MATRIX, charizardCurrentTranslate * 1.0);
+        LIBS.translateY(charizardUpperTeethRight.MOVE_MATRIX, charizardCurrentTranslate * 1.0);
+        LIBS.translateZ(charizardUpperTeethLeft.MOVE_MATRIX, charizardCurrentTranslate * -1.0);
+        LIBS.translateZ(charizardUpperTeethRight.MOVE_MATRIX, charizardCurrentTranslate * -1.0);
+        LIBS.translateY(charizardLowerTeethLeft.MOVE_MATRIX, charizardCurrentTranslate * 1.0);
+        LIBS.translateY(charizardLowerTeethRight.MOVE_MATRIX, charizardCurrentTranslate * 1.0);
+        LIBS.translateZ(charizardLowerTeethLeft.MOVE_MATRIX, charizardCurrentTranslate * 1.0);
+        LIBS.translateZ(charizardLowerTeethRight.MOVE_MATRIX, charizardCurrentTranslate * 1.0);
         // ========== ANIMATE OBJECT END ==========
 
         GL.flush();
