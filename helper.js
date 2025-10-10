@@ -642,3 +642,73 @@ function generateCircleDisk(radius = 1.0, height = 0.2, segments = 32, colorTop 
 
     return { vertices, indices };
 }
+
+function generateHemisphereGradientClosed(radius = 1.0, stacks = 10, slices = 20, colorTop = [1.0, 1.0, 1.0], colorBottom = [0.0, 0.0, 0.0]) {
+    let vertices = [];
+    let indices = [];
+
+    // Hemisphere vertices
+    for (let i = 0; i <= stacks; i++) {
+        let theta = i * (Math.PI / 2) / stacks; // 0 -> PI/2
+        let sinTheta = Math.sin(theta);
+        let cosTheta = Math.cos(theta);
+
+        // gradient
+        let t = i / stacks;
+        let threshold = 0.7; // 70% hijau, 30% transisi ke coklat
+        let interp;
+        if (t < threshold) {
+            interp = 0; // full hijau
+        } else {
+            interp = (t - threshold) / (1 - threshold); // transisi ke coklat
+        }
+        let rCol = colorTop[0] * (1 - interp) + colorBottom[0] * interp;
+        let gCol = colorTop[1] * (1 - interp) + colorBottom[1] * interp;
+        let bCol = colorTop[2] * (1 - interp) + colorBottom[2] * interp;
+
+        for (let j = 0; j <= slices; j++) {
+            let phi = j * 2 * Math.PI / slices;
+            let sinPhi = Math.sin(phi);
+            let cosPhi = Math.cos(phi);
+
+            let x = radius * sinTheta * cosPhi;
+            let y = radius * cosTheta;
+            let z = radius * sinTheta * sinPhi;
+
+            vertices.push(x, y, z, rCol, gCol, bCol);
+        }
+    }
+
+    // Hemisphere indices
+    for (let i = 0; i < stacks; i++) {
+        for (let j = 0; j < slices; j++) {
+            let first = i * (slices + 1) + j;
+            let second = first + slices + 1;
+
+            indices.push(first, second, first + 1);
+            indices.push(second, second + 1, first + 1);
+        }
+    }
+
+    // Disk (bottom cap)
+    const baseCenterIndex = vertices.length / 6;
+    vertices.push(0, radius * Math.cos(Math.PI / 2), 0, ...colorBottom); // center point
+
+    for (let j = 0; j <= slices; j++) {
+        let phi = j * 2 * Math.PI / slices;
+        let x = radius * Math.sin(Math.PI / 2) * Math.cos(phi);
+        let y = radius * Math.cos(Math.PI / 2); // y = 0
+        let z = radius * Math.sin(Math.PI / 2) * Math.sin(phi);
+        vertices.push(x, y, z, ...colorBottom);
+    }
+
+    // Disk indices
+    for (let j = 1; j <= slices; j++) {
+        indices.push(baseCenterIndex, baseCenterIndex + j, baseCenterIndex + j + 1);
+    }
+
+    return {
+        vertices: new Float32Array(vertices),
+        indices: new Uint16Array(indices)
+    };
+}

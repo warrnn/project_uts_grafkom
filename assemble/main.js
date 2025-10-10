@@ -11,7 +11,7 @@ function main() {
     var FRICTION = 0.05;
     var dX = 0, dY = 0;
     var SPEED = 0.05
-    var zoom = -32;
+    var zoom = -60;
 
     var mouseDown = function (e) {
         drag = true;
@@ -128,30 +128,42 @@ function main() {
 
     GL.useProgram(SHADER_PROGRAM);
 
-    var PROJMATRIX = LIBS.get_projection(40, CANVAS.width / CANVAS.height, 1, 100);
+    var PROJMATRIX = LIBS.get_projection(60, CANVAS.width / CANVAS.height, 1, 100);
     var VIEWMATRIX = LIBS.get_I4();
 
     // ENVIROMENT OBJECT VARIABLE
-    const { vertices: base_vertices, indices: base_indices } = generateCircleDisk(18.0, 0.6, 64, [0.1, 0.6, 0.1], [0.4, 0.25, 0.1]);
+    const { vertices: base_vertices, indices: base_indices } = generateHemisphereGradientClosed(24.0, 12, 64, [0.4, 0.25, 0.1], [0.2, 0.8, 0.2]);
     const base = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, base_vertices, base_indices, GL.TRIANGLES);
 
-    const { vertices: tree_log_vertices, indices: tree_log_indices } = generateStraightCylinder(1.4, 1.4, 14.0, 30, 30, [0.2, 0.2, 0.2]);
+    const { vertices: tree_log_vertices, indices: tree_log_indices } = generateCylinderDynamicRadius(2.5, 1.0, 1.0, 2.5, 14.0, 32, 32, [0.5, 0.0, 0.0], "linear");
     const treeLog1 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, tree_log_vertices, tree_log_indices, GL.TRIANGLES);
     const treeLog2 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, tree_log_vertices, tree_log_indices, GL.TRIANGLES);
 
-    const { vertices: tree_leaves_vertices, indices: tree_leaves_indices } = generateEllipsoid(2.4, 2.4, 2.4, 30, 30, [0.0, 0.5, 0.0]);
-    const treeLeaves1 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, tree_leaves_vertices, tree_leaves_indices, GL.TRIANGLES);
-    const treeLeaves2 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, tree_leaves_vertices, tree_leaves_indices, GL.TRIANGLES);
-    const treeLeaves3 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, tree_leaves_vertices, tree_leaves_indices, GL.TRIANGLES);
-    const treeLeaves4 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, tree_leaves_vertices, tree_leaves_indices, GL.TRIANGLES);
-    const treeLeaves5 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, tree_leaves_vertices, tree_leaves_indices, GL.TRIANGLES);
-    const treeLeaves6 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, tree_leaves_vertices, tree_leaves_indices, GL.TRIANGLES);
-    const treeLeaves7 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, tree_leaves_vertices, tree_leaves_indices, GL.TRIANGLES);
-    const treeLeaves8 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, tree_leaves_vertices, tree_leaves_indices, GL.TRIANGLES);
-    const treeLeaves9 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, tree_leaves_vertices, tree_leaves_indices, GL.TRIANGLES);
-    const treeLeaves10 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, tree_leaves_vertices, tree_leaves_indices, GL.TRIANGLES);
-    const treeLeaves11 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, tree_leaves_vertices, tree_leaves_indices, GL.TRIANGLES);
-    const treeLeaves12 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, tree_leaves_vertices, tree_leaves_indices, GL.TRIANGLES);
+    const { vertices: tree_leaves_vertices_1, indices: tree_leaves_indices_1 } = generateEllipsoid(3.0, 3.0, 3.0, 30, 30, [0.0, 0.5, 0.0]);
+    const { vertices: tree_leaves_vertices_2, indices: tree_leaves_indices_2 } = generateEllipsoid(3.0, 3.0, 3.0, 30, 30, [0.2, 0.5, 0.0]);
+    const { vertices: tree_leaves_vertices_3, indices: tree_leaves_indices_3 } = generateEllipsoid(3.0, 3.0, 3.0, 30, 30, [0.0, 0.5, 0.2]);
+    const treeLeaves1 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, tree_leaves_vertices_1, tree_leaves_indices_1, GL.TRIANGLES);
+    const treeLeaves2 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, tree_leaves_vertices_1, tree_leaves_indices_1, GL.TRIANGLES);
+    const treeLeaves3 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, tree_leaves_vertices_2, tree_leaves_indices_2, GL.TRIANGLES);
+    const treeLeaves4 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, tree_leaves_vertices_2, tree_leaves_indices_2, GL.TRIANGLES);
+    const treeLeaves5 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, tree_leaves_vertices_2, tree_leaves_indices_2, GL.TRIANGLES);
+    const treeLeaves6 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, tree_leaves_vertices_2, tree_leaves_indices_2, GL.TRIANGLES);
+    const treeLeaves7 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, tree_leaves_vertices_3, tree_leaves_indices_3, GL.TRIANGLES);
+    const treeLeaves8 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, tree_leaves_vertices_3, tree_leaves_indices_3, GL.TRIANGLES);
+    const treeLeaves9 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, tree_leaves_vertices_3, tree_leaves_indices_3, GL.TRIANGLES);
+    const treeLeaves10 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, tree_leaves_vertices_3, tree_leaves_indices_3, GL.TRIANGLES);
+    const treeLeaves11 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, tree_leaves_vertices_1, tree_leaves_indices_1, GL.TRIANGLES);
+    const treeLeaves12 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, tree_leaves_vertices_1, tree_leaves_indices_1, GL.TRIANGLES);
+
+    const { vertices: cloudbase_vertices, indices: cloudbase_indices } = generateEllipsoid(4.0, 2.5, 3.0, 30, 30, [1.0, 1.0, 1.0]);
+    const cloudbase1 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, cloudbase_vertices, cloudbase_indices, GL.TRIANGLES);
+    const cloudbase2 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, cloudbase_vertices, cloudbase_indices, GL.TRIANGLES);
+    const cloudbase3 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, cloudbase_vertices, cloudbase_indices, GL.TRIANGLES);
+
+    const { vertices: cloud_vertices, indices: cloud_indices } = generateEllipsoid(2.5, 2.5, 2.5, 30, 30, [1.0, 1.0, 1.0]);
+    const cloud1 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, cloud_vertices, cloud_indices, GL.TRIANGLES);
+    const cloud2 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, cloud_vertices, cloud_indices, GL.TRIANGLES);
+    const cloud3 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, cloud_vertices, cloud_indices, GL.TRIANGLES);
     // ENVIROMENT OBJECT VARIABLE END
 
     // CHARMANDER OBJECT VARIABLE
@@ -378,7 +390,7 @@ function main() {
 
     // ENVIRONMENT TRANSFORMATION
     LIBS.translateY(base.MOVE_MATRIX, -2.0);
-    LIBS.rotateX(base.MOVE_MATRIX, -Math.PI / 2);
+    LIBS.rotateX(base.MOVE_MATRIX, -Math.PI);
 
     LIBS.translateX(treeLog1.MOVE_MATRIX, 10.0);
     LIBS.translateY(treeLog1.MOVE_MATRIX, 5.0);
@@ -435,6 +447,21 @@ function main() {
     LIBS.translateX(treeLeaves12.MOVE_MATRIX, 10.0);
     LIBS.translateY(treeLeaves12.MOVE_MATRIX, 14.0);
     LIBS.translateZ(treeLeaves12.MOVE_MATRIX, -10.0);
+
+    LIBS.translateX(cloudbase1.MOVE_MATRIX, -16.0);
+    LIBS.translateY(cloudbase1.MOVE_MATRIX, 20.0);
+
+    LIBS.translateY(cloud1.MOVE_MATRIX, 2.0);
+
+    LIBS.translateX(cloudbase2.MOVE_MATRIX, 0.0);
+    LIBS.translateY(cloudbase2.MOVE_MATRIX, 22.0);
+
+    LIBS.translateY(cloud2.MOVE_MATRIX, 2.0);
+
+    LIBS.translateX(cloudbase3.MOVE_MATRIX, 16.0);
+    LIBS.translateY(cloudbase3.MOVE_MATRIX, 18.0);
+
+    LIBS.translateY(cloud3.MOVE_MATRIX, 2.0);
     // ENVIRONMENT TRANSFORMATION END
 
     // CHARMANDER TRANSFORMATION
@@ -782,6 +809,12 @@ function main() {
     LIBS.rotateZ(charizardRightWingMembraneClose.MOVE_MATRIX, LIBS.degToRad(-30));
     // CHARIZARD TRANSFORMATION END
 
+    // ENVIRONMENT HIERARCHY
+    cloudbase1.addChild(cloud1);
+    cloudbase2.addChild(cloud2);
+    cloudbase3.addChild(cloud3);
+    // ENVIRONMENT HIERARCHY END
+
     // CHARMANDER HIERARCHY
     charmanderBody.addChild(charmanderBelly);
 
@@ -903,6 +936,10 @@ function main() {
     treeLeaves10.setup();
     treeLeaves11.setup();
     treeLeaves12.setup();
+
+    cloudbase1.setup();
+    cloudbase2.setup();
+    cloudbase3.setup();
     // ENVIRONMENT SETUP OBJECT END
 
     // CHARMANDER SETUP OBJECT
@@ -945,6 +982,11 @@ function main() {
     ];
     const initialTreeLeavesMatrices = allTreeLeaves.map(leaf => [...leaf.MOVE_MATRIX]);
 
+    var cloudCurrentTranslateX = 0;
+    var cloudTranslateXDirection = 1;
+    var cloudCurrentTranslateY = 0;
+    var cloudTranslateYDirection = 1;
+
     var charizardCurrentFlap = 0;
     var charizardFlapDirection = 1;
     var charizardCurrentTranslate = 0;
@@ -952,7 +994,7 @@ function main() {
 
     var animate = function (time) {
         GL.viewport(0, 0, CANVAS.width, CANVAS.height);
-        GL.clear(GL.COLOR_BUFFER_BIT | GL.DEPTH_BUFFER_BIT);
+        // GL.clear(GL.COLOR_BUFFER_BIT | GL.DEPTH_BUFFER_BIT);
 
         if (!drag) {
             dX *= (1 - FRICTION);
@@ -990,6 +1032,9 @@ function main() {
         treeLeaves10.render(MODELMATRIX);
         treeLeaves11.render(MODELMATRIX);
         treeLeaves12.render(MODELMATRIX);
+        cloudbase1.render(MODELMATRIX);
+        cloudbase2.render(MODELMATRIX);
+        cloudbase3.render(MODELMATRIX);
         // ENVIRONMENT RENDER OBJECT END
 
         // CHARMANDER RENDER OBJECT
@@ -1028,6 +1073,30 @@ function main() {
             LIBS.scaleY(leaf.MOVE_MATRIX, leavesScale);
             LIBS.scaleZ(leaf.MOVE_MATRIX, leavesScale);
         });
+
+        cloudCurrentTranslateX += cloudTranslateXDirection * 0.001;
+        cloudCurrentTranslateY += cloudTranslateYDirection * 0.001;
+
+        if (cloudCurrentTranslateX >= 0.05) {
+            cloudTranslateXDirection = -1;
+        } else if (cloudCurrentTranslateX <= -0.05) {
+            cloudTranslateXDirection = 1;
+        }
+
+        if (cloudCurrentTranslateY >= 0.03) {
+            cloudTranslateYDirection = -1;
+        } else if (cloudCurrentTranslateY <= -0.03) {
+            cloudTranslateYDirection = 1;
+        }
+
+        LIBS.translateX(cloudbase1.MOVE_MATRIX, cloudCurrentTranslateX);
+        LIBS.translateY(cloudbase1.MOVE_MATRIX, cloudCurrentTranslateY);
+
+        LIBS.translateX(cloudbase2.MOVE_MATRIX, cloudCurrentTranslateX);
+        LIBS.translateY(cloudbase2.MOVE_MATRIX, -cloudCurrentTranslateY);
+
+        LIBS.translateX(cloudbase3.MOVE_MATRIX, cloudCurrentTranslateX);
+        LIBS.translateY(cloudbase3.MOVE_MATRIX, cloudCurrentTranslateY);
         // ENVIRONMENT ANIMATION END
 
         // CHARMANDER ANIMATION
