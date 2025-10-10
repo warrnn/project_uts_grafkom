@@ -292,7 +292,7 @@ function main() {
     const { vertices: tail_tip, indices: tail_tip_indices } = generateEllipsoidGradient(0.6, 0.6, 0.6, 30, 30, [1.0, 0.5, 0.0], [1.0, 1.0, 0.0]);
     const charizardTailTip = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, tail_tip, tail_tip_indices, GL.TRIANGLES);
 
-    const { vertices: fire_vertices, indices: fire_indices } = generateCylinderDynamicRadius(0.6, 0.8, 0.0, 0.0, 1.1, 32, 32, [1.0, 0.3, 0.0], "sin");
+    const { vertices: fire_vertices, indices: fire_indices } = generateCylinderDynamicRadius(0.6, 0.88, 0.0, .0, 1.1, 32, 32, [1.0, 0.3, 0.0], "sin");
     const charizardTailTipFire = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, fire_vertices, fire_indices, GL.TRIANGLES);
 
     const { vertices: neck_vertices, indices: neck_indices } = generateCylinderDynamicRadius(0.9, 0.9, 0.4, 0.4, 4.0, 32, 32, [1.0, 0.5, 0.0], "cos");
@@ -700,9 +700,9 @@ function main() {
     LIBS.rotateX(charizardTail.MOVE_MATRIX, LIBS.degToRad(-60));
     LIBS.rotateY(charizardTail.MOVE_MATRIX, LIBS.degToRad(180));
 
-    LIBS.translateY(charizardTailTip.MOVE_MATRIX, 1.6);
-    LIBS.translateZ(charizardTailTip.MOVE_MATRIX, -1.3);
-    LIBS.rotateX(charizardTailTip.MOVE_MATRIX, LIBS.degToRad(-60));
+    LIBS.translateX(charizardTailTip.MOVE_MATRIX, 9.0);
+    LIBS.translateY(charizardTailTip.MOVE_MATRIX, 1.2);
+    LIBS.translateZ(charizardTailTip.MOVE_MATRIX, -5.1);
 
     LIBS.translateY(charizardTailTipFire.MOVE_MATRIX, 0.6);
 
@@ -889,8 +889,6 @@ function main() {
     charizardLowerMouth.addChild(charizardLowerTeethRight);
     charizardLowerMouth.addChild(charizardTongue);
 
-    charizardTail.addChild(charizardTailTip);
-
     charizardTailTip.addChild(charizardTailTipFire);
 
     charizardLeftShoulder.addChild(charizardLeftArm);
@@ -963,6 +961,7 @@ function main() {
     charizardLeftShoulder.setup();
     charizardRightShoulder.setup();
     charizardTail.setup();
+    charizardTailTip.setup();
     charizardNeck.setup();
     charizardLeftWingMembrane.setup();
     charizardLeftWingMembraneClose.setup();
@@ -1058,6 +1057,7 @@ function main() {
         charizardLeftShoulder.render(MODELMATRIX);
         charizardRightShoulder.render(MODELMATRIX);
         charizardTail.render(MODELMATRIX);
+        charizardTailTip.render(MODELMATRIX);
         charizardNeck.render(MODELMATRIX);
         charizardLeftWingMembrane.render(MODELMATRIX);
         charizardLeftWingMembraneClose.render(MODELMATRIX);
@@ -1145,8 +1145,7 @@ function main() {
         LIBS.translateX(charizardRightArm.MOVE_MATRIX, -charizardCurrentTranslate);
         LIBS.translateY(charizardRightArm.MOVE_MATRIX, charizardCurrentTranslate);
         LIBS.translateY(charizardTail.MOVE_MATRIX, charizardCurrentTranslate);
-        LIBS.translateY(charizardTailTip.MOVE_MATRIX, charizardCurrentTranslate * 0.6);
-        LIBS.translateZ(charizardTailTip.MOVE_MATRIX, charizardCurrentTranslate * 0.8);
+        LIBS.translateY(charizardTailTip.MOVE_MATRIX, charizardCurrentTranslate * 1.0);
         LIBS.translateY(charizardLeftWingMembrane.MOVE_MATRIX, charizardCurrentTranslate);
         LIBS.translateY(charizardRightWingMembrane.MOVE_MATRIX, charizardCurrentTranslate);
         LIBS.translateY(charizardLeftWingMembraneClose.MOVE_MATRIX, charizardCurrentTranslate);
@@ -1182,6 +1181,11 @@ function main() {
         LIBS.translateZ(charizardRightFootClaw1.MOVE_MATRIX, charizardCurrentTranslate * -0.07);
         LIBS.translateZ(charizardRightFootClaw2.MOVE_MATRIX, charizardCurrentTranslate * -0.07);
         LIBS.translateZ(charizardRightFootClaw3.MOVE_MATRIX, charizardCurrentTranslate * -0.07);
+
+        const tailTipScale = 1.0 + Math.sin(time / 400) * 0.008;
+        LIBS.scaleX(charizardTailTip.MOVE_MATRIX, tailTipScale);
+        LIBS.scaleY(charizardTailTip.MOVE_MATRIX, tailTipScale);
+        LIBS.scaleZ(charizardTailTip.MOVE_MATRIX, tailTipScale);
         // CHARIZARD ANIMATION END
 
         GL.flush();
