@@ -450,16 +450,19 @@ function main() {
 
     LIBS.translateX(cloudbase1.MOVE_MATRIX, -16.0);
     LIBS.translateY(cloudbase1.MOVE_MATRIX, 20.0);
+    LIBS.translateZ(cloudbase1.MOVE_MATRIX, -16.0);
 
     LIBS.translateY(cloud1.MOVE_MATRIX, 2.0);
 
     LIBS.translateX(cloudbase2.MOVE_MATRIX, 0.0);
     LIBS.translateY(cloudbase2.MOVE_MATRIX, 22.0);
+    LIBS.translateZ(cloudbase2.MOVE_MATRIX, -16.0);
 
     LIBS.translateY(cloud2.MOVE_MATRIX, 2.0);
 
     LIBS.translateX(cloudbase3.MOVE_MATRIX, 16.0);
     LIBS.translateY(cloudbase3.MOVE_MATRIX, 18.0);
+    LIBS.translateZ(cloudbase3.MOVE_MATRIX, -16.0);
 
     LIBS.translateY(cloud3.MOVE_MATRIX, 2.0);
     // ENVIRONMENT TRANSFORMATION END
@@ -1077,9 +1080,9 @@ function main() {
         cloudCurrentTranslateX += cloudTranslateXDirection * 0.001;
         cloudCurrentTranslateY += cloudTranslateYDirection * 0.001;
 
-        if (cloudCurrentTranslateX >= 0.05) {
+        if (cloudCurrentTranslateX >= 0.08) {
             cloudTranslateXDirection = -1;
-        } else if (cloudCurrentTranslateX <= -0.05) {
+        } else if (cloudCurrentTranslateX <= -0.08) {
             cloudTranslateXDirection = 1;
         }
 
@@ -1182,7 +1185,7 @@ function main() {
         LIBS.translateZ(charizardRightFootClaw2.MOVE_MATRIX, charizardCurrentTranslate * -0.07);
         LIBS.translateZ(charizardRightFootClaw3.MOVE_MATRIX, charizardCurrentTranslate * -0.07);
 
-        const tailTipScale = 1.0 + Math.sin(time / 400) * 0.008;
+        const tailTipScale = 1.0 + Math.sin(time / 100) * 0.02;
         LIBS.scaleX(charizardTailTip.MOVE_MATRIX, tailTipScale);
         LIBS.scaleY(charizardTailTip.MOVE_MATRIX, tailTipScale);
         LIBS.scaleZ(charizardTailTip.MOVE_MATRIX, tailTipScale);
