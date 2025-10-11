@@ -120,6 +120,7 @@ var LIBS = {
         return rm;
     },
 
+    // LIBS tambahan diluar praktikum
     rotateArbitraryAxis: function (m, axis, angle) {
         const [x, y, z] = axis;
         const len = Math.sqrt(x * x + y * y + z * z);
@@ -137,14 +138,13 @@ var LIBS = {
             0, 0, 0, 1
         ];
 
-        // Kalikan matrix dengan rotasi (in-place)
         const result = LIBS.multiply(m, rot);
         for (let i = 0; i < 16; i++) m[i] = result[i];
     },
 
     axisNormalize: function (v) {
         const len = Math.hypot(v[0], v[1], v[2]);
-        if (len === 0) return [0, 1, 0]; // fallback axis
+        if (len === 0) return [0, 1, 0];
         return [v[0] / len, v[1] / len, v[2] / len];
     }
 };
