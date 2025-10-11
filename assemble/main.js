@@ -132,7 +132,8 @@ function main() {
     var VIEWMATRIX = LIBS.get_I4();
 
     // ENVIROMENT OBJECT VARIABLE
-    const { vertices: base_vertices, indices: base_indices } = generateHemisphereGradientClosed(24.0, 12, 64, [0.4, 0.25, 0.1], [0.2, 0.8, 0.2]);
+    const baseRadius = 24.0;
+    const { vertices: base_vertices, indices: base_indices } = generateHemisphereGradientClosed(baseRadius, 12, 64, [0.4, 0.25, 0.1], [0.2, 0.8, 0.2]);
     const base = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, base_vertices, base_indices, GL.TRIANGLES);
 
     const { vertices: tree_log_vertices, indices: tree_log_indices } = generateCylinderDynamicRadius(2.5, 1.0, 1.0, 2.5, 14.0, 32, 32, [0.5, 0.0, 0.0], "linear");
@@ -154,6 +155,11 @@ function main() {
     const treeLeaves10 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, tree_leaves_vertices_3, tree_leaves_indices_3, GL.TRIANGLES);
     const treeLeaves11 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, tree_leaves_vertices_1, tree_leaves_indices_1, GL.TRIANGLES);
     const treeLeaves12 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, tree_leaves_vertices_1, tree_leaves_indices_1, GL.TRIANGLES);
+    const allTreeLeaves = [
+        treeLeaves1, treeLeaves2, treeLeaves3, treeLeaves4,
+        treeLeaves5, treeLeaves6, treeLeaves7, treeLeaves8,
+        treeLeaves9, treeLeaves10, treeLeaves11, treeLeaves12
+    ];
 
     const { vertices: cloudbase_vertices, indices: cloudbase_indices } = generateEllipsoid(4.0, 2.5, 3.0, 30, 30, [1.0, 1.0, 1.0]);
     const cloudbase1 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, cloudbase_vertices, cloudbase_indices, GL.TRIANGLES);
@@ -188,7 +194,7 @@ function main() {
     const { vertices: rock_water_vertices, indices: rock_water_indices } = generateEllipsoidGradient(5.8, 1.0, 3.5, 30, 30, [0.5, 0.5, 1.0], [0.0, 0.0, 1.0]);
     const waterRock = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, rock_water_vertices, rock_water_indices, GL.TRIANGLES);
 
-    const { vertices: waterfall_vertices, indices: waterfall_indices } = generateVerticalPlaneGradient(7.0, 80.0, 30, 30, [1.0, 1.0, 1.0], [0.0, 0.0, 1.0]);
+    const { vertices: waterfall_vertices, indices: waterfall_indices } = generateVerticalPlaneGradient(7.0, 80.0, 30, 30, [0.5, 0.5, 1.0], [0.0, 0.0, 1.0]);
     const waterfall = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, waterfall_vertices, waterfall_indices, GL.TRIANGLES);
 
     let grasses = [];
@@ -209,6 +215,15 @@ function main() {
         const { vertices, indices } = generateCylinderDynamicRadius(0.5, 1.0, 0.0, 0.0, grassHeight, 8, 8, grassColor, "linear");
 
         grasses.push(new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, vertices, indices, GL.TRIANGLES));
+    }
+
+    let stars = [];
+    for (let i = 0; i < 5; i++) {
+        const starInnerRadius = 0.5 + Math.random() * 0.3;
+        const starOuterRadius = 1.2 + Math.random() * 0.5;
+
+        const { vertices: star_vertices, indices: star_indices } = generateStar(5, starInnerRadius, starOuterRadius, [1.0, 1.0, 0.0], 0.5);
+        stars.push(new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, star_vertices, star_indices, GL.TRIANGLES));
     }
     // ENVIROMENT OBJECT VARIABLE END
 
@@ -536,6 +551,21 @@ function main() {
         let z = (Math.random() < 0.5) ? (Math.random() * -9.0 - 4.0) : (Math.random() * 9.0 + 4.0);
         LIBS.translateZ(grass.MOVE_MATRIX, z);
     })
+
+    stars.forEach(star => {
+        const theta = Math.random() * 2 * Math.PI;
+        const phi = Math.random() * Math.PI;
+
+        const r = baseRadius * (1.2 + Math.random() * 0.3);
+
+        const x = r * Math.sin(phi) * Math.cos(theta);
+        const y = r * Math.sin(phi) * Math.sin(theta);
+        const z = r * Math.cos(phi);
+
+        LIBS.translateX(star.MOVE_MATRIX, x);
+        LIBS.translateY(star.MOVE_MATRIX, y);
+        LIBS.translateZ(star.MOVE_MATRIX, z);
+    });
     // ENVIRONMENT TRANSFORMATION END
 
     // CHARMANDER TRANSFORMATION
@@ -996,18 +1026,7 @@ function main() {
     treeLog1.setup();
     treeLog2.setup();
 
-    treeLeaves1.setup();
-    treeLeaves2.setup();
-    treeLeaves3.setup();
-    treeLeaves4.setup();
-    treeLeaves5.setup();
-    treeLeaves6.setup();
-    treeLeaves7.setup();
-    treeLeaves8.setup();
-    treeLeaves9.setup();
-    treeLeaves10.setup();
-    treeLeaves11.setup();
-    treeLeaves12.setup();
+    allTreeLeaves.forEach(leaf => leaf.setup());
 
     cloudbase1.setup();
     cloudbase2.setup();
@@ -1022,6 +1041,8 @@ function main() {
     waterfall.setup();
 
     grasses.forEach(grass => grass.setup());
+
+    stars.forEach(star => star.setup());
     // ENVIRONMENT SETUP OBJECT END
 
     // CHARMANDER SETUP OBJECT
@@ -1058,17 +1079,20 @@ function main() {
     GL.clearColor(0.5, 0.7, 0.9, 1.0);
     GL.clearDepth(1.0);
 
-    const allTreeLeaves = [
-        treeLeaves1, treeLeaves2, treeLeaves3, treeLeaves4,
-        treeLeaves5, treeLeaves6, treeLeaves7, treeLeaves8,
-        treeLeaves9, treeLeaves10, treeLeaves11, treeLeaves12
-    ];
     const initialTreeLeavesMatrices = allTreeLeaves.map(leaf => [...leaf.MOVE_MATRIX]);
 
     var cloudCurrentTranslateX = 0;
     var cloudTranslateXDirection = 1;
     var cloudCurrentTranslateY = 0;
     var cloudTranslateYDirection = 1;
+    const starsAxis = []
+
+    for (let i = 0; i < stars.length; i++) {
+        const x = Math.random() - 0.5;
+        const y = Math.random() - 0.5;
+        const z = Math.random() - 0.5;
+        starsAxis[i] = LIBS.axisNormalize([x, y, z]);
+    }
 
     var charizardCurrentFlap = 0;
     var charizardFlapDirection = 1;
@@ -1103,18 +1127,7 @@ function main() {
         base.render(MODELMATRIX);
         treeLog1.render(MODELMATRIX);
         treeLog2.render(MODELMATRIX);
-        treeLeaves1.render(MODELMATRIX);
-        treeLeaves2.render(MODELMATRIX);
-        treeLeaves3.render(MODELMATRIX);
-        treeLeaves4.render(MODELMATRIX);
-        treeLeaves5.render(MODELMATRIX);
-        treeLeaves6.render(MODELMATRIX);
-        treeLeaves7.render(MODELMATRIX);
-        treeLeaves8.render(MODELMATRIX);
-        treeLeaves9.render(MODELMATRIX);
-        treeLeaves10.render(MODELMATRIX);
-        treeLeaves11.render(MODELMATRIX);
-        treeLeaves12.render(MODELMATRIX);
+        allTreeLeaves.forEach(leaf => leaf.render(MODELMATRIX));
         cloudbase1.render(MODELMATRIX);
         cloudbase2.render(MODELMATRIX);
         cloudbase3.render(MODELMATRIX);
@@ -1123,6 +1136,7 @@ function main() {
         waterRock.render(MODELMATRIX);
         waterfall.render(MODELMATRIX);
         grasses.forEach(grass => grass.render(MODELMATRIX));
+        stars.forEach(star => star.render(MODELMATRIX));
         // ENVIRONMENT RENDER OBJECT END
 
         // CHARMANDER RENDER OBJECT
@@ -1189,6 +1203,11 @@ function main() {
 
         const waterfallScale = 1.0 + Math.sin((time / 300)) * 0.003;
         LIBS.scaleX(waterfall.MOVE_MATRIX, waterfallScale);
+
+        stars.forEach((star, index) => {
+            const axis = starsAxis[index];
+            LIBS.rotateArbitraryAxis(star.MOVE_MATRIX, axis, 0.01);
+        });
         // ENVIRONMENT ANIMATION END
 
         // CHARMANDER ANIMATION

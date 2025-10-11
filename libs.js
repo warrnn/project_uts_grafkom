@@ -118,5 +118,33 @@ var LIBS = {
             }
         }
         return rm;
+    },
+
+    rotateArbitraryAxis: function (m, axis, angle) {
+        const [x, y, z] = axis;
+        const len = Math.sqrt(x * x + y * y + z * z);
+        if (len === 0) return;
+        const nx = x / len, ny = y / len, nz = z / len;
+        const c = Math.cos(angle);
+        const s = Math.sin(angle);
+        const t = 1 - c;
+
+        // Matriks rotasi 4x4
+        const rot = [
+            t * nx * nx + c, t * nx * ny - s * nz, t * nx * nz + s * ny, 0,
+            t * nx * ny + s * nz, t * ny * ny + c, t * ny * nz - s * nx, 0,
+            t * nx * nz - s * ny, t * ny * nz + s * nx, t * nz * nz + c, 0,
+            0, 0, 0, 1
+        ];
+
+        // Kalikan matrix dengan rotasi (in-place)
+        const result = LIBS.multiply(m, rot);
+        for (let i = 0; i < 16; i++) m[i] = result[i];
+    },
+
+    axisNormalize: function (v) {
+        const len = Math.hypot(v[0], v[1], v[2]);
+        if (len === 0) return [0, 1, 0]; // fallback axis
+        return [v[0] / len, v[1] / len, v[2] / len];
     }
 };

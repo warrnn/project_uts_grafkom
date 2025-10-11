@@ -643,6 +643,63 @@ function generateCircleDisk(radius = 1.0, height = 0.2, segments = 32, colorTop 
     return { vertices, indices };
 }
 
+function generateHemisphereClosed(radius = 1.0, stacks = 10, slices = 20, color = [1.0, 1.0, 1.0]) {
+    let vertices = [];
+    let indices = [];
+
+    // --- Hemisphere vertices ---
+    for (let i = 0; i <= stacks; i++) {
+        let theta = i * (Math.PI / 2) / stacks; // dari 0 -> PI/2 (setengah bola)
+        let sinTheta = Math.sin(theta);
+        let cosTheta = Math.cos(theta);
+
+        for (let j = 0; j <= slices; j++) {
+            let phi = j * 2 * Math.PI / slices;
+            let sinPhi = Math.sin(phi);
+            let cosPhi = Math.cos(phi);
+
+            let x = radius * sinTheta * cosPhi;
+            let y = radius * cosTheta;
+            let z = radius * sinTheta * sinPhi;
+
+            vertices.push(x, y, z, color[0], color[1], color[2]);
+        }
+    }
+
+    // --- Hemisphere indices ---
+    for (let i = 0; i < stacks; i++) {
+        for (let j = 0; j < slices; j++) {
+            let first = i * (slices + 1) + j;
+            let second = first + slices + 1;
+
+            indices.push(first, second, first + 1);
+            indices.push(second, second + 1, first + 1);
+        }
+    }
+
+    // --- Disk (bottom cap) ---
+    const baseCenterIndex = vertices.length / 6;
+    vertices.push(0, 0, 0, color[0], color[1], color[2]); // titik tengah dasar
+
+    for (let j = 0; j <= slices; j++) {
+        let phi = j * 2 * Math.PI / slices;
+        let x = radius * Math.cos(phi);
+        let z = radius * Math.sin(phi);
+        vertices.push(x, 0, z, color[0], color[1], color[2]);
+    }
+
+    // --- Disk indices ---
+    for (let j = 1; j <= slices; j++) {
+        indices.push(baseCenterIndex, baseCenterIndex + j, baseCenterIndex + j + 1);
+    }
+
+    // --- Return hasil ---
+    return {
+        vertices: new Float32Array(vertices),
+        indices: new Uint16Array(indices)
+    };
+}
+
 function generateHemisphereGradientClosed(radius = 1.0, stacks = 10, slices = 20, colorTop = [1.0, 1.0, 1.0], colorBottom = [0.0, 0.0, 0.0]) {
     let vertices = [];
     let indices = [];
@@ -750,14 +807,25 @@ function generateVerticalPlaneGradient(width = 1.0, height = 2.0, segmentsX = 1,
     let vertices = [];
     let indices = [];
 
+    // --- Threshold kontrol gradasi (0–1): ---
+    // misalnya 0.6 artinya 60% bagian atas masih colorTop
+    const threshold = 0.8;
+
     for (let j = 0; j <= segmentsY; j++) {
         let v = j / segmentsY;
         let y = -height / 2 + v * height; // dari atas ke bawah
 
-        // Interpolasi warna
-        let rCol = colorTop[0] * (1 - v) + colorBottom[0] * v;
-        let gCol = colorTop[1] * (1 - v) + colorBottom[1] * v;
-        let bCol = colorTop[2] * (1 - v) + colorBottom[2] * v;
+        // --- Interpolasi warna dengan threshold ---
+        let interp;
+        if (v < threshold) {
+            interp = 0; // warna penuh top (belum mulai gradient)
+        } else {
+            interp = (v - threshold) / (1.0 - threshold); // transisi mulai dari threshold ke bawah
+        }
+
+        let rCol = colorTop[0] * (1 - interp) + colorBottom[0] * interp;
+        let gCol = colorTop[1] * (1 - interp) + colorBottom[1] * interp;
+        let bCol = colorTop[2] * (1 - interp) + colorBottom[2] * interp;
 
         for (let i = 0; i <= segmentsX; i++) {
             let u = i / segmentsX;
@@ -767,6 +835,7 @@ function generateVerticalPlaneGradient(width = 1.0, height = 2.0, segmentsX = 1,
         }
     }
 
+    // --- Buat indices ---
     for (let j = 0; j < segmentsY; j++) {
         for (let i = 0; i < segmentsX; i++) {
             let row1 = j * (segmentsX + 1);
@@ -783,38 +852,53 @@ function generateVerticalPlaneGradient(width = 1.0, height = 2.0, segmentsX = 1,
     };
 }
 
-function generateWavyVerticalPlaneGradient(width = 1.0, height = 2.0, segmentsX = 20, segmentsY = 20, waveAmplitude = 0.2, waveFrequency = 2.0, colorTop = [1.0, 1.0, 1.0], colorBottom = [0.0, 0.0, 0.0]) {
+function generateStar(spikes = 5, outerRadius = 1.0, innerRadius = 0.5, color = [1.0, 1.0, 0.0], thickness = 0.1) {
     let vertices = [];
     let indices = [];
 
-    for (let j = 0; j <= segmentsY; j++) {
-        let v = j / segmentsY;
-        let y = -height / 2 + v * height;
-
-        // Interpolasi warna gradient
-        let rCol = colorTop[0] * (1 - v) + colorBottom[0] * v;
-        let gCol = colorTop[1] * (1 - v) + colorBottom[1] * v;
-        let bCol = colorTop[2] * (1 - v) + colorBottom[2] * v;
-
-        for (let i = 0; i <= segmentsX; i++) {
-            let u = i / segmentsX;
-            let x = -width / 2 + u * width;
-
-            // Gelombang di sumbu Z
-            let z = Math.sin(u * Math.PI * waveFrequency + v * Math.PI * waveFrequency) * waveAmplitude;
-
-            vertices.push(x, y, z, rCol, gCol, bCol);
-        }
+    // FRONT FACE (z = +thickness/2)
+    vertices.push(0, 0, thickness / 2, color[0], color[1], color[2]); // center front
+    for (let i = 0; i < spikes * 2; i++) {
+        let angle = (i * Math.PI) / spikes;
+        let radius = (i % 2 === 0) ? outerRadius : innerRadius;
+        let x = Math.cos(angle) * radius;
+        let y = Math.sin(angle) * radius;
+        vertices.push(x, y, thickness / 2, color[0], color[1], color[2]);
     }
 
-    for (let j = 0; j < segmentsY; j++) {
-        for (let i = 0; i < segmentsX; i++) {
-            let row1 = j * (segmentsX + 1);
-            let row2 = (j + 1) * (segmentsX + 1);
+    // BACK FACE (z = -thickness/2)
+    vertices.push(0, 0, -thickness / 2, color[0], color[1], color[2]); // center back
+    for (let i = 0; i < spikes * 2; i++) {
+        let angle = (i * Math.PI) / spikes;
+        let radius = (i % 2 === 0) ? outerRadius : innerRadius;
+        let x = Math.cos(angle) * radius;
+        let y = Math.sin(angle) * radius;
+        vertices.push(x, y, -thickness / 2, color[0], color[1], color[2]);
+    }
 
-            indices.push(row1 + i, row2 + i, row1 + i + 1);
-            indices.push(row1 + i + 1, row2 + i, row2 + i + 1);
-        }
+    // Indices front face
+    for (let i = 1; i <= spikes * 2; i++) {
+        let next = (i % (spikes * 2)) + 1;
+        indices.push(0, i, next);
+    }
+
+    // Indices back face
+    const offset = spikes * 2 + 1;
+    for (let i = 1; i <= spikes * 2; i++) {
+        let next = (i % (spikes * 2)) + 1;
+        indices.push(offset, offset + i, offset + next);
+    }
+
+    // Side faces (connect front and back)
+    for (let i = 1; i <= spikes * 2; i++) {
+        let next = (i % (spikes * 2)) + 1;
+        let frontA = i;
+        let frontB = next;
+        let backA = offset + i;
+        let backB = offset + next;
+        // dua segitiga per sisi
+        indices.push(frontA, backA, frontB);
+        indices.push(frontB, backA, backB);
     }
 
     return {
