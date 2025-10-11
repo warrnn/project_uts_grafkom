@@ -712,3 +712,113 @@ function generateHemisphereGradientClosed(radius = 1.0, stacks = 10, slices = 20
         indices: new Uint16Array(indices)
     };
 }
+
+function generateVerticalPlane(width = 1.0, height = 2.0, segmentsX = 1, segmentsY = 10, color = [1.0, 1.0, 1.0]) {
+    let vertices = [];
+    let indices = [];
+
+    for (let j = 0; j <= segmentsY; j++) {
+        let v = j / segmentsY;
+        let y = -height / 2 + v * height; // dari atas ke bawah
+
+        for (let i = 0; i <= segmentsX; i++) {
+            let u = i / segmentsX;
+            let x = -width / 2 + u * width; // dari kiri ke kanan
+            let z = 0; // plane di X-Y
+
+            vertices.push(x, y, z, color[0], color[1], color[2]);
+        }
+    }
+
+    for (let j = 0; j < segmentsY; j++) {
+        for (let i = 0; i < segmentsX; i++) {
+            let row1 = j * (segmentsX + 1);
+            let row2 = (j + 1) * (segmentsX + 1);
+
+            indices.push(row1 + i, row2 + i, row1 + i + 1);
+            indices.push(row1 + i + 1, row2 + i, row2 + i + 1);
+        }
+    }
+
+    return {
+        vertices: new Float32Array(vertices),
+        indices: new Uint16Array(indices)
+    };
+}
+
+function generateVerticalPlaneGradient(width = 1.0, height = 2.0, segmentsX = 1, segmentsY = 10, colorTop = [1.0, 1.0, 1.0], colorBottom = [0.0, 0.0, 0.0]) {
+    let vertices = [];
+    let indices = [];
+
+    for (let j = 0; j <= segmentsY; j++) {
+        let v = j / segmentsY;
+        let y = -height / 2 + v * height; // dari atas ke bawah
+
+        // Interpolasi warna
+        let rCol = colorTop[0] * (1 - v) + colorBottom[0] * v;
+        let gCol = colorTop[1] * (1 - v) + colorBottom[1] * v;
+        let bCol = colorTop[2] * (1 - v) + colorBottom[2] * v;
+
+        for (let i = 0; i <= segmentsX; i++) {
+            let u = i / segmentsX;
+            let x = -width / 2 + u * width;
+            let z = 0;
+            vertices.push(x, y, z, rCol, gCol, bCol);
+        }
+    }
+
+    for (let j = 0; j < segmentsY; j++) {
+        for (let i = 0; i < segmentsX; i++) {
+            let row1 = j * (segmentsX + 1);
+            let row2 = (j + 1) * (segmentsX + 1);
+
+            indices.push(row1 + i, row2 + i, row1 + i + 1);
+            indices.push(row1 + i + 1, row2 + i, row2 + i + 1);
+        }
+    }
+
+    return {
+        vertices: new Float32Array(vertices),
+        indices: new Uint16Array(indices)
+    };
+}
+
+function generateWavyVerticalPlaneGradient(width = 1.0, height = 2.0, segmentsX = 20, segmentsY = 20, waveAmplitude = 0.2, waveFrequency = 2.0, colorTop = [1.0, 1.0, 1.0], colorBottom = [0.0, 0.0, 0.0]) {
+    let vertices = [];
+    let indices = [];
+
+    for (let j = 0; j <= segmentsY; j++) {
+        let v = j / segmentsY;
+        let y = -height / 2 + v * height;
+
+        // Interpolasi warna gradient
+        let rCol = colorTop[0] * (1 - v) + colorBottom[0] * v;
+        let gCol = colorTop[1] * (1 - v) + colorBottom[1] * v;
+        let bCol = colorTop[2] * (1 - v) + colorBottom[2] * v;
+
+        for (let i = 0; i <= segmentsX; i++) {
+            let u = i / segmentsX;
+            let x = -width / 2 + u * width;
+
+            // Gelombang di sumbu Z
+            let z = Math.sin(u * Math.PI * waveFrequency + v * Math.PI * waveFrequency) * waveAmplitude;
+
+            vertices.push(x, y, z, rCol, gCol, bCol);
+        }
+    }
+
+    for (let j = 0; j < segmentsY; j++) {
+        for (let i = 0; i < segmentsX; i++) {
+            let row1 = j * (segmentsX + 1);
+            let row2 = (j + 1) * (segmentsX + 1);
+
+            indices.push(row1 + i, row2 + i, row1 + i + 1);
+            indices.push(row1 + i + 1, row2 + i, row2 + i + 1);
+        }
+    }
+
+    return {
+        vertices: new Float32Array(vertices),
+        indices: new Uint16Array(indices)
+    };
+}

@@ -164,6 +164,52 @@ function main() {
     const cloud1 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, cloud_vertices, cloud_indices, GL.TRIANGLES);
     const cloud2 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, cloud_vertices, cloud_indices, GL.TRIANGLES);
     const cloud3 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, cloud_vertices, cloud_indices, GL.TRIANGLES);
+
+    let rocks = [];
+    for (let i = 0; i < 20; i++) {
+        const rockSize = 1.0 + Math.random() * 0.5;
+
+        const gray = 0.4 + Math.random() * 0.4;
+        const colorVariation = (Math.random() - 0.5) * 0.05;
+        const rockColor = [
+            Math.min(1.0, Math.max(0.0, gray + colorVariation)),
+            Math.min(1.0, Math.max(0.0, gray + colorVariation * 0.8)),
+            Math.min(1.0, Math.max(0.0, gray + colorVariation * 0.6))
+        ];
+
+        const { vertices: rock_vertices, indices: rock_indices } = generateEllipsoid(rockSize, rockSize, rockSize, 4, 8, rockColor);
+
+        rocks.push(new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, rock_vertices, rock_indices, GL.TRIANGLES));
+    }
+
+    const { vertices: rock_waterfall_vertices, indices: rock_waterfall_indices } = generateEllipsoid(7.0, 1., 3.5, 32, 12, [0.5, 0.5, 0.5]);
+    const rockWaterfall = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, rock_waterfall_vertices, rock_waterfall_indices, GL.TRIANGLES);
+
+    const { vertices: rock_water_vertices, indices: rock_water_indices } = generateEllipsoidGradient(5.8, 1.0, 3.5, 30, 30, [0.5, 0.5, 1.0], [0.0, 0.0, 1.0]);
+    const waterRock = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, rock_water_vertices, rock_water_indices, GL.TRIANGLES);
+
+    const { vertices: waterfall_vertices, indices: waterfall_indices } = generateVerticalPlaneGradient(7.0, 80.0, 30, 30, [1.0, 1.0, 1.0], [0.0, 0.0, 1.0]);
+    const waterfall = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, waterfall_vertices, waterfall_indices, GL.TRIANGLES);
+
+    let grasses = [];
+    for (let i = 0; i < 100; i++) {
+        const grassHeight = 3.0 + Math.random();
+
+        const baseRed = 0.1 + Math.random() * 0.1;
+        const baseGreen = 0.6 + Math.random() * 0.3;
+        const baseBlue = 0.1 + Math.random() * 0.2;
+
+        const variation = (Math.random() - 0.5) * 0.05;
+        const grassColor = [
+            Math.min(1.0, Math.max(0.0, baseRed + variation * 0.3)),
+            Math.min(1.0, Math.max(0.0, baseGreen + variation)),
+            Math.min(1.0, Math.max(0.0, baseBlue + variation * 0.2))
+        ];
+
+        const { vertices, indices } = generateCylinderDynamicRadius(0.5, 1.0, 0.0, 0.0, grassHeight, 8, 8, grassColor, "linear");
+
+        grasses.push(new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, vertices, indices, GL.TRIANGLES));
+    }
     // ENVIROMENT OBJECT VARIABLE END
 
     // CHARMANDER OBJECT VARIABLE
@@ -389,7 +435,7 @@ function main() {
     // CHARMANDER OBJECT VARIABLE END
 
     // ENVIRONMENT TRANSFORMATION
-    LIBS.translateY(base.MOVE_MATRIX, -2.0);
+    LIBS.translateY(base.MOVE_MATRIX, -1.7);
     LIBS.rotateX(base.MOVE_MATRIX, -Math.PI);
 
     LIBS.translateX(treeLog1.MOVE_MATRIX, 10.0);
@@ -465,6 +511,31 @@ function main() {
     LIBS.translateZ(cloudbase3.MOVE_MATRIX, -16.0);
 
     LIBS.translateY(cloud3.MOVE_MATRIX, 2.0);
+
+    rocks.forEach(rock => {
+        LIBS.translateX(rock.MOVE_MATRIX, Math.random() * 40.0 - 20.0);
+        LIBS.translateY(rock.MOVE_MATRIX, -2.0);
+
+        let z = (Math.random() < 0.5) ? (Math.random() * -7.0 - 4.0) : (Math.random() * 7.0 + 4.0);
+        LIBS.translateZ(rock.MOVE_MATRIX, z);
+    })
+
+    LIBS.translateY(rockWaterfall.MOVE_MATRIX, -2.0);
+    LIBS.translateZ(rockWaterfall.MOVE_MATRIX, 22.0);
+
+    LIBS.translateY(waterfall.MOVE_MATRIX, -42.0);
+    LIBS.translateZ(waterfall.MOVE_MATRIX, 25.0);
+
+    LIBS.translateY(waterRock.MOVE_MATRIX, -1.9);
+    LIBS.translateZ(waterRock.MOVE_MATRIX, 22.4);
+
+    grasses.forEach(grass => {
+        LIBS.translateX(grass.MOVE_MATRIX, Math.random() * 40.0 - 20.0);
+        LIBS.translateY(grass.MOVE_MATRIX, -2.0);
+
+        let z = (Math.random() < 0.5) ? (Math.random() * -9.0 - 4.0) : (Math.random() * 9.0 + 4.0);
+        LIBS.translateZ(grass.MOVE_MATRIX, z);
+    })
     // ENVIRONMENT TRANSFORMATION END
 
     // CHARMANDER TRANSFORMATION
@@ -705,7 +776,7 @@ function main() {
 
     LIBS.translateX(charizardTailTip.MOVE_MATRIX, 9.0);
     LIBS.translateY(charizardTailTip.MOVE_MATRIX, 1.2);
-    LIBS.translateZ(charizardTailTip.MOVE_MATRIX, -5.1);
+    LIBS.translateZ(charizardTailTip.MOVE_MATRIX, -5.2);
 
     LIBS.translateY(charizardTailTipFire.MOVE_MATRIX, 0.6);
 
@@ -941,6 +1012,16 @@ function main() {
     cloudbase1.setup();
     cloudbase2.setup();
     cloudbase3.setup();
+
+    rocks.forEach(rock => rock.setup());
+
+    rockWaterfall.setup();
+
+    waterRock.setup();
+
+    waterfall.setup();
+
+    grasses.forEach(grass => grass.setup());
     // ENVIRONMENT SETUP OBJECT END
 
     // CHARMANDER SETUP OBJECT
@@ -1037,6 +1118,11 @@ function main() {
         cloudbase1.render(MODELMATRIX);
         cloudbase2.render(MODELMATRIX);
         cloudbase3.render(MODELMATRIX);
+        rocks.forEach(rock => rock.render(MODELMATRIX));
+        rockWaterfall.render(MODELMATRIX);
+        waterRock.render(MODELMATRIX);
+        waterfall.render(MODELMATRIX);
+        grasses.forEach(grass => grass.render(MODELMATRIX));
         // ENVIRONMENT RENDER OBJECT END
 
         // CHARMANDER RENDER OBJECT
@@ -1100,6 +1186,9 @@ function main() {
 
         LIBS.translateX(cloudbase3.MOVE_MATRIX, cloudCurrentTranslateX);
         LIBS.translateY(cloudbase3.MOVE_MATRIX, cloudCurrentTranslateY);
+
+        const waterfallScale = 1.0 + Math.sin((time / 300)) * 0.003;
+        LIBS.scaleX(waterfall.MOVE_MATRIX, waterfallScale);
         // ENVIRONMENT ANIMATION END
 
         // CHARMANDER ANIMATION
@@ -1185,7 +1274,8 @@ function main() {
         LIBS.translateZ(charizardRightFootClaw2.MOVE_MATRIX, charizardCurrentTranslate * -0.07);
         LIBS.translateZ(charizardRightFootClaw3.MOVE_MATRIX, charizardCurrentTranslate * -0.07);
 
-        const tailTipScale = 1.0 + Math.sin(time / 100) * 0.02;
+        const tailTipScale = 1.0 + Math.sin((time / 100) + Math.PI) * 0.02;
+
         LIBS.scaleX(charizardTailTip.MOVE_MATRIX, tailTipScale);
         LIBS.scaleY(charizardTailTip.MOVE_MATRIX, tailTipScale);
         LIBS.scaleZ(charizardTailTip.MOVE_MATRIX, tailTipScale);
