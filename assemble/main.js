@@ -551,7 +551,7 @@ function main() {
         LIBS.translateX(grass.MOVE_MATRIX, Math.random() * 40.0 - 20.0);
         LIBS.translateY(grass.MOVE_MATRIX, -2.0);
 
-        let z = (Math.random() < 0.5) ? (Math.random() * -9.0 - 4.0) : (Math.random() * 9.0 + 4.0);
+        let z = (Math.random() < 0.5) ? (Math.random() * -8.5 - 4.0) : (Math.random() * 8.5 + 4.0);
         LIBS.translateZ(grass.MOVE_MATRIX, z);
     })
 
@@ -1184,6 +1184,11 @@ function main() {
             LIBS.scaleZ(leaf.MOVE_MATRIX, leavesScale);
         });
 
+        grasses.forEach((grass, index) => {
+            const grassScale = 1.0 + Math.sin((time / 500) + index) * 0.004;
+            LIBS.scaleY(grass.MOVE_MATRIX, grassScale);
+        })
+
         cloudCurrentTranslateX += cloudTranslateXDirection * 0.001;
         cloudCurrentTranslateY += cloudTranslateYDirection * 0.001;
 
@@ -1320,3 +1325,5 @@ function main() {
 }
 
 window.addEventListener('load', main);
+
+setTimeout(() => window.location.reload(), 20000);
