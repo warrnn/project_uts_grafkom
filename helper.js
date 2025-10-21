@@ -94,6 +94,107 @@ function generateEllipsoidGradient(rx = 1, ry = 1, rz = 1, stacks = 20, slices =
     };
 }
 
+function generateEllipsoidTwoColor(rx = 1, ry = 1, rz = 1, stacks = 20, slices = 20, colorTop = [1.0, 0.0, 0.0], colorBottom = [0.0, 0.0, 1.0]) {
+    let vertices = [];
+    let indices = [];
+
+    // Generate vertices (posisi + warna tanpa gradient)
+    for (let i = 0; i <= stacks; i++) {
+        let theta = i * Math.PI / stacks; // 0 -> PI
+        let sinTheta = Math.sin(theta);
+        let cosTheta = Math.cos(theta);
+
+        // Bagian atas (0 -> tengah) pakai colorTop, bawah pakai colorBottom
+        let color = (i < stacks / 2) ? colorTop : colorBottom;
+
+        for (let j = 0; j <= slices; j++) {
+            let phi = j * 2 * Math.PI / slices; // 0 -> 2PI
+            let sinPhi = Math.sin(phi);
+            let cosPhi = Math.cos(phi);
+
+            // posisi ellipsoid
+            let x = rx * sinTheta * cosPhi;
+            let y = ry * cosTheta;
+            let z = rz * sinTheta * sinPhi;
+
+            // push posisi + warna tetap (tidak diinterpolasi)
+            vertices.push(x, y, z, color[0], color[1], color[2]);
+        }
+    }
+
+    // Generate indices (quad → 2 segitiga)
+    for (let i = 0; i < stacks; i++) {
+        for (let j = 0; j < slices; j++) {
+            let first = i * (slices + 1) + j;
+            let second = first + slices + 1;
+
+            indices.push(first, second, first + 1);
+            indices.push(second, second + 1, first + 1);
+        }
+    }
+
+    return {
+        vertices: new Float32Array(vertices),
+        indices: new Uint16Array(indices)
+    };
+}
+
+function generateEllipsoidPokeball(rx = 1, ry = 1, rz = 1, stacks = 20, slices = 20, colorTop = [1.0, 0.0, 0.0], colorMiddle = [0.0, 0.0, 0.0], colorBottom = [1.0, 1.0, 1.0]) {
+    let vertices = [];
+    let indices = [];
+
+    for (let i = 0; i <= stacks; i++) {
+        let theta = i * Math.PI / stacks; // 0 -> PI
+        let sinTheta = Math.sin(theta);
+        let cosTheta = Math.cos(theta);
+
+        // progress vertikal (0 = atas, 1 = bawah)
+        let t = i / stacks;
+
+        // Pilih warna berdasarkan posisi
+        let color;
+        if (t <= 0.45) {
+            color = colorTop; // 45% atas
+        } else if (t <= 0.55) {
+            color = colorMiddle; // 10% tengah
+        } else {
+            color = colorBottom; // 45% bawah
+        }
+
+        for (let j = 0; j <= slices; j++) {
+            let phi = j * 2 * Math.PI / slices; // 0 -> 2PI
+            let sinPhi = Math.sin(phi);
+            let cosPhi = Math.cos(phi);
+
+            // posisi ellipsoid
+            let x = rx * sinTheta * cosPhi;
+            let y = ry * cosTheta;
+            let z = rz * sinTheta * sinPhi;
+
+            // posisi + warna
+            vertices.push(x, y, z, color[0], color[1], color[2]);
+        }
+    }
+
+    // Buat index (quad jadi 2 segitiga)
+    for (let i = 0; i < stacks; i++) {
+        for (let j = 0; j < slices; j++) {
+            let first = i * (slices + 1) + j;
+            let second = first + slices + 1;
+
+            indices.push(first, second, first + 1);
+            indices.push(second, second + 1, first + 1);
+        }
+    }
+
+    return {
+        vertices: new Float32Array(vertices),
+        indices: new Uint16Array(indices)
+    };
+}
+
+
+
 function generateCurvedCylinder(radiusStart = 0.2, radiusEnd = 0.1, length = 2.0, segments = 20, rings = 10, color = [1.0, 1.0, 1.0]) {
     let vertices = [];
     let indices = [];

@@ -447,6 +447,9 @@ function main() {
     const charizardWingPointsRightClose = charizardWingPointsLeftClose.map(p => [-p[0], p[1], p[2]]);
     const { vertices: wing_membrane_right_close_vertices, indices: wing_membrane_right_close_indices } = generateWingFanBezier3D(charizardWingPointsRightClose, 30, [1.0, 0.55, 0.0]);
     const charizardRightWingMembraneClose = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, wing_membrane_right_close_vertices, wing_membrane_right_close_indices, GL.TRIANGLE_FAN);
+
+    const { vertices: charizard_pokeball_vertices, indices: charizard_pokeball_indices } = generateEllipsoidPokeball(0.8, 0.8, 0.8, 20, 20, [1.0, 0.0, 0.0], [0.0, 0.0, 0.0], [1.0, 1.0, 1.0]);
+    const charizardPokeball = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, charizard_pokeball_vertices, charizard_pokeball_indices, GL.TRIANGLES);
     // CHARMANDER OBJECT VARIABLE END
 
     // ENVIRONMENT TRANSFORMATION
@@ -806,7 +809,7 @@ function main() {
 
     LIBS.translateX(charizardTailTip.MOVE_MATRIX, 9.0);
     LIBS.translateY(charizardTailTip.MOVE_MATRIX, 1.2);
-    LIBS.translateZ(charizardTailTip.MOVE_MATRIX, -5.2);
+    LIBS.translateZ(charizardTailTip.MOVE_MATRIX, -5.3);
 
     LIBS.translateY(charizardTailTipFire.MOVE_MATRIX, 0.6);
 
@@ -911,6 +914,9 @@ function main() {
     LIBS.translateZ(charizardRightWingMembraneClose.MOVE_MATRIX, 0.37 - 1.5);
     LIBS.rotateY(charizardRightWingMembraneClose.MOVE_MATRIX, LIBS.degToRad(6));
     LIBS.rotateZ(charizardRightWingMembraneClose.MOVE_MATRIX, LIBS.degToRad(-30));
+
+    LIBS.translateX(charizardPokeball.MOVE_MATRIX, 6.0);
+    LIBS.translateZ(charizardPokeball.MOVE_MATRIX, -3.0);
     // CHARIZARD TRANSFORMATION END
 
     // ENVIRONMENT HIERARCHY
@@ -967,6 +973,7 @@ function main() {
 
     // CHARIZARD HIERARCHY
     charizardBody.addChild(charizardBelly);
+    charizardBody.addChild(charizardPokeball);
 
     charizardNeck.addChild(charizardHead);
 
@@ -1201,7 +1208,7 @@ function main() {
         LIBS.translateX(cloudbase3.MOVE_MATRIX, cloudCurrentTranslateX);
         LIBS.translateY(cloudbase3.MOVE_MATRIX, cloudCurrentTranslateY);
 
-        const waterfallScale = 1.0 + Math.sin((time / 300)) * 0.003;
+        const waterfallScale = 1.0 + Math.sin((time / 175)) * 0.0035;
         LIBS.scaleX(waterfall.MOVE_MATRIX, waterfallScale);
 
         stars.forEach((star, index) => {
@@ -1293,11 +1300,17 @@ function main() {
         LIBS.translateZ(charizardRightFootClaw2.MOVE_MATRIX, charizardCurrentTranslate * -0.07);
         LIBS.translateZ(charizardRightFootClaw3.MOVE_MATRIX, charizardCurrentTranslate * -0.07);
 
-        const tailTipScale = 1.0 + Math.sin((time / 100) + Math.PI) * 0.02;
+        const t = ((time / 75) % (Math.PI * 2));
+        const tailTipScale = 1.0 + Math.sin(t + Math.PI) * 0.02;
 
         LIBS.scaleX(charizardTailTip.MOVE_MATRIX, tailTipScale);
         LIBS.scaleY(charizardTailTip.MOVE_MATRIX, tailTipScale);
         LIBS.scaleZ(charizardTailTip.MOVE_MATRIX, tailTipScale);
+
+        LIBS.rotateArbitraryAxis(charizardPokeball.MOVE_MATRIX, [1, 1, 1], 0.00001);
+        LIBS.rotateX(charizardPokeball.MOVE_MATRIX, -0.03);
+        LIBS.rotateY(charizardPokeball.MOVE_MATRIX, -0.03);
+        LIBS.rotateZ(charizardPokeball.MOVE_MATRIX, -0.03);
         // CHARIZARD ANIMATION END
 
         GL.flush();
