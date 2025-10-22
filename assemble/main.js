@@ -308,7 +308,105 @@ function main() {
     // CHARMANDER OBJECT VARIABLE END
 
     // CHARMELEON OBJECT VARIABLE
-    // ...
+        const { vertices: charmeleon_body_vertices, indices: charmeleon_body_indices } = generateEllipsoid(1.4, 1.9, 1.2, 30, 30, [1.0, 0.2, 0.0]);
+    const charmeleonBody = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, charmeleon_body_vertices, charmeleon_body_indices, GL.TRIANGLES);
+
+    const {vertices: charmeleon_belly_vertices, indices: charmeleon_belly_indices} = generateEllipsoid(1.1, 1.5, 0.6, 30, 30, [1.0 , 1.0, 0.6]);
+    const charmeleonBelly = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, charmeleon_belly_vertices, charmeleon_belly_indices, GL.TRIANGLES);
+
+    const {vertices: charmeleon_sendi_kiri_vertices, indices: charmeleon_sendi_kiri_indices} = generateEllipsoid(0.5, 0.5 , 0.5  , 15, 15, [1.0, 0.2,0.0]);
+    const charmeleonSendiKiri = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, charmeleon_sendi_kiri_vertices, charmeleon_sendi_kiri_indices, GL.TRIANGLES);
+
+    const {vertices: charmeleon_sendi_kanan_vertices, indices: charmeleon_sendi_kanan_indices} = generateEllipsoid(0.5, 0.5 , 0.5  , 15, 15, [1.0, 0.2, 0.0]);
+    const charmeleonSendiKanan = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, charmeleon_sendi_kanan_vertices, charmeleon_sendi_kanan_indices, GL.TRIANGLES);
+
+    const {vertices: charmeleon_paha_kiri_vertices, indices: charmeleon_paha_kiri_indices} = generateEllipsoid(0.7, 1.2, 0.6, 30, 30, [1.0, 0.2, 0.0]);
+    const charmeleonPahaKiri = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, charmeleon_paha_kiri_vertices, charmeleon_paha_kiri_indices, GL.TRIANGLES);
+
+    const {vertices: charmeleon_paha_kanan_vertices, indices: charmeleon_paha_kanan_indices} = generateEllipsoid(0.7, 1.2, 0.6, 30, 30, [1.0 , 0.2, 0.0]);
+    const charmeleonPahaKanan = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, charmeleon_paha_kanan_vertices, charmeleon_paha_kanan_indices, GL.TRIANGLES);
+
+    const {vertices: charmeleon_sendi_telapak_kiri_vertices, indices: charmeleon_sendi_telapak_kiri_indices} = generateEllipsoid(0.4, 0.4 , 0.4  , 15, 15, [1.0, 0.2, 0.0]);
+    const charmeleonSendiTelapakKiri = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, charmeleon_sendi_telapak_kiri_vertices, charmeleon_sendi_telapak_kiri_indices, GL.TRIANGLES);
+
+    const {vertices: charmeleon_sendi_telapak_kanan_vertices, indices: charmeleon_sendi_telapak_kanan_indices} = generateEllipsoid(0.4, 0.4 , 0.4  , 15, 15, [1.0, 0.2, 0.0]);
+    const charmeleonSendiTelapakKanan = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, charmeleon_sendi_telapak_kanan_vertices, charmeleon_sendi_telapak_kanan_indices, GL.TRIANGLES);
+
+    const { vertices: charmeleon_telapak_kiri_vertices, indices: charmeleon_telapak_kiri_indices } = generateEllipsoid(0.5, 0.3, 0.8, 30, 30, [1.0, 0.2, 0.0]);
+    const charmeleonTelapakKiri = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, charmeleon_telapak_kiri_vertices, charmeleon_telapak_kiri_indices, GL.TRIANGLES);
+
+    const {vertices: charmeleon_telapak_kanan_vertices, indices: charmeleon_telapak_kanan_indices} = generateEllipsoid(0.5, 0.3, 0.8, 30, 30, [1.0, 0.2, 0.0]);
+    const charmeleonTelapakKanan = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, charmeleon_telapak_kanan_vertices, charmeleon_telapak_kanan_indices, GL.TRIANGLES);
+
+    const{vertices: charmeleon_sendi_tangan_kiri_vertices, indices: charmeleon_sendi_tangan_kiri_indices} = generateEllipsoid(0.2, 0.2, 0.2, 15, 15, [1.0, 0.2, 0.0]);
+    const charmeleonSendiTanganKiri = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, charmeleon_sendi_tangan_kiri_vertices, charmeleon_sendi_tangan_kiri_indices, GL.TRIANGLES);
+
+    const{vertices: charmeleon_sendi_tangan_kanan_vertices, indices: charmeleon_sendi_tangan_kanan_indices} = generateEllipsoid(0.2, 0.2, 0.2, 15, 15, [1.0, 0.2, 0.0]);
+    const charmeleonSendiTanganKanan = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, charmeleon_sendi_tangan_kanan_vertices, charmeleon_sendi_tangan_kanan_indices, GL.TRIANGLES);
+
+    const {vertices: charmeleon_tangan_kiri_vertices, indices: charmeleon_tangan_kiri_indices} = generateEllipticParaboloidFlexible(0.5, 0.45, 2.5, 30, 30, 0.2, [1.0, 0.2, 0.0]);
+    const charmeleonTanganKiri = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, charmeleon_tangan_kiri_vertices, charmeleon_tangan_kiri_indices, GL.TRIANGLES);
+
+    const {vertices: charmeleon_tangan_kanan_vertices, indices: charmeleon_tangan_kanan_indices} = generateEllipticParaboloidFlexible(0.5, 0.45, 2.5, 30, 30, 0.2, [1.0, 0.2, 0.0]);
+    const charmeleonTanganKanan = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, charmeleon_tangan_kanan_vertices, charmeleon_tangan_kanan_indices, GL.TRIANGLES);
+
+    const { vertices: charmeleon_tail_vertices, indices: charmeleon_tail_indices } = generateCurvedCylinder(0.6, 0.45 , 3.5, 20, 10, [1.0, 0.2, 0.0]);
+    const charmeleonTail = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, charmeleon_tail_vertices, charmeleon_tail_indices, GL.TRIANGLES);
+
+    const {vertices: charmeleon_tail2_vertices, indices: charmeleon_tail2_indices} = generateCurvedCylinder(0.6, 0.45 , 3.5, 20, 10, [1.0, 1.0, 0.6]);
+    const charmeleonTail2 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, charmeleon_tail2_vertices, charmeleon_tail2_indices, GL.TRIANGLES);
+
+    const { vertices: charmeleon_tail_tip, indices: charmeleon_tail_tip_indices } = generateEllipsoidGradient(0.4, 0.5, 0.45, 30, 30, [1.0, 0.2, 0.0], [1.0, 1.0, 0.0]);
+    const charmeleonTailTip = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, charmeleon_tail_tip, charmeleon_tail_tip_indices, GL.TRIANGLES);
+
+    const {vertices: charmeleon_tail_tip_fire_vertices, indices: charmeleon_tail_tip_fire_indices} = generateCylinderDynamicRadius(0.3, 0.7, 0.0, 0.0, 1.5, 32, 32, [1.0, 0.3, 0.0], "sin");
+    const charmeleonTailTipFire = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, charmeleon_tail_tip_fire_vertices, charmeleon_tail_tip_fire_indices, GL.TRIANGLES);
+
+    const {vertices: charmeleon_neck_vertices, indices: charmeleon_neck_indices} = generateCylinderDynamicRadius(0.9, 0.9, 0.2, 0.4, 1.3, 32, 32, [1.0, 0.2, 0.0]);
+    const charmeleonNeck = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, charmeleon_neck_vertices, charmeleon_neck_indices, GL.TRIANGLES);
+
+    const {vertices: charmeleon_head_vertices, indices: charmeleon_head_indices} = generateEllipsoid(1.0, 0.80, 1.0, 30, 30, [1.0, 0.2, 0.0]);
+    const charmeleonHead = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, charmeleon_head_vertices, charmeleon_head_indices, GL.TRIANGLES);
+
+    const {vertices: charmeleon_lower_jaw_vertices, indices: charmeleon_lower_jaw_indices} = generateEllipticParaboloidFlexible(0.6, 0.2, 1.3, 30, 30, 0.2, [1.0, 0.2, 0.0]);
+    const charmeleonLowerJaw = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, charmeleon_lower_jaw_vertices, charmeleon_lower_jaw_indices, GL.TRIANGLES);
+
+    const {vertices: charmeleon_upper_jaw_vertices, indices: charmeleon_upper_jaw_indices} = generateEllipticParaboloidFlexible(0.7, 0.3, 1.4, 30, 30, 0.2, [1.0, 0.2, 0.0]);
+    const charmeleonUpperJaw = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, charmeleon_upper_jaw_vertices, charmeleon_upper_jaw_indices, GL.TRIANGLES);
+
+    const { vertices: charmeleon_white_eye_vertices, indices: charmeleon_white_eye_indices } = generateEllipsoid(0.25, 0.15, 0.1, 30, 30, [1.0, 1.0, 1.0]);
+    const charmeleonLeftWhiteEye = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, charmeleon_white_eye_vertices, charmeleon_white_eye_indices, GL.TRIANGLES);
+    const charmeleonRightWhiteEye = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, charmeleon_white_eye_vertices, charmeleon_white_eye_indices, GL.TRIANGLES);
+
+    const { vertices: charmeleon_black_eye_vertices, indices: charmeleon_black_eye_indices } = generateEllipsoid(0.25, 0.15, 0.1, 30, 30, [0.0, 0.0, 0.0]);
+    const charmeleonLeftBlackEye = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, charmeleon_black_eye_vertices, charmeleon_black_eye_indices, GL.TRIANGLES);
+    const charmeleonRightBlackEye = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, charmeleon_black_eye_vertices, charmeleon_black_eye_indices, GL.TRIANGLES);
+
+    const {vertices: charmeleon_upper_head_vertices, indices: charmeleon_upper_head_indices} = generateEllipticParaboloidFlexible(0.4, 0.3, 1.3, 30, 30, 0.2, [1.0, 0.2, 0.0]);
+    const charmeleonUpperHead = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, charmeleon_upper_head_vertices, charmeleon_upper_head_indices, GL.TRIANGLES);
+
+    const {vertices: charmeleon_left_hand_claw_vertices, indices: charmeleon_left_hand_claw_indices} = generateEllipticParaboloid(0.1, 0.1, 0.4, 20, 10, [1.0, 1.0, 1.0]);
+    const charmeleonLeftHandClaw1 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, charmeleon_left_hand_claw_vertices, charmeleon_left_hand_claw_indices, GL.TRIANGLES);
+    const charmeleonLeftHandClaw2 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, charmeleon_left_hand_claw_vertices, charmeleon_left_hand_claw_indices, GL.TRIANGLES);
+    const charmeleonLeftHandClaw3 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, charmeleon_left_hand_claw_vertices, charmeleon_left_hand_claw_indices, GL.TRIANGLES);
+
+    const{vertices: charmeleon_right_hand_claw_vertices, indices: charmeleon_right_hand_claw_indices} = generateEllipticParaboloid(0.1, 0.1, 0.4, 20, 10, [1.0, 1.0, 1.0]);
+    const charmeleonRightHandClaw1 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, charmeleon_right_hand_claw_vertices, charmeleon_right_hand_claw_indices, GL.TRIANGLES);
+    const charmeleonRightHandClaw2 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, charmeleon_right_hand_claw_vertices, charmeleon_right_hand_claw_indices, GL.TRIANGLES);
+    const charmeleonRightHandClaw3 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, charmeleon_right_hand_claw_vertices, charmeleon_right_hand_claw_indices, GL.TRIANGLES);
+
+    const{vertices: charmeleon_right_foot_claw_vertices, indices: charmeleon_right_foot_claw_indices} = generateEllipticParaboloid(0.1, 0.1, 0.4, 20, 10, [1.0, 1.0, 1.0]);
+    const charmeleonRightFootClaw1 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, charmeleon_right_foot_claw_vertices, charmeleon_right_foot_claw_indices, GL.TRIANGLES);
+    const charmeleonRightFootClaw2 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, charmeleon_right_foot_claw_vertices, charmeleon_right_foot_claw_indices, GL.TRIANGLES);
+    const charmeleonRightFootClaw3 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, charmeleon_right_foot_claw_vertices, charmeleon_right_foot_claw_indices, GL.TRIANGLES);
+
+    const{vertices: charmeleon_left_foot_claw_vertices, indices: charmeleon_left_foot_claw_indices} = generateEllipticParaboloid(0.1, 0.1, 0.4, 20, 10, [1.0, 1.0, 1.0]);
+    const charmeleonLeftFootClaw1 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, charmeleon_left_foot_claw_vertices, charmeleon_left_foot_claw_indices, GL.TRIANGLES);
+    const charmeleonLeftFootClaw2 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, charmeleon_left_foot_claw_vertices, charmeleon_left_foot_claw_indices, GL.TRIANGLES);
+    const charmeleonLeftFootClaw3 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, charmeleon_left_foot_claw_vertices, charmeleon_left_foot_claw_indices, GL.TRIANGLES);
+
+    const {vertices : charmeleon_great_ball_vertices, indices: charmeleon_great_ball_indices} = generateEllipsoidPokeball(0.8, 0.8, 0.8, 20, 20, [0.0, 0.0, 1.0], [0.0, 0.0, 0.0], [1.0, 10.0, 1.0]);
+    const charmeleonGreatBall = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, charmeleon_great_ball_vertices, charmeleon_great_ball_indices, GL.TRIANGLES);
     // CHARMELEON OBJECT VARIABLE END
 
     // CHARIZARD OBJECT VARIABLE
@@ -717,7 +815,198 @@ function main() {
     // CHARMANDER TRANSFORMATION END
 
     // CHARMELEON TRANSFORMATION
-    // ...
+    LIBS.translateX(charmeleonHead.MOVE_MATRIX, 0);
+    LIBS.translateY(charmeleonBody.MOVE_MATRIX, 1.1);
+    LIBS.translateZ(charmeleonBody.MOVE_MATRIX, 0);
+
+    LIBS.translateX(charmeleonBelly.MOVE_MATRIX, 0);
+    LIBS.translateY(charmeleonBelly.MOVE_MATRIX, -0.3);
+    LIBS.translateZ(charmeleonBelly.MOVE_MATRIX, 0.62);
+    LIBS.rotateX(charmeleonBelly.MOVE_MATRIX, LIBS.degToRad(5));
+
+    LIBS.translateX(charmeleonSendiKiri.MOVE_MATRIX, 0.6);
+    LIBS.translateY(charmeleonSendiKiri.MOVE_MATRIX, -0.6);
+    LIBS.translateZ(charmeleonSendiKiri.MOVE_MATRIX, 0.4);
+    LIBS.rotateZ(charmeleonSendiKiri.MOVE_MATRIX, LIBS.degToRad(-30));
+
+    LIBS.translateX(charmeleonSendiKanan.MOVE_MATRIX, -0.6);
+    LIBS.translateY(charmeleonSendiKanan.MOVE_MATRIX, -0.6);
+    LIBS.translateZ(charmeleonSendiKanan.MOVE_MATRIX, 0.4);
+    LIBS.rotateZ(charmeleonSendiKanan.MOVE_MATRIX, LIBS.degToRad(30));
+
+    LIBS.translateX(charmeleonPahaKiri.MOVE_MATRIX, 0.3);
+    LIBS.translateY(charmeleonPahaKiri.MOVE_MATRIX, -1.2);
+    LIBS.translateZ(charmeleonPahaKiri.MOVE_MATRIX, 0.);
+    LIBS.rotateZ(charmeleonPahaKiri.MOVE_MATRIX, LIBS.degToRad(30));
+
+    LIBS.translateX(charmeleonPahaKanan.MOVE_MATRIX, -0.3);
+    LIBS.translateY(charmeleonPahaKanan.MOVE_MATRIX, -1.2);
+    LIBS.translateZ(charmeleonPahaKanan.MOVE_MATRIX, 0);
+    LIBS.rotateZ(charmeleonPahaKanan.MOVE_MATRIX, LIBS.degToRad(-30));
+
+    LIBS.translateX(charmeleonSendiTelapakKiri.MOVE_MATRIX, -0.1);
+    LIBS.translateY(charmeleonSendiTelapakKiri.MOVE_MATRIX, -1.5);
+    LIBS.translateZ(charmeleonSendiTelapakKiri.MOVE_MATRIX, 0);
+    LIBS.rotateZ(charmeleonSendiTelapakKiri.MOVE_MATRIX, LIBS.degToRad(30));
+
+    LIBS.translateX(charmeleonSendiTelapakKanan.MOVE_MATRIX, 0.1);
+    LIBS.translateY(charmeleonSendiTelapakKanan.MOVE_MATRIX, -1.5);
+    LIBS.translateZ(charmeleonSendiTelapakKanan.MOVE_MATRIX, 0.1);
+    LIBS.rotateZ(charmeleonSendiTelapakKanan.MOVE_MATRIX, LIBS.degToRad(-30));
+
+    LIBS.translateX(charmeleonTelapakKiri.MOVE_MATRIX, 0.65);
+    LIBS.translateY(charmeleonTelapakKiri.MOVE_MATRIX, 0.15);
+    LIBS.translateZ(charmeleonTelapakKiri.MOVE_MATRIX, 0.4);
+    LIBS.rotateZ(charmeleonTelapakKiri.MOVE_MATRIX, LIBS.degToRad(-24));
+
+    LIBS.translateX(charmeleonTelapakKanan.MOVE_MATRIX, -0.65);
+    LIBS.translateY(charmeleonTelapakKanan.MOVE_MATRIX, 0.15);
+    LIBS.translateZ(charmeleonTelapakKanan.MOVE_MATRIX, 0.4);
+    LIBS.rotateZ(charmeleonTelapakKanan.MOVE_MATRIX, LIBS.degToRad(24));
+
+    LIBS.translateX(charmeleonSendiTanganKiri.MOVE_MATRIX, 1.2);
+    LIBS.translateY(charmeleonSendiTanganKiri.MOVE_MATRIX, 1.0);
+    LIBS.translateZ(charmeleonSendiTanganKiri.MOVE_MATRIX, 0.4);
+    LIBS.rotateY(charmeleonSendiTanganKiri.MOVE_MATRIX, LIBS.degToRad(-90));
+    
+    LIBS.translateX(charmeleonSendiTanganKanan.MOVE_MATRIX, -1.2);
+    LIBS.translateY(charmeleonSendiTanganKanan.MOVE_MATRIX, 1.0);
+    LIBS.translateZ(charmeleonSendiTanganKanan.MOVE_MATRIX, 0.4);
+    LIBS.rotateY(charmeleonSendiTanganKanan.MOVE_MATRIX, LIBS.degToRad(90));
+
+    LIBS.translateX(charmeleonTanganKiri.MOVE_MATRIX, 1.10);
+    LIBS.translateY(charmeleonTanganKiri.MOVE_MATRIX, -0.3);
+    LIBS.translateZ(charmeleonTanganKiri.MOVE_MATRIX, 0.0);
+    LIBS.rotateZ(charmeleonTanganKiri.MOVE_MATRIX, LIBS.degToRad(-20));
+
+    LIBS.translateX(charmeleonTanganKanan.MOVE_MATRIX, -1.10);
+    LIBS.translateY(charmeleonTanganKanan.MOVE_MATRIX, -0.2);
+    LIBS.translateZ(charmeleonTanganKanan.MOVE_MATRIX, -0.5);
+    LIBS.rotateZ(charmeleonTanganKanan.MOVE_MATRIX, LIBS.degToRad(20));
+
+    LIBS.translateX(charmeleonTail.MOVE_MATRIX, 0.0);
+    LIBS.translateY(charmeleonTail.MOVE_MATRIX, 2.55);
+    LIBS.translateZ(charmeleonTail.MOVE_MATRIX, -2.15 );
+    LIBS.rotateX(charmeleonTail.MOVE_MATRIX, LIBS.degToRad(-60));
+    LIBS.rotateY(charmeleonTail.MOVE_MATRIX, LIBS.degToRad(180));
+
+    LIBS.translateX(charmeleonTail2.MOVE_MATRIX, 0.0);
+    LIBS.translateY(charmeleonTail2.MOVE_MATRIX, -0.08);
+    LIBS.translateZ(charmeleonTail2.MOVE_MATRIX, 0.0);
+
+    LIBS.translateX(charmeleonTailTip.MOVE_MATRIX, 0.0);
+    LIBS.translateY(charmeleonTailTip.MOVE_MATRIX, 2.1);
+    LIBS.translateZ(charmeleonTailTip.MOVE_MATRIX, -4.5);
+    LIBS.rotateX(charmeleonTailTip.MOVE_MATRIX, LIBS.degToRad(8));
+
+    LIBS.translateX(charmeleonTailTipFire.MOVE_MATRIX, 0.0);
+    LIBS.translateY(charmeleonTailTipFire.MOVE_MATRIX, 0.985);
+    LIBS.translateZ(charmeleonTailTipFire.MOVE_MATRIX, 0.135);
+    LIBS.rotateX(charmeleonTailTipFire.MOVE_MATRIX, LIBS.degToRad(-5));
+
+    LIBS.translateX(charmeleonNeck.MOVE_MATRIX, 0);
+    LIBS.translateY(charmeleonNeck.MOVE_MATRIX, 1.8);
+    LIBS.translateZ(charmeleonNeck.MOVE_MATRIX, 0.0);
+
+    LIBS.translateX(charmeleonHead.MOVE_MATRIX, 0);
+    LIBS.translateY(charmeleonHead.MOVE_MATRIX, 1.3);
+    LIBS.translateZ(charmeleonHead.MOVE_MATRIX, 0.2);
+
+    LIBS.translateX(charmeleonLowerJaw.MOVE_MATRIX, 0);
+    LIBS.translateY(charmeleonLowerJaw.MOVE_MATRIX, -0.6);
+    LIBS.translateZ(charmeleonLowerJaw.MOVE_MATRIX, 1.7);
+    LIBS.rotateX(charmeleonLowerJaw.MOVE_MATRIX, 0.2);
+    LIBS.rotateX(charmeleonLowerJaw.MOVE_MATRIX, LIBS.degToRad(-15));
+    LIBS.rotateY(charmeleonLowerJaw.MOVE_MATRIX, LIBS.degToRad(180));
+
+    LIBS.translateX(charmeleonUpperJaw.MOVE_MATRIX, 0);
+    LIBS.translateY(charmeleonUpperJaw.MOVE_MATRIX, -0.4);
+    LIBS.translateZ(charmeleonUpperJaw.MOVE_MATRIX, 1.4);
+    LIBS.rotateX(charmeleonUpperJaw.MOVE_MATRIX, 0.1);
+    LIBS.rotateX(charmeleonUpperJaw.MOVE_MATRIX, LIBS.degToRad(-15));
+    LIBS.rotateY(charmeleonUpperJaw.MOVE_MATRIX, LIBS.degToRad(180));
+
+    LIBS.translateX(charmeleonLeftWhiteEye.MOVE_MATRIX, 2);
+    LIBS.translateY(charmeleonLeftWhiteEye.MOVE_MATRIX, 0.4);
+    LIBS.translateZ(charmeleonLeftWhiteEye.MOVE_MATRIX, 0.65);
+    LIBS.rotateY(charmeleonLeftWhiteEye.MOVE_MATRIX, LIBS.degToRad(45));
+    LIBS.rotateZ(charmeleonLeftWhiteEye.MOVE_MATRIX, LIBS.degToRad(20));
+    
+    LIBS.translateX(charmeleonRightWhiteEye.MOVE_MATRIX, -2);
+    LIBS.translateY(charmeleonRightWhiteEye.MOVE_MATRIX, 0.4);
+    LIBS.translateZ(charmeleonRightWhiteEye.MOVE_MATRIX, 0.65);
+    LIBS.rotateY(charmeleonRightWhiteEye.MOVE_MATRIX, LIBS.degToRad(-45));
+    LIBS.rotateZ(charmeleonRightWhiteEye.MOVE_MATRIX, LIBS.degToRad(-20));
+    
+    LIBS.translateX(charmeleonLeftBlackEye.MOVE_MATRIX, -0.1);
+    LIBS.translateY(charmeleonLeftBlackEye.MOVE_MATRIX, 0.0);
+    LIBS.translateZ(charmeleonLeftBlackEye.MOVE_MATRIX, 0.1);
+    
+    LIBS.translateX(charmeleonRightBlackEye.MOVE_MATRIX, 0.1);
+    LIBS.translateY(charmeleonRightBlackEye.MOVE_MATRIX, 0.0);
+    LIBS.translateZ(charmeleonRightBlackEye.MOVE_MATRIX, 0.1);
+
+    LIBS.translateX(charmeleonUpperHead.MOVE_MATRIX, 0.0);
+    LIBS.translateY(charmeleonUpperHead.MOVE_MATRIX, 1.8);
+    LIBS.translateZ(charmeleonUpperHead.MOVE_MATRIX, -3.8);
+    LIBS.rotateX(charmeleonUpperHead.MOVE_MATRIX, LIBS.degToRad(30));
+
+    LIBS.translateX(charmeleonLeftHandClaw1.MOVE_MATRIX, 0.3);
+    LIBS.translateY(charmeleonLeftHandClaw1.MOVE_MATRIX, -0.1);
+    LIBS.translateZ(charmeleonLeftHandClaw1.MOVE_MATRIX, 0.15);
+
+    LIBS.translateX(charmeleonLeftHandClaw2.MOVE_MATRIX, 0.3);
+    LIBS.translateY(charmeleonLeftHandClaw2.MOVE_MATRIX, -0.1);
+    LIBS.translateZ(charmeleonLeftHandClaw2.MOVE_MATRIX, 0.0);
+
+    LIBS.translateX(charmeleonLeftHandClaw3.MOVE_MATRIX, 0.3);
+    LIBS.translateY(charmeleonLeftHandClaw3.MOVE_MATRIX, -0.1);
+    LIBS.translateZ(charmeleonLeftHandClaw3.MOVE_MATRIX, -0.15);
+
+    LIBS.translateX(charmeleonRightHandClaw1.MOVE_MATRIX, -0.3);
+    LIBS.translateY(charmeleonRightHandClaw1.MOVE_MATRIX, -0.1);
+    LIBS.translateZ(charmeleonRightHandClaw1.MOVE_MATRIX, 0.15);
+
+    LIBS.translateX(charmeleonRightHandClaw2.MOVE_MATRIX, -0.3);
+    LIBS.translateY(charmeleonRightHandClaw2.MOVE_MATRIX, -0.1);
+    LIBS.translateZ(charmeleonRightHandClaw2.MOVE_MATRIX, 0.0);
+
+    LIBS.translateX(charmeleonRightHandClaw3.MOVE_MATRIX, -0.3);
+    LIBS.translateY(charmeleonRightHandClaw3.MOVE_MATRIX, -0.1);
+    LIBS.translateZ(charmeleonRightHandClaw3.MOVE_MATRIX, -0.15);
+
+    LIBS.translateX(charmeleonRightFootClaw1.MOVE_MATRIX, -0.25);
+    LIBS.translateY(charmeleonRightFootClaw1.MOVE_MATRIX, -2.75);
+    LIBS.translateZ(charmeleonRightFootClaw1.MOVE_MATRIX, 2.73);
+    LIBS.rotateX(charmeleonRightFootClaw1.MOVE_MATRIX, LIBS.degToRad(180));
+
+    LIBS.translateX(charmeleonRightFootClaw2.MOVE_MATRIX, -0.0);
+    LIBS.translateY(charmeleonRightFootClaw2.MOVE_MATRIX, -2.75);
+    LIBS.translateZ(charmeleonRightFootClaw2.MOVE_MATRIX, 2.8);
+    LIBS.rotateX(charmeleonRightFootClaw2.MOVE_MATRIX, LIBS.degToRad(180));
+
+    LIBS.translateX(charmeleonRightFootClaw3.MOVE_MATRIX, 0.25);
+    LIBS.translateY(charmeleonRightFootClaw3.MOVE_MATRIX, -2.75);
+    LIBS.translateZ(charmeleonRightFootClaw3.MOVE_MATRIX, 2.73);
+    LIBS.rotateX(charmeleonRightFootClaw3.MOVE_MATRIX, LIBS.degToRad(180));
+
+    LIBS.translateX(charmeleonLeftFootClaw1.MOVE_MATRIX, 0.25);
+    LIBS.translateY(charmeleonLeftFootClaw1.MOVE_MATRIX, -2.75);
+    LIBS.translateZ(charmeleonLeftFootClaw1.MOVE_MATRIX, 2.55);
+    LIBS.rotateX(charmeleonLeftFootClaw1.MOVE_MATRIX, LIBS.degToRad(180));
+
+    LIBS.translateX(charmeleonLeftFootClaw2.MOVE_MATRIX, 0.0);
+    LIBS.translateY(charmeleonLeftFootClaw2.MOVE_MATRIX, -2.75);
+    LIBS.translateZ(charmeleonLeftFootClaw2.MOVE_MATRIX, 2.63);
+    LIBS.rotateX(charmeleonLeftFootClaw2.MOVE_MATRIX, LIBS.degToRad(180));
+
+    LIBS.translateX(charmeleonLeftFootClaw3.MOVE_MATRIX, -0.25);
+    LIBS.translateY(charmeleonLeftFootClaw3.MOVE_MATRIX, -2.75);
+    LIBS.translateZ(charmeleonLeftFootClaw3.MOVE_MATRIX, 2.55);
+    LIBS.rotateX(charmeleonLeftFootClaw3.MOVE_MATRIX, LIBS.degToRad(180));
+
+    LIBS.translateX(charmeleonGreatBall.MOVE_MATRIX, 5);
+
     // CHARMELEON TRANSFORMATION END
 
     // CHARIZARD TRANSFORMATION
@@ -977,7 +1266,59 @@ function main() {
     // CHARMANDER HIERARCHY END
 
     // CHARMELEON HIERARCHY
-    // ...
+    charmeleonBody.addChild(charmeleonBelly);
+    charmeleonBody.addChild(charmeleonGreatBall);
+
+    charmeleonBody.addChild(charmeleonSendiKanan);
+    charmeleonBody.addChild(charmeleonSendiKiri);
+    charmeleonBody.addChild(charmeleonSendiTanganKiri);
+    charmeleonBody.addChild(charmeleonSendiTanganKanan);
+    charmeleonBody.addChild(charmeleonTail);
+    charmeleonBody.addChild(charmeleonNeck);
+
+    charmeleonNeck.addChild(charmeleonHead);
+
+    charmeleonHead.addChild(charmeleonLowerJaw);
+    charmeleonHead.addChild(charmeleonUpperJaw);
+    charmeleonHead.addChild(charmeleonLeftWhiteEye);
+    charmeleonHead.addChild(charmeleonRightWhiteEye);
+    charmeleonHead.addChild(charmeleonUpperHead);
+
+    charmeleonLeftWhiteEye.addChild(charmeleonLeftBlackEye);
+
+    charmeleonRightWhiteEye.addChild(charmeleonRightBlackEye);
+
+    charmeleonTail.addChild(charmeleonTail2);
+
+    charmeleonTailTip.addChild(charmeleonTailTipFire);
+    
+    charmeleonSendiKiri.addChild(charmeleonPahaKiri);
+    charmeleonSendiKanan.addChild(charmeleonPahaKanan);
+
+    charmeleonPahaKiri.addChild(charmeleonSendiTelapakKiri);
+    charmeleonPahaKanan.addChild(charmeleonSendiTelapakKanan);
+
+    charmeleonSendiTelapakKiri.addChild(charmeleonTelapakKiri);
+    charmeleonSendiTelapakKanan.addChild(charmeleonTelapakKanan);
+
+    charmeleonSendiTanganKiri.addChild(charmeleonTanganKiri);
+    charmeleonSendiTanganKanan.addChild(charmeleonTanganKanan);
+
+    charmeleonTanganKiri.addChild(charmeleonLeftHandClaw1);
+    charmeleonTanganKiri.addChild(charmeleonLeftHandClaw2);
+    charmeleonTanganKiri.addChild(charmeleonLeftHandClaw3);
+
+    charmeleonTanganKanan.addChild(charmeleonRightHandClaw1);
+    charmeleonTanganKanan.addChild(charmeleonRightHandClaw2);
+    charmeleonTanganKanan.addChild(charmeleonRightHandClaw3);
+
+    charmeleonTelapakKanan.addChild(charmeleonRightFootClaw1);
+    charmeleonTelapakKanan.addChild(charmeleonRightFootClaw2);
+    charmeleonTelapakKanan.addChild(charmeleonRightFootClaw3);
+
+    charmeleonTelapakKiri.addChild(charmeleonLeftFootClaw1);
+    charmeleonTelapakKiri.addChild(charmeleonLeftFootClaw2);
+    charmeleonTelapakKiri.addChild(charmeleonLeftFootClaw3);
     // CHARMELEON HIERARCHY END
 
     // CHARIZARD HIERARCHY
@@ -1073,7 +1414,8 @@ function main() {
     // CHARMANDER SETUP OBJECT END
 
     // CHARMELEON SETUP OBJECT
-    // ...
+    charmeleonBody.setup();
+    charmeleonTailTip.setup();
     // CHARMELEON SETUP OBJECT END
 
     // CHARIZARD SETUP OBJECT
@@ -1172,7 +1514,8 @@ function main() {
         // CHARMANDER RENDER OBJECT END
 
         // CHARMELEON RENDER OBJECT
-        // ...
+        charmeleonBody.render(MODELMATRIX);
+        charmeleonTailTip.render(MODELMATRIX);
         // CHARMELEON RENDER OBJECT END
 
         // CHARIZARD RENDER OBJECT
@@ -1275,7 +1618,107 @@ function main() {
        
 
         // CHARMELEON ANIMATION
-        // ...
+
+        //Rotate
+        // charmeleon sway tangan kanan
+        const charmeleon_sway = ((time / 200) % (Math.PI * 2));
+        const charmeleonSwayAmount = Math.sin(charmeleon_sway) * 0.0055;
+
+        LIBS.rotateY(charmeleonTanganKanan.MOVE_MATRIX, -charmeleonSwayAmount * -3);
+        LIBS.rotateZ(charmeleonTanganKanan.MOVE_MATRIX, charmeleonSwayAmount * 0.4);
+
+        // Abitary Axis Rotate
+        // Great ball abitary axis rotate body charmeleon
+        LIBS.rotateArbitraryAxis(charmeleonGreatBall.MOVE_MATRIX,[0, -1, 0], 0.05);
+
+        //Scaling
+        //CharmeleonTailFire membesar mengecil
+        const charmeleon_t = ((time / 75) % (Math.PI * 2));
+        const charmeleonTailTipScale = 1 + Math.sin(charmeleon_t + Math.PI) * 0.02;
+
+        LIBS.scaleX(charmeleonTailTip.MOVE_MATRIX, charmeleonTailTipScale);
+        LIBS.scaleY(charmeleonTailTip.MOVE_MATRIX, charmeleonTailTipScale);
+        LIBS.scaleZ(charmeleonTailTip.MOVE_MATRIX, charmeleonTailTipScale);
+
+        // Translate
+        // charmeleon jump
+        const charmeleon_jump = ((time / 200) % (Math.PI * 2));
+        const charmeleonJumpAmount =Math.sin(charmeleon_jump) * 0.05;
+
+        LIBS.translateY(charmeleonBody.MOVE_MATRIX, charmeleonJumpAmount);
+
+        //tail
+        LIBS.translateY(charmeleonTail.MOVE_MATRIX, charmeleonJumpAmount* 0.55 );
+        LIBS.translateZ(charmeleonTail.MOVE_MATRIX, -charmeleonJumpAmount);
+
+        LIBS.translateY(charmeleonTailTip.MOVE_MATRIX, -charmeleonJumpAmount* -1);
+        LIBS.translateX(charmeleonTailTip.MOVE_MATRIX, charmeleonJumpAmount* 0.0000001);
+        LIBS.translateZ(charmeleonTailTipFire.MOVE_MATRIX, charmeleonJumpAmount* 0.1);
+
+        //Feet
+        LIBS.translateX(charmeleonSendiKiri.MOVE_MATRIX, -charmeleonJumpAmount *0.5);
+        LIBS.translateY(charmeleonSendiKiri.MOVE_MATRIX, charmeleonJumpAmount *0.1);
+
+        LIBS.translateX(charmeleonSendiKanan.MOVE_MATRIX, charmeleonJumpAmount *0.5);
+        LIBS.translateY(charmeleonSendiKanan.MOVE_MATRIX, charmeleonJumpAmount *0.1);
+
+        LIBS.translateX(charmeleonPahaKiri.MOVE_MATRIX, charmeleonJumpAmount *0.5);
+        LIBS.translateY(charmeleonPahaKiri.MOVE_MATRIX, charmeleonJumpAmount *0.1);
+
+        LIBS.translateX(charmeleonPahaKanan.MOVE_MATRIX, -charmeleonJumpAmount *0.5);
+        LIBS.translateY(charmeleonPahaKanan.MOVE_MATRIX, charmeleonJumpAmount *0.1);
+
+        LIBS.translateX(charmeleonSendiTelapakKiri.MOVE_MATRIX, charmeleonJumpAmount *0.5);
+        LIBS.translateY(charmeleonSendiTelapakKiri.MOVE_MATRIX, charmeleonJumpAmount *0.1);
+
+        LIBS.translateX(charmeleonSendiTelapakKanan.MOVE_MATRIX, -charmeleonJumpAmount *0.5);
+        LIBS.translateY(charmeleonSendiTelapakKanan.MOVE_MATRIX, charmeleonJumpAmount *0.1);
+
+        LIBS.translateX(charmeleonTelapakKanan.MOVE_MATRIX, charmeleonJumpAmount *0.395);
+        LIBS.translateY(charmeleonTelapakKanan.MOVE_MATRIX, charmeleonJumpAmount *0.1);
+
+        LIBS.translateX(charmeleonTelapakKiri.MOVE_MATRIX, -charmeleonJumpAmount *0.395);
+        LIBS.translateY(charmeleonTelapakKiri.MOVE_MATRIX, charmeleonJumpAmount *0.1);
+
+        LIBS.translateY(charmeleonLeftFootClaw1.MOVE_MATRIX, charmeleonJumpAmount *1.83);
+        LIBS.translateY(charmeleonLeftFootClaw2.MOVE_MATRIX, charmeleonJumpAmount *1.83);
+        LIBS.translateY(charmeleonLeftFootClaw3.MOVE_MATRIX, charmeleonJumpAmount *1.83);
+
+        LIBS.translateY(charmeleonRightFootClaw1.MOVE_MATRIX, charmeleonJumpAmount *1.83);
+        LIBS.translateY(charmeleonRightFootClaw2.MOVE_MATRIX, charmeleonJumpAmount *1.83);
+        LIBS.translateY(charmeleonRightFootClaw3.MOVE_MATRIX, charmeleonJumpAmount *1.83);
+
+        //Hand
+        LIBS.translateY(charmeleonTanganKiri.MOVE_MATRIX, charmeleonJumpAmount *0.03);
+        LIBS.translateX(charmeleonTanganKiri.MOVE_MATRIX, -charmeleonJumpAmount *0.3);
+
+        LIBS.translateY(charmeleonTanganKanan.MOVE_MATRIX, charmeleonJumpAmount *0.03);
+        LIBS.translateX(charmeleonTanganKanan.MOVE_MATRIX, charmeleonJumpAmount *0.3);
+
+        //Belly
+        LIBS.translateZ(charmeleonBelly.MOVE_MATRIX, -charmeleonJumpAmount *0.08);
+
+        //Upper Head
+        LIBS.translateZ(charmeleonUpperHead.MOVE_MATRIX, charmeleonJumpAmount *-0.469);
+        LIBS.translateY(charmeleonUpperHead.MOVE_MATRIX, charmeleonJumpAmount *0.12);
+
+        //Jaw
+        LIBS.translateY(charmeleonLowerJaw.MOVE_MATRIX, charmeleonJumpAmount *0.001);
+        LIBS.translateZ(charmeleonLowerJaw.MOVE_MATRIX, -charmeleonJumpAmount *0.055);
+
+        LIBS.translateY(charmeleonUpperJaw.MOVE_MATRIX, charmeleonJumpAmount *0.001);
+        LIBS.translateZ(charmeleonUpperJaw.MOVE_MATRIX, -charmeleonJumpAmount *0.15);
+
+        //Eyes
+        LIBS.translateX(charmeleonLeftWhiteEye.MOVE_MATRIX, charmeleonJumpAmount *0.341);
+        LIBS.translateY(charmeleonLeftWhiteEye.MOVE_MATRIX, charmeleonJumpAmount *0.05);
+
+        LIBS.translateX(charmeleonRightWhiteEye.MOVE_MATRIX, -charmeleonJumpAmount *0.341);
+        LIBS.translateY(charmeleonRightWhiteEye.MOVE_MATRIX, charmeleonJumpAmount *0.05);
+
+        //GreatBall
+        LIBS.translateY(charmeleonGreatBall.MOVE_MATRIX, charmeleonJumpAmount *0.01);
+        
         // CHARMELEON ANIMATION END
 
         // CHARIZARD ANIMATION
