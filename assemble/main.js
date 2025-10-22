@@ -302,6 +302,9 @@ function main() {
     const charmanderRightLegClaw1 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, claw_vertices, claw_indices, GL.TRIANGLES);
     const charmanderRightLegClaw2 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, claw_vertices, claw_indices, GL.TRIANGLES);
     const charmanderRightLegClaw3 = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, claw_vertices, claw_indices, GL.TRIANGLES);
+    
+    const { vertices: charmander_pokeball_vertices, indices: charmander_pokeball_indices } = generateEllipsoidPokeball(0.8, 0.8, 0.8, 20, 20, [1.0, 1.0, 1.0], [1.0, 0.0, 0.0], [1.0, 1.0, 1.0]);
+    const charmanderPokeball = new Object(GL, SHADER_PROGRAM, _position, _color, _Mmatrix, charmander_pokeball_vertices, charmander_pokeball_indices, GL.TRIANGLES);
     // CHARMANDER OBJECT VARIABLE END
 
     // CHARMELEON OBJECT VARIABLE
@@ -628,16 +631,17 @@ function main() {
     LIBS.rotateX(charmanderTail.MOVE_MATRIX, -Math.PI / 3);
     LIBS.rotateY(charmanderTail.MOVE_MATRIX, Math.PI);
 
-    LIBS.translateY(charmanderTailTip.MOVE_MATRIX, 0.6);
-    LIBS.translateZ(charmanderTailTip.MOVE_MATRIX, -1.39);
+    LIBS.translateX(charmanderTailTip.MOVE_MATRIX, -9.0);
+    LIBS.translateY(charmanderTailTip.MOVE_MATRIX, 0.0);
+    LIBS.translateZ(charmanderTailTip.MOVE_MATRIX, -2.0);
     LIBS.rotateX(charmanderTailTip.MOVE_MATRIX, LIBS.degToRad(-90));
 
-    LIBS.translateY(charmanderTailTipFire.MOVE_MATRIX, 0.56);
-    LIBS.translateZ(charmanderTailTipFire.MOVE_MATRIX, -1.07);
-    LIBS.rotateX(charmanderTailTipFire.MOVE_MATRIX, LIBS.degToRad(-60));
+    LIBS.translateY(charmanderTailTipFire.MOVE_MATRIX, -1.5);
+    LIBS.translateZ(charmanderTailTipFire.MOVE_MATRIX, -2.0);
+    LIBS.rotateX(charmanderTailTipFire.MOVE_MATRIX, LIBS.degToRad(90));
 
     LIBS.translateY(charmanderBelly.MOVE_MATRIX, -0.2);
-    LIBS.translateZ(charmanderBelly.MOVE_MATRIX, 0.41);
+    LIBS.translateZ(charmanderBelly.MOVE_MATRIX, 0.44);
     LIBS.rotateX(charmanderBelly.MOVE_MATRIX, Math.PI / 16);
 
     LIBS.translateX(charmanderLeftarmShoulder.MOVE_MATRIX, -9.8);
@@ -705,6 +709,11 @@ function main() {
     LIBS.translateY(charmanderRightLegClaw3.MOVE_MATRIX, -2.85);
     LIBS.translateZ(charmanderRightLegClaw3.MOVE_MATRIX, 0.75);
     LIBS.rotateX(charmanderRightLegClaw3.MOVE_MATRIX, LIBS.degToRad(180));
+
+    LIBS.translateX(charmanderPokeball.MOVE_MATRIX, -5.0);
+    LIBS.translateY(charmanderPokeball.MOVE_MATRIX, 1.5);
+    LIBS.translateZ(charmanderPokeball.MOVE_MATRIX, 5.0);
+
     // CHARMANDER TRANSFORMATION END
 
     // CHARMELEON TRANSFORMATION
@@ -935,12 +944,12 @@ function main() {
     charmanderHead.addChild(charmanderCheeks);
     charmanderHead.addChild(charmanderMouthBase);
     charmanderHead.addChild(charmanderMouth);
+    charmanderHead.addChild(charmanderPokeball);
 
     charmanderMouthBase.addChild(charmanderNoseLeft);
     charmanderMouthBase.addChild(charmaderNoseRight);
 
-    charmanderTail.addChild(charmanderTailTip);
-    charmanderTail.addChild(charmanderTailTipFire);
+    charmanderTailTip.addChild(charmanderTailTipFire);
 
     charmanderLeftEye.addChild(charmanderLeftEyePupil);
     charmanderLeftEye.addChild(charmanderLeftEyePupil2);
@@ -1056,6 +1065,7 @@ function main() {
     charmanderBody.setup();
     charmanderHead.setup();
     charmanderTail.setup();
+    charmanderTailTip.setup();
     charmanderLeftarmShoulder.setup();
     charmanderRightarmShoulder.setup();
     charmanderLeftLeg.setup();
@@ -1100,6 +1110,10 @@ function main() {
         const z = Math.random() - 0.5;
         starsAxis[i] = LIBS.axisNormalize([x, y, z]);
     }
+
+    var charmanderCurrentArmRotate = 0;
+    var charmanderArmRotateDirection = 1;
+    
 
     var charizardCurrentFlap = 0;
     var charizardFlapDirection = 1;
@@ -1150,6 +1164,7 @@ function main() {
         charmanderBody.render(MODELMATRIX);
         charmanderHead.render(MODELMATRIX);
         charmanderTail.render(MODELMATRIX);
+        charmanderTailTip.render(MODELMATRIX);
         charmanderLeftarmShoulder.render(MODELMATRIX);
         charmanderRightarmShoulder.render(MODELMATRIX);
         charmanderLeftLeg.render(MODELMATRIX);
@@ -1223,8 +1238,41 @@ function main() {
         // ENVIRONMENT ANIMATION END
 
         // CHARMANDER ANIMATION
-        // ...
+        LIBS.translateX(charmanderTail.MOVE_MATRIX, Math.sin(time / 75) * 0.02);
+        LIBS.translateX(charmanderTailTip.MOVE_MATRIX, Math.sin(time / 75) * 0.02);
+
+        LIBS.translateY(charmanderHead.MOVE_MATRIX, Math.sin(time / 60) * 0.001);
+        LIBS.translateX(charmanderBody.MOVE_MATRIX, Math.sin(time / 125) * 0.005);
+        LIBS.translateY(charmanderBody.MOVE_MATRIX, Math.sin(time / 75) * 0.009);
+
+        LIBS.translateX(charmanderLeftLeg.MOVE_MATRIX, Math.sin(time / 65 + Math.PI) * 0.004);
+        LIBS.translateX(charmanderRightLeg.MOVE_MATRIX, Math.sin(time / 125) * 0.009);
+
+
+        charmanderCurrentArmRotate += charmanderArmRotateDirection * 0.001;
+        if (charmanderCurrentArmRotate >= 0.007) {
+            charmanderArmRotateDirection = -1;
+        } else if (charmanderCurrentArmRotate <= -0.007) {
+            charmanderArmRotateDirection = 1;
+        }
+
+        LIBS.rotateY(charmanderRightArm.MOVE_MATRIX, charmanderCurrentArmRotate);
+        LIBS.rotateY(charmanderLeftArm.MOVE_MATRIX, charmanderCurrentArmRotate);
+
+        const tCharmander = ((time / 200) % (Math.PI * 2));
+        const tailTipScaleCharmander = 1.0 + Math.sin(tCharmander + Math.PI) * 0.02 ;
+
+        LIBS.scaleX(charmanderTailTip.MOVE_MATRIX, tailTipScaleCharmander);
+        LIBS.scaleY(charmanderTailTip.MOVE_MATRIX, tailTipScaleCharmander);
+        LIBS.scaleZ(charmanderTailTip.MOVE_MATRIX, tailTipScaleCharmander);
+
+        // LIBS.rotateArbitraryAxis(charmanderPokeball.MOVE_MATRIX, [1, 1, 1], 0.02);
+        LIBS.rotateX(charmanderPokeball.MOVE_MATRIX, 0.03);
+        // LIBS.rotateY(charmanderPokeball.MOVE_MATRIX, 0.03);
+        LIBS.rotateZ(charmanderPokeball.MOVE_MATRIX, 0.03);
+
         // CHARMANDER ANIMATION END
+       
 
         // CHARMELEON ANIMATION
         // ...
