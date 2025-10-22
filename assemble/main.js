@@ -997,7 +997,6 @@ function main() {
     LIBS.rotateX(charmeleonLeftFootClaw3.MOVE_MATRIX, LIBS.degToRad(180));
 
     LIBS.translateX(charmeleonGreatBall.MOVE_MATRIX, 5);
-
     // CHARMELEON TRANSFORMATION END
 
     // CHARIZARD TRANSFORMATION
